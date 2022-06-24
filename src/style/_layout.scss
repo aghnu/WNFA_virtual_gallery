@@ -37,7 +37,12 @@ $frame-size-d:       100vh;
 
     .room {
         @include interactiveContainer();
-        
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
         .frame {
             @include interactiveContainer();
             z-index: $layer-base-z-index - 1;
@@ -53,7 +58,7 @@ $frame-size-d:       100vh;
                     }
 
                     .buttons {
-                        padding: 2em;
+                        padding-top: 1em;
                     }
                 }
             }
@@ -102,12 +107,17 @@ $frame-size-d:       100vh;
 
         .gallery {
             @include interactiveContainer();
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
 
             .wall {
                 position: absolute;
-                top: -40vh;
-                width: 50vw;
-                height: 75vh;
+                top: 10%;
+                width: 45%;
+                height: 70%;
                 transform-style: preserve-3d;
 
                 .poster {

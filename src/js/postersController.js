@@ -38,31 +38,45 @@ function loadResults() {
                     el.style.right = x + '%';
                     el.style.transform = `rotateZ(${r}deg) rotateY(${r}deg)`;
                     el.style.width = s + 'em';
-    
+                    el.style.opacity = 0;
                     el.src = assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg';
             
-                    el.onmouseenter = () => {
-                        el.style.opacity = 1;
-                    }
-            
-                    el.onmouseleave = () => {
-                        el.style.opacity = 0.9;
-                    }
+
             
                     // append
                     posters.push(el);
                     walls[Math.floor(Math.random() * walls.length)].appendChild(el);
                     currentNum++;
 
-                    // remove
-                    if (currentNum >= 20) {
-                        const toRemove = posters.shift();
-                        toRemove.parentElement.removeChild(toRemove);
-                    }
+                    setTimeout(() => {
+                        el.style.opacity = 0.9;
+                        el.onmouseenter = () => {
+                            el.style.opacity = 1;
+                        }
+                
+                        el.onmouseleave = () => {
+                            el.style.opacity = 0.9;
+                        }
+
+                        // remove
+                        if (currentNum >= 20) {
+                            const toRemove = posters.shift();
+                            toRemove.style.onmouseenter = () => {};
+                            toRemove.style.onmouseleave = () => {};
+                            toRemove.style.opacity = 0;
+                            setTimeout(() => {
+                                toRemove.parentElement.removeChild(toRemove);
+                            }, 1000);
+                        }
+
+                    }, 250);
+
+
+
                 });
 
                 displayResult();
-            }, (currentNum < 20) ? 250 : (Math.random() * 1000) + 1000);
+            }, (currentNum < 20) ? 100 : (Math.random() * 1000) + 5000);
         }
 
         displayResult();
