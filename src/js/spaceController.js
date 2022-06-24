@@ -27,7 +27,7 @@ function rotateUpdate(el) {
 
 function spaceUpdate(spaceEl, boundingEl) {
     
-    const max_degree = 20;
+    const max_degree = 10;
     const boxEl = spaceEl.getBoundingClientRect();
     const boxBody = boundingEl.getBoundingClientRect();
     
@@ -56,12 +56,23 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
         const box = spaceEl.getBoundingClientRect();
         space_info.pointerX = box.left + box.width / 2;
         space_info.pointerY = box.top + box.height / 2;
+        space_info.focusX = space_info.pointerX;
+        space_info.focusY = space_info.pointerY;
+    }
+    const checkRatio = () => {
+        const box = boundingEl.getBoundingClientRect();
+        const boxRatio = box.width / box.height;
+
+        // support up to 21:9 9:21 ratio
+        if ((boxRatio < 0.4) || (boxRatio > 2.5)) {
+            boundingEl.style.visibility = 'hidden';
+        } else {
+            boundingEl.style.visibility = 'visible';
+        }
     }
 
-    space_info.focusX = space_info.pointerX;
-    space_info.focusY = space_info.pointerY;  
     initSpace();
-
+    checkRatio();
     
     boundingEl.onmousemove = e => {
         space_info.pointerX = e.clientX;
@@ -76,14 +87,14 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     // animation loop
     
     setInterval(() => {
-        space_info.rotateDeg = space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)));
+        space_info.rotateDeg = (space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)))) % 360;
         focusUpdate();
         rotateUpdate(rotateEl);
         spaceUpdate(spaceEl, boundingEl);
     }, 1000 / UPDATE_FPS);
 
-
     window.addEventListener('resize', ()=>{
+        checkRatio();
         initSpace();
     });
 }

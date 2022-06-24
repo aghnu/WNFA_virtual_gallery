@@ -4,32 +4,16 @@ $site-element-size:         2vh;
 #site-informative {
     font-size: $site-element-size;
     pointer-events: none;
-
-    .nav {
-        pointer-events: all;
-        button {
-            width: $site-element-size * 2;
-            height: $site-element-size * 2;
-            border-radius: 100%;
-            background-color: rgb(255, 179, 0);
-        }
-    }
-
-    .footer {
-        pointer-events: all;
-        color: white;
-        text-align: center;
-    }
 }
 
 #site-interactive {
     font-size: $site-interactive-size;
-    perspective: 75em;
+    perspective: 80em;
     perspective-origin: center;
     
     .lighting {
         pointer-events: none;
-        background-image: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3) 75%);
+        // background-image: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3) 75%);
     }
 
     .room {
@@ -38,13 +22,38 @@ $site-element-size:         2vh;
         .frame {
             pointer-events: none;
 
-            .bottom,
-            .top,
-            .left,
-            .right {
-                background-color: #e0e0e0;
+            .surface {
+                background-color: #b1b1b1;
                 background-image: radial-gradient(rgba(80, 80, 80, 0.5), #000 90%);
                 filter: blur(1em);                
+            }
+
+            .display {
+                font-size: $site-element-size;
+                .control {
+                    pointer-events: all;
+                    color: rgb(225, 225, 225);
+                    text-align: center;
+                    font-size: 1.7em;
+                    white-space: nowrap;
+                    transition: font-size 0.5s, top 0.5s;
+                    @media only screen and (max-width: 600px) {
+                        font-size: 1.2em;
+                    }
+
+                    .buttons {
+                        pointer-events: all;
+                        display: flex;
+                        justify-content: center;
+                        gap: 1em;
+                        button {
+                            width: 1em;
+                            height: 1em;
+                            border-radius: 100%;
+                            background-color: rgb(135, 135, 135);
+                        }
+                    }
+                }
             }
         }
 

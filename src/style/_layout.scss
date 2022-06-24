@@ -23,18 +23,6 @@ $frame-size-d:       100vh;
 #site-informative {
     @include fixedWholeScreen();
     z-index: $layer-base-z-index + 2;
-
-    .nav {
-        position: absolute;
-        right: 8%;
-        bottom: 8%;
-    }
-
-    .footer {
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-    }
 }
 
 #site-interactive {
@@ -54,12 +42,34 @@ $frame-size-d:       100vh;
             @include interactiveContainer();
             z-index: $layer-base-z-index - 1;
 
+            .display {
+                z-index: $layer-base-z-index;
+                .control {
+                    position: absolute;
+                    width: 100%;
+                    top: 7.5%;
+                    @media only screen and (max-width: 600px) {
+                        top: 12.5%;
+                    }
+
+                    .buttons {
+                        padding: 2em;
+                    }
+                }
+            }
+
             .bottom {
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-d;
-                transform: rotateX(90deg) translateZ(- $frame-size-h/2);
+                transform: rotateX(90deg) translateZ(- $frame-size-h/2) rotateX(-20deg);
+                transition: transform 0.5s;
+                @media only screen and (max-width: 600px) {
+                    transform: rotateX(90deg) translateZ(- $frame-size-h/2) rotateX(-25deg);
+                }
             }
+
+
 
             .top {
                 position: absolute;
@@ -95,8 +105,9 @@ $frame-size-d:       100vh;
 
             .wall {
                 position: absolute;
+                top: -40vh;
                 width: 50vw;
-                height: 80vh;
+                height: 75vh;
                 transform-style: preserve-3d;
 
                 .poster {
