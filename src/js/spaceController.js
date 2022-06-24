@@ -1,11 +1,25 @@
 const space_info = {
     pointerX: 0,
     pointerY: 0,
+    focusX: 0,
+    focusY:0,
     rotateDeg: 0,
 }
 
 const ROTATE_SPEED = 60;
+const FOCUS_UPDATE_ANIMATION_SPEED = 0.2;
+const UPDATE_FPS = 60;
 
+function focusUpdate() {
+
+    if (Math.abs(space_info.pointerX - space_info.focusX) > 1) {
+        space_info.focusX = space_info.focusX + (space_info.pointerX - space_info.focusX) / (FOCUS_UPDATE_ANIMATION_SPEED * UPDATE_FPS);
+    }
+
+    if (Math.abs(space_info.pointerY - space_info.focusY) > 1) {
+        space_info.focusY = space_info.focusY + (space_info.pointerY - space_info.focusY) / (FOCUS_UPDATE_ANIMATION_SPEED * UPDATE_FPS);
+    }
+}
 
 function rotateUpdate(el) {
     el.style.transform = `rotateY(${space_info.rotateDeg}deg)`;
@@ -13,7 +27,7 @@ function rotateUpdate(el) {
 
 function spaceUpdate(spaceEl, boundingEl) {
     
-    const max_degree = 10;
+    const max_degree = 20;
     const boxEl = spaceEl.getBoundingClientRect();
     const boxBody = boundingEl.getBoundingClientRect();
     
@@ -24,8 +38,8 @@ function spaceUpdate(spaceEl, boundingEl) {
     const centerX = boxEl.left + boxEl.width / 2;
     const centerY = boxEl.top + boxEl.height / 2;
 
-    const distanceX = space_info.pointerX - centerX;
-    const distanceY = space_info.pointerY - centerY;
+    const distanceX = space_info.focusX - centerX;
+    const distanceY = space_info.focusY - centerY;
 
     const distanceFactorX = distanceX / (boxBody.width/ 2);
     const distanceFactorY = distanceY / (boxBody.height / 2);
@@ -38,10 +52,17 @@ function spaceUpdate(spaceEl, boundingEl) {
 
 export function initSpace(spaceEl, rotateEl, boundingEl) {
     // setup listeners
-    const box = spaceEl.getBoundingClientRect();
-    space_info.pointerX = box.left + box.width / 2;
-    space_info.pointerY = box.top + box.height / 2;
+    const initSpace = () => {
+        const box = spaceEl.getBoundingClientRect();
+        space_info.pointerX = box.left + box.width / 2;
+        space_info.pointerY = box.top + box.height / 2;
+    }
 
+    space_info.focusX = space_info.pointerX;
+    space_info.focusY = space_info.pointerY;  
+    initSpace();
+
+    
     boundingEl.onmousemove = e => {
         space_info.pointerX = e.clientX;
         space_info.pointerY = e.clientY;
@@ -52,14 +73,17 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
         space_info.pointerY = e.touches[0].clientY;
     };
 
-    const rotateUpdateSpeed = 0.1;
+    // animation loop
+    
     setInterval(() => {
-        space_info.rotateDeg = space_info.rotateDeg + (360 / (ROTATE_SPEED / rotateUpdateSpeed));
-    }, rotateUpdateSpeed  * 1000);
-
-    const updateFPS = 12;
-    setInterval(() => {
+        space_info.rotateDeg = space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)));
+        focusUpdate();
         rotateUpdate(rotateEl);
         spaceUpdate(spaceEl, boundingEl);
-    }, 1000 / updateFPS);
+    }, 1000 / UPDATE_FPS);
+
+
+    window.addEventListener('resize', ()=>{
+        initSpace();
+    });
 }

@@ -34,7 +34,6 @@ $site-element-size:         2vh;
 
     .room {
         pointer-events: none;
-        transition: transform 0.2s linear;
 
         .frame {
             pointer-events: none;
@@ -51,7 +50,6 @@ $site-element-size:         2vh;
 
         .gallery {
             pointer-events: none;
-            transition: transform 0.2s linear;
             
             .wall {
                 pointer-events: none;

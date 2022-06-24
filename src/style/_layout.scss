@@ -81,6 +81,13 @@ $frame-size-d:       100vh;
                 height: $frame-size-h;
                 transform: rotateY(-90deg) translateZ(- $frame-size-w/2);
             }
+
+            // .back {
+            //     position: absolute;
+            //     width: $frame-size-w;
+            //     height: $frame-size-h;
+            //     transform: translateZ(- $frame-size-d/2);
+            // }
         }
 
         .gallery {
