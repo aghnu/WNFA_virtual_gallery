@@ -34,9 +34,9 @@ $site-element-size:         2vh;
                     pointer-events: all;
                     color: rgb(225, 225, 225);
                     text-align: center;
-                    font-size: 1.7em;
+                    font-size: 1.6em;
                     white-space: nowrap;
-                    transition: font-size 0.5s, top 0.5s;
+                    transition: font-size 0.5s;
                     @media only screen and (max-width: 600px) {
                         font-size: 1.2em;
                     }
@@ -47,8 +47,8 @@ $site-element-size:         2vh;
                         justify-content: center;
                         gap: 1em;
                         button {
-                            width: 1.5em;
-                            height: 1.55em;
+                            width: 1.7em;
+                            height: 1.7em;
                             border-radius: 100%;
                             background-color: rgb(58, 58, 58);
                             transition: opacity 0.25s;
