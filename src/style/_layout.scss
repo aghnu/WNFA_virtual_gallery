@@ -1,0 +1,98 @@
+$layer-base-z-index: 1000;
+
+@mixin fixedWholeScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+@mixin interactiveContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+#site-informative {
+    @include fixedWholeScreen();
+    z-index: $layer-base-z-index + 2;
+
+    .nav {
+        position: absolute;
+        right: 8%;
+        bottom: 8%;
+    }
+
+    .footer {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+}
+
+#site-interactive {
+    @include fixedWholeScreen();
+    @include interactiveContainer();
+    z-index: $layer-base-z-index;
+
+    .lighting {
+        @include fixedWholeScreen();
+        z-index: $layer-base-z-index + 1;
+    }
+
+    .room {
+        @include interactiveContainer();
+        
+        .frame {
+            @include interactiveContainer();
+            z-index: $layer-base-z-index - 1;
+
+            .bottom {
+                position: absolute;
+                width: 100vw;
+                height: 100vw;
+                transform: rotateX(90deg) translateZ(-50vh);
+            }
+
+            .top {
+                position: absolute;
+                width: 100vw;
+                height: 100vw;
+                transform: rotateX(-90deg) translateZ(-50vh);
+            }
+
+            .left {
+                position: absolute;
+                width: 100vw;
+                height: 100vh;
+                transform: rotateY(90deg) translateZ(-50vw);
+            }
+
+            .right {
+                position: absolute;
+                width: 100vw;
+                height: 100vh;
+                transform: rotateY(-90deg) translateZ(-50vw);
+            }
+        }
+
+        .gallery {
+            @include interactiveContainer();
+
+            .wall {
+                position: absolute;
+                width: 50vw;
+                height: 80vh;
+                transform-style: preserve-3d;
+
+                .poster {
+                    position: absolute;
+                    transform-style: preserve-3d;
+                }
+            }
+        }
+    }
+}

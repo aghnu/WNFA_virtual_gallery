@@ -1,0 +1,75 @@
+$site-interactive-size:     2vh;
+$site-element-size:         2vh;
+
+#site-informative {
+    font-size: $site-element-size;
+    pointer-events: none;
+
+    .nav {
+        pointer-events: all;
+        button {
+            width: $site-element-size * 2;
+            height: $site-element-size * 2;
+            border-radius: 100%;
+            background-color: rgb(255, 179, 0);
+        }
+    }
+
+    .footer {
+        pointer-events: all;
+        color: white;
+        text-align: center;
+    }
+}
+
+#site-interactive {
+    font-size: $site-interactive-size;
+    perspective: 120em;
+    perspective-origin: center;
+    
+    .lighting {
+        pointer-events: none;
+        background-image: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3) 75%);
+    }
+
+    .room {
+        pointer-events: none;
+        transition: transform 0.2s linear;
+
+        .frame {
+            pointer-events: none;
+
+            .bottom,
+            .top,
+            .left,
+            .right {
+                background-color: #333333;
+                background-image: radial-gradient(rgba(80, 80, 80, 0.5), #000 90%);
+                filter: blur(1em);                
+            }
+        }
+
+        .gallery {
+            pointer-events: none;
+            transition: transform 0.2s linear;
+            
+            .wall {
+                pointer-events: none;
+    
+                .poster {
+                    pointer-events: all;
+                    display: block;
+                    opacity: 0.8;
+                    object-fit: contain;
+                }
+            }
+    
+        }
+    }
+
+
+}
+
+
+
+
