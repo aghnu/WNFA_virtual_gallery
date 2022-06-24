@@ -24,7 +24,7 @@ $site-element-size:         2vh;
 
 #site-interactive {
     font-size: $site-interactive-size;
-    perspective: 120em;
+    perspective: 75em;
     perspective-origin: center;
     
     .lighting {
@@ -43,7 +43,7 @@ $site-element-size:         2vh;
             .top,
             .left,
             .right {
-                background-color: #333333;
+                background-color: #e0e0e0;
                 background-image: radial-gradient(rgba(80, 80, 80, 0.5), #000 90%);
                 filter: blur(1em);                
             }

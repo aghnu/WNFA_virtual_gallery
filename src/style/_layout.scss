@@ -1,4 +1,8 @@
 $layer-base-z-index: 1000;
+$frame-size-w:       100vw;
+$frame-size-h:       100vh;
+$frame-size-d:       100vh;
+
 
 @mixin fixedWholeScreen {
     position: fixed;
@@ -52,30 +56,30 @@ $layer-base-z-index: 1000;
 
             .bottom {
                 position: absolute;
-                width: 100vw;
-                height: 100vw;
-                transform: rotateX(90deg) translateZ(-50vh);
+                width: $frame-size-w;
+                height: $frame-size-d;
+                transform: rotateX(90deg) translateZ(- $frame-size-h/2);
             }
 
             .top {
                 position: absolute;
-                width: 100vw;
-                height: 100vw;
-                transform: rotateX(-90deg) translateZ(-50vh);
+                width: $frame-size-w;
+                height: $frame-size-d;
+                transform: rotateX(-90deg) translateZ(- $frame-size-h/2);
             }
 
             .left {
                 position: absolute;
-                width: 100vw;
-                height: 100vh;
-                transform: rotateY(90deg) translateZ(-50vw);
+                width: $frame-size-d;
+                height: $frame-size-h;
+                transform: rotateY(90deg) translateZ(- $frame-size-w/2);
             }
 
             .right {
                 position: absolute;
-                width: 100vw;
-                height: 100vh;
-                transform: rotateY(-90deg) translateZ(-50vw);
+                width: $frame-size-d;
+                height: $frame-size-h;
+                transform: rotateY(-90deg) translateZ(- $frame-size-w/2);
             }
         }
 
