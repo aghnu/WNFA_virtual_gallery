@@ -6,6 +6,11 @@ body {
     color: white;
 }
 
+p {
+    margin: 0;
+    line-height: 1em;
+}
+
 button {
     all: unset;
     cursor: pointer;

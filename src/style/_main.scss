@@ -30,6 +30,9 @@ $site-element-size:         2vh;
 
             .display {
                 font-size: $site-element-size;
+                p {
+                    line-height: 2em;
+                }
                 .control {
                     pointer-events: all;
                     color: rgb(225, 225, 225);
