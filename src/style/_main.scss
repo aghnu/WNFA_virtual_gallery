@@ -1,6 +1,11 @@
 $site-interactive-size:     2vh;
 $site-element-size:         2vh;
 
+#site-poster-detail-layer {
+    // opacity: 0;
+    // transition: opacity 0.5s;
+}
+
 #site-noscript {
     font-size: $site-element-size;
     pointer-events: all;
@@ -134,9 +139,8 @@ $site-element-size:         2vh;
                 .poster {
                     pointer-events: all;
                     display: block;
-                    opacity: 0.9;
                     object-fit: contain;
-                    transition: opacity 0.35s, font-size 0.5s;
+                    transition: opacity 0.5s, font-size 0.5s;
                     @media only screen and (max-width: 600px) {
                         font-size: 0.75em;
                     }

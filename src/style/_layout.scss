@@ -20,6 +20,13 @@ $frame-size-d:       100vh;
     transform-style: preserve-3d;
 }
 
+#site-poster-detail-layer {
+    @include fixedWholeScreen();
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #site-noscript {
     @include fixedWholeScreen();
     z-index: $layer-base-z-index + 4;
@@ -88,6 +95,13 @@ $frame-size-d:       100vh;
                 }
             }
 
+            .center {
+                position: absolute;
+                width: $frame-size-w;
+                height: $frame-size-h;
+                transform: translateZ(calc(-#{$frame-size-d} / 4));
+            }
+
             .bottom {
                 position: absolute;
                 width: $frame-size-w;
@@ -122,12 +136,7 @@ $frame-size-d:       100vh;
                 transform: rotateY(-90deg) translateZ(calc(-#{$frame-size-w}/2));
             }
 
-            // .back {
-            //     position: absolute;
-            //     width: $frame-size-w;
-            //     height: $frame-size-h;
-            //     transform: translateZ(- $frame-size-d/2);
-            // }
+
         }
 
         .gallery {
@@ -137,6 +146,7 @@ $frame-size-d:       100vh;
             left: 0;
             width: 100%;
             height: 100%;
+            transform: translateZ(calc(-#{$frame-size-d} / 4));
 
             .wall {
                 position: absolute;

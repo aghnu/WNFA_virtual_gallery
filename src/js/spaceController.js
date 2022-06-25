@@ -21,8 +21,8 @@ function focusUpdate() {
     }
 }
 
-function rotateUpdate(el) {
-    el.style.transform = `rotateY(${space_info.rotateDeg}deg)`;
+function rotateUpdate(el, originalTransformMatrix) {
+    el.style.transform = originalTransformMatrix + `rotateY(${space_info.rotateDeg}deg)`;
 }
 
 function spaceUpdate(spaceEl, boundingEl) {
@@ -89,11 +89,11 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     };
 
     // animation loop
-    
+    const rotateElOriginalTransformMatrix = window.getComputedStyle(rotateEl).transform;
     setInterval(() => {
         space_info.rotateDeg = (space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)))) % 360;
         focusUpdate();
-        rotateUpdate(rotateEl);
+        rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);
         spaceUpdate(spaceEl, boundingEl);
     }, 1000 / UPDATE_FPS);
 

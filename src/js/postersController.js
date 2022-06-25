@@ -7,8 +7,10 @@ function loadResults(metaJSON, type) {
 
     let preLoadingInterval;
     let postLoadingInterval;
+    let pause = false;
 
     const createPoster = (url) => {
+
         const el = document.createElement('img');
         const x = (Math.random() * 50);
         const y = (Math.random() * 80);
@@ -16,6 +18,10 @@ function loadResults(metaJSON, type) {
         const s = (Math.random() * 6) + 2;
 
         el.classList.add('poster');
+        el.onerror = () => {
+            this.style.display = 'none';
+        }
+
 
         el.style.top = y + '%';
         el.style.right = x + '%';
@@ -24,14 +30,28 @@ function loadResults(metaJSON, type) {
         el.style.opacity = 0;
         el.src = url;
 
+        el.onmouseenter = () => {
+            el.style.opacity = 1;
+        }
+
+        el.onmouseleave = () => {
+            el.style.opacity = 0.8;
+        }
+
+        el.onclick = () => {
+            console.log("YES");
+        }
+
         return el;
     }
 
     const appendPoster = (el) => {
-        posters.push(el);
         walls[Math.floor(Math.random() * walls.length)].appendChild(el);
+        posters.push(el);
         setTimeout(() => {
-            el.style.opacity = 0.9;
+            if (!pause) {
+                el.style.opacity = 0.8;
+            }
         }, 100);
     }
 
@@ -52,17 +72,41 @@ function loadResults(metaJSON, type) {
         callback();
     }
 
+    const hideAllPosters = (callback = () => {}) => {
+        pause = true;
+        for (let i = 0; i < posters.length; i++) {
+            const el = posters[i];
+            el.style.opacity = 0;
+            el.style.pointerEvents = 'none';
+        }
+         callback();
+    }
+
+    const showAllPosters = (callback = () => {}) => {
+        for (let i = 0; i < posters.length; i++) {
+            const el = posters[i];
+            el.style.opacity = 0.8;
+            el.style.pointerEvents = 'all';
+        }
+        pause = false;
+        callback();
+    }
+
     const loadResults = () => {
         const postersNum = metaJSON.results.total;
         let i = 0;
         preLoadingInterval = setInterval(() => {
-            appendPoster(createPoster(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg'));
-            if (++i > 20) {
-                clearInterval(preLoadingInterval);
-                postLoadingInterval = setInterval(() => {
-                    removeLastPoster();
-                    appendPoster(createPoster(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg'));
-                }, 5000);
+            if (!pause) {
+                appendPoster(createPoster(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg'));
+                if (++i > 20) {
+                    clearInterval(preLoadingInterval);
+                    postLoadingInterval = setInterval(() => {
+                        if (!pause) {
+                            removeLastPoster();
+                            appendPoster(createPoster(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg'));                            
+                        };
+                    }, 5000);
+                };       
             };
         }, 100);        
     }
@@ -71,10 +115,12 @@ function loadResults(metaJSON, type) {
         const postersNum = metaJSON.posters.total;
         let i = 1;
         preLoadingInterval = setInterval(() => {
-            appendPoster(createPoster(assetsURL + 'posters/' + String(i) + '.jpg'));
-            if (++i > postersNum) {
-                clearInterval(preLoadingInterval);
-            };
+            if (!pause) {
+                appendPoster(createPoster(assetsURL + 'posters/' + String(i) + '.jpg'));
+                if (++i > postersNum) {
+                    clearInterval(preLoadingInterval);
+                };                
+            }
         }, 100);        
     }
 
@@ -84,10 +130,12 @@ function loadResults(metaJSON, type) {
         const site_interactive = document.querySelector('#site-interactive');
         
         if (type === 'results') {
+            pause = false;
             loadResults();
             gallery_name.innerHTML = 'WNFA/心的铁片';
             site_interactive.classList.add('lightup');
         } else if (type === 'posters') {
+            pause = false;
             gallery_name.innerHTML = '回想回想';
             loadPosters();
             site_interactive.classList.add('lightup');
@@ -99,6 +147,7 @@ function loadResults(metaJSON, type) {
 
     return {
         clean: (callback) => {
+            pause = true;
             clearInterval(preLoadingInterval);
             clearInterval(postLoadingInterval);
             removeAllPosters(() => {
@@ -110,6 +159,7 @@ function loadResults(metaJSON, type) {
             });
         },
         refresh: () => {
+            pause = true;
             clearInterval(preLoadingInterval);
             clearInterval(postLoadingInterval);
             removeAllPosters(() => {
@@ -120,6 +170,20 @@ function loadResults(metaJSON, type) {
                 }, 1000);           
             });
         },
+        hide: (callback) => {
+            hideAllPosters(()=>{
+                setTimeout(() => {
+                    callback();
+                }, 1000);
+            });
+        },
+        show: (callback) => {
+            showAllPosters(()=>{
+                setTimeout(() => {
+                    callback();
+                }, 1000);
+            })
+        }
     };
 }
 
@@ -175,11 +239,15 @@ export function initPosters(container) {
         const gallery = document.querySelector('#site-interactive .room .gallery');
 
         const buttonDownFunc = () => {
-            gallery.style.visibility = 'hidden';
+            currentPostersControlFunc.hide(()=>{
+                // gallery.style.display = 'none';
+            });
         };
 
         const buttonUpFunc = () => {
-            gallery.style.visibility = 'visible';
+            currentPostersControlFunc.show(()=>{
+                // gallery.style.display = 'block';
+            });
         }
 
         // touch events
