@@ -62,12 +62,16 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     const checkRatio = () => {
         const box = boundingEl.getBoundingClientRect();
         const boxRatio = box.width / box.height;
-
+        const site_prompt = document.querySelector('#site-prompt');
+        const prompt = document.querySelector('#site-prompt .prompt');
+        
         // support up to 21:9 9:21 ratio
         if ((boxRatio < 0.4) || (boxRatio > 2.5)) {
-            boundingEl.style.visibility = 'hidden';
+            prompt.innerHTML = 'Window ratio not supported';
+            site_prompt.style.visibility = 'visible';
         } else {
-            boundingEl.style.visibility = 'visible';
+            site_prompt.style.visibility = 'hidden';
+            prompt.innerHTML = '';
         }
     }
 

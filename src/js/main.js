@@ -35,4 +35,33 @@ function main() {
     button_refresh.appendChild(button_refresh_icon);
 }
 
-window.addEventListener('load', main);
+
+
+
+
+window.addEventListener('load', () => {
+    const site_prompt = document.querySelector('#site-prompt');
+    const prompt = document.querySelector('#site-prompt .prompt');    
+
+    const loadingPrompts = [
+        'loading<br>.',
+        'loading<br>. .',
+        'loading<br>. . .',
+    ]
+
+    let i = 0;
+    let loadingPromptInterval = setInterval(() => {
+        prompt.innerHTML = loadingPrompts[i];
+        i = (i + 1) % loadingPrompts.length;
+    }, 750);
+
+    // pre-render code here
+    // for now it is useless
+    setTimeout(() => {
+        clearInterval(loadingPromptInterval);
+        prompt.innerHTML = '';
+        site_prompt.style.visibility = 'hidden';
+        main();
+    }, 3000);
+
+});

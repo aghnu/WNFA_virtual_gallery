@@ -1,9 +1,27 @@
 $site-interactive-size:     2vh;
 $site-element-size:         2vh;
 
+#site-noscript {
+    font-size: $site-element-size;
+    pointer-events: all;
+    p {
+        color: rgb(225, 225, 225);
+        text-align: center;
+    }
+}
+
 #site-informative {
     font-size: $site-element-size;
     pointer-events: none;
+
+    #site-prompt {
+        pointer-events: all;
+        background-color: black;
+        p {
+            color: rgb(225, 225, 225);
+            text-align: center;
+        }
+    }
 }
 
 #site-interactive {
