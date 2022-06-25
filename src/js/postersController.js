@@ -41,7 +41,7 @@ function loadResults(metaJSON, type) {
             el.style.opacity = 0;
             setTimeout(() => {
                 el.parentElement.removeChild(el);
-            }, 1000);
+            }, 500);
         }
     }
 
@@ -81,12 +81,16 @@ function loadResults(metaJSON, type) {
     // gallery name
     const gallery_name = document.querySelector('#site-gallery-name');
     const load = () => {
+        const site_interactive = document.querySelector('#site-interactive');
+        
         if (type === 'results') {
             loadResults();
-            gallery_name.innerHTML = 'WNFA/心的铁片'
+            gallery_name.innerHTML = 'WNFA/心的铁片';
+            site_interactive.classList.add('lightup');
         } else if (type === 'posters') {
-            gallery_name.innerHTML = '回想回想'
+            gallery_name.innerHTML = '回想回想';
             loadPosters();
+            site_interactive.classList.add('lightup');
         }
     }
 
@@ -97,12 +101,24 @@ function loadResults(metaJSON, type) {
         clean: (callback) => {
             clearInterval(preLoadingInterval);
             clearInterval(postLoadingInterval);
-            removeAllPosters(callback);
+            removeAllPosters(() => {
+                const site_interactive = document.querySelector('#site-interactive');
+                site_interactive.classList.remove('lightup');     
+                setTimeout(() => {
+                    callback();
+                }, 1000);   
+            });
         },
         refresh: () => {
             clearInterval(preLoadingInterval);
             clearInterval(postLoadingInterval);
-            removeAllPosters(load);
+            removeAllPosters(() => {
+                const site_interactive = document.querySelector('#site-interactive');
+                site_interactive.classList.remove('lightup');     
+                setTimeout(() => {
+                    load();
+                }, 1000);           
+            });
         },
     };
 }

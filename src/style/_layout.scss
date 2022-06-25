@@ -51,6 +51,11 @@ $frame-size-d:       100vh;
         z-index: $layer-base-z-index + 1;
     }
 
+    .shadowing {
+        @include fixedWholeScreen();
+        z-index: $layer-base-z-index + 1;
+    }
+
     .room {
         @include interactiveContainer();
         position: absolute;
