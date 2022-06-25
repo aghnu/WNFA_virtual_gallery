@@ -64,10 +64,10 @@ $frame-size-d:       100vh;
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-d;
-                transform: rotateX(90deg) translateZ(- $frame-size-h/2) rotateX(-20deg);
+                transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-20deg);
                 transition: transform 0.5s;
                 @media only screen and (max-width: 600px) {
-                    transform: rotateX(90deg) translateZ(- $frame-size-h/2) rotateX(-25deg);
+                    transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
                 }
             }
 
@@ -77,21 +77,21 @@ $frame-size-d:       100vh;
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-d;
-                transform: rotateX(-90deg) translateZ(- $frame-size-h/2);
+                transform: rotateX(-90deg) translateZ(calc(-#{$frame-size-h}/2));
             }
 
             .left {
                 position: absolute;
                 width: $frame-size-d;
                 height: $frame-size-h;
-                transform: rotateY(90deg) translateZ(- $frame-size-w/2);
+                transform: rotateY(90deg) translateZ(calc(-#{$frame-size-w}/2));
             }
 
             .right {
                 position: absolute;
                 width: $frame-size-d;
                 height: $frame-size-h;
-                transform: rotateY(-90deg) translateZ(- $frame-size-w/2);
+                transform: rotateY(-90deg) translateZ(calc(-#{$frame-size-w}/2));
             }
 
             // .back {
