@@ -6,7 +6,7 @@ www.aghnu.me/gallery/wnfa
 <img alt="demo" width="25%" src=https://user-images.githubusercontent.com/46549455/175751597-797c28d8-cdfd-4df3-9fce-e522b551c199.gif>
 </p>
 
-# LICENSE
+# License
  Copyright 2022 Gengyuan Huang
 
  Licensed under the Apache License, Version 2.0 (the "License");
