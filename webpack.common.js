@@ -13,12 +13,6 @@ module.exports = {
           "sass-loader",
         ],
       },
-      {
-        test: /\.(png|jpe?g|gif|mp4|ogg|webm)$/i,
-        use: [{
-          loader: 'file-loader',
-        }, ],
-      },
     ],
   },
 

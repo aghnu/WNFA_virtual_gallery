@@ -90,6 +90,12 @@ $site-element-size:         2vh;
                         }
                     }
                 }
+
+                .texture {
+                    background-image: url("../img/noise_screen.png");
+                    background-size: 30em;
+                    pointer-events: none;
+                }
             }
         }
 

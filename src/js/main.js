@@ -36,9 +36,6 @@ function main() {
 }
 
 
-
-
-
 window.addEventListener('load', () => {
     const site_prompt = document.querySelector('#site-prompt');
     const prompt = document.querySelector('#site-prompt .prompt');    

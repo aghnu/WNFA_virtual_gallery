@@ -64,6 +64,7 @@ $frame-size-d:       100vh;
             z-index: $layer-base-z-index - 1;
 
             .display {
+                position: relative;
                 z-index: $layer-base-z-index;
                 .control {
                     position: absolute;
@@ -73,6 +74,12 @@ $frame-size-d:       100vh;
                     .buttons {
                         padding-top: 1em;
                     }
+                }
+                .texture {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    z-index: $layer-base-z-index + 2;
                 }
             }
 
