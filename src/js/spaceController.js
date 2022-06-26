@@ -5,32 +5,40 @@ const space_info = {
     pointerY: 0,
     focusX: 0,
     focusY:0,
+    rotateDegFocus: 0,
     rotateDeg: 0,
 }
 
 const FOCUS_UPDATE_ANIMATION_SPEED = 0.25;
+const MIN_FPS_ALLOWED = 5;
 // const UPDATE_FPS = 60;
 
 let focus = true;
 
 function focusUpdate(FPS) {
-    if (focus) {
-        if (Math.abs(space_info.pointerX - space_info.focusX) > 10) {
+    if (FPS * FOCUS_UPDATE_ANIMATION_SPEED > 1) {
+        if (Math.abs(space_info.pointerX - space_info.focusX) > 1) {
             space_info.focusX = space_info.focusX + (space_info.pointerX - space_info.focusX) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
         } else {
-            space_info.pointerX = space_info.focusX
+            space_info.focusX = space_info.pointerX;
         }
 
-        if (Math.abs(space_info.pointerY - space_info.focusY) > 10) {
+        if (Math.abs(space_info.pointerY - space_info.focusY) > 1) {
             space_info.focusY = space_info.focusY + (space_info.pointerY - space_info.focusY) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
         } else {
-            space_info.pointerY = space_info.focusY
+            space_info.focusY = space_info.pointerY;
         }        
+
+        if (Math.abs(space_info.rotateDeg - space_info.rotateDegFocus) > 1) {
+            space_info.rotateDegFocus = (space_info.rotateDegFocus + (space_info.rotateDeg - space_info.rotateDegFocus) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS));
+        } else {
+            space_info.rotateDegFocus = space_info.rotateDeg;
+        }            
     }
 }
 
 function rotateUpdate(el, originalTransformMatrix) {
-    el.style.transform = originalTransformMatrix + `rotateY(${space_info.rotateDeg}deg)`;
+    el.style.transform = originalTransformMatrix + `rotateY(${space_info.rotateDegFocus}deg)`;
 }
 
 function spaceUpdate(spaceEl, boundingEl) {
@@ -112,7 +120,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
                 } else {
                     const distance = e.clientX - space_info.rotateOrigin;
                     const degPerPixel = 90/1080;
-                    space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel) % 360;  
+                    space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel);  
                     space_info.rotateOrigin = e.clientX;         
                 }
             }
@@ -131,7 +139,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
                 } else {
                     const distance = e.touches[0].clientX - space_info.rotateOrigin;
                     const degPerPixel = 90/1080;
-                    space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel) % 360;   
+                    space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel);   
                     space_info.rotateOrigin = e.touches[0].clientX;          
                 }
             }
@@ -199,17 +207,15 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
             const seconds_timelapse = (t-old) / 1000;
             const FPS = 1 / seconds_timelapse;
 
-            if (FPS > 1) {
+            if (FPS > MIN_FPS_ALLOWED) {
                 if (GlobalState.getInstance().canRotate()) {
-                    space_info.rotateDeg = (space_info.rotateDeg + (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS)))) % 360;
+                    space_info.rotateDeg = (space_info.rotateDeg + (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
                 }
                 focusUpdate(FPS);
                 spaceUpdate(spaceEl, boundingEl);            
-                rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);                
-
-                animation_loop_frame(t);                
+                rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);                                 
             }
-            
+            animation_loop_frame(t);   
         });
             
     }
