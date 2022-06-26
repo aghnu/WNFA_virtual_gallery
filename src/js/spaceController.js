@@ -16,12 +16,16 @@ let focus = true;
 
 function focusUpdate(FPS) {
 
-    if (Math.abs(space_info.pointerX - space_info.focusX) > 1) {
+    if (Math.abs(space_info.pointerX - space_info.focusX) > 10) {
         space_info.focusX = space_info.focusX + (space_info.pointerX - space_info.focusX) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
+    } else {
+        space_info.pointerX = space_info.focusX
     }
 
-    if (Math.abs(space_info.pointerY - space_info.focusY) > 1) {
+    if (Math.abs(space_info.pointerY - space_info.focusY) > 10) {
         space_info.focusY = space_info.focusY + (space_info.pointerY - space_info.focusY) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
+    } else {
+        space_info.pointerY = space_info.focusY
     }
 }
 
@@ -48,8 +52,16 @@ function spaceUpdate(spaceEl, boundingEl) {
     const distanceFactorX = distanceX / (boxBody.width/ 2);
     const distanceFactorY = distanceY / (boxBody.height / 2);
 
-    const calc_rotate_y = (distanceFactorX * max_degree_x) / ((boxBody.height + 600)/600);
-    const calc_rotate_x = (-distanceFactorY * max_degree_y) / ((boxBody.width + 600)/600);
+    let calc_rotate_y = (distanceFactorX * max_degree_x) / ((boxBody.height + 600)/600);
+    let calc_rotate_x = (-distanceFactorY * max_degree_y) / ((boxBody.width + 600)/600);
+
+    if (Math.abs(calc_rotate_y) > max_degree) {
+        calc_rotate_y = calc_rotate_y / Math.abs(calc_rotate_y) * max_degree;
+    }
+
+    if (Math.abs(calc_rotate_x) > max_degree) {
+        calc_rotate_x = calc_rotate_x / Math.abs(calc_rotate_x) * max_degree;
+    }
 
     spaceEl.style.transform = `rotateX(${calc_rotate_x}deg) rotateY(${calc_rotate_y}deg)`;
 }
