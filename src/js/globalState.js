@@ -7,7 +7,9 @@ export class GlobalState {
         GlobalState._instance = this;
 
         // global states
-        this.control_rotate = true;
+
+        this.onPoster = false;
+        this.clickDown = false;
     }
 
     static getInstance() {
@@ -16,5 +18,9 @@ export class GlobalState {
         }
 
         return new ProgramCore();
+    }
+
+    canRotate() {
+        return (!this.onPoster) && (!this.clickDown)
     }
 }

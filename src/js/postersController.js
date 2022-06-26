@@ -32,12 +32,12 @@ function loadResults(metaJSON, type) {
         el.src = url;
 
         el.onmouseenter = () => {
-            GlobalState.getInstance().control_rotate = false;
+            GlobalState.getInstance().onPoster = true;
             el.classList.add('focus');
         }
 
         el.onmouseleave = () => {
-            GlobalState.getInstance().control_rotate = true;
+            GlobalState.getInstance().onPoster = false;
             el.classList.remove('focus');
         }
 
@@ -306,6 +306,4 @@ export function initPosters(container) {
             }
         });
     });
-
-
 }
