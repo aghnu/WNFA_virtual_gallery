@@ -9,7 +9,7 @@ const space_info = {
 }
 
 const ROTATE_SPEED = 60;
-const FOCUS_UPDATE_ANIMATION_SPEED = 0.2;
+const FOCUS_UPDATE_ANIMATION_SPEED = 0.25;
 // const UPDATE_FPS = 60;
 
 function focusUpdate(FPS) {
@@ -91,19 +91,30 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     
     boundingEl.onmousemove = e => {
         if (GlobalState.getInstance().clickDown) {
-            const distanceX = e.clientX - space_info.pointerX;
-            const degPerPixel = 90/1080;
-            space_info.rotateDeg = (space_info.rotateDeg + 4 * distanceX * degPerPixel) % 360;
+            if (space_info.rotateOrigin === null) {
+                space_info.rotateOrigin = e.clientX;
+            } else {
+                const distance = e.clientX - space_info.rotateOrigin;
+                const degPerPixel = 90/1080;
+                space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel) % 360;  
+                space_info.rotateOrigin = e.clientX;         
+            }
         }
+        
         space_info.pointerX = e.clientX;
-        space_info.pointerY = e.clientY;            
+        space_info.pointerY = e.clientY;              
     };
 
     boundingEl.ontouchmove = e => {
         if (GlobalState.getInstance().clickDown) {
-            const distanceX = e.touches[0].clientX - space_info.pointerX;
-            const degPerPixel = 90/1080;
-            space_info.rotateDeg = (space_info.rotateDeg + 4 * distanceX * degPerPixel) % 360;
+            if (space_info.rotateOrigin === null) {
+                space_info.rotateOrigin = e.touches[0].clientX;
+            } else {
+                const distance = e.touches[0].clientX - space_info.rotateOrigin;
+                const degPerPixel = 90/1080;
+                space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel) % 360;   
+                space_info.rotateOrigin = e.touches[0].clientX;          
+            }
         }
         space_info.pointerX = e.touches[0].clientX;
         space_info.pointerY = e.touches[0].clientY;
@@ -112,31 +123,40 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
 
 
     // drag rotate
-    boundingEl.addEventListener('mousedown', (e)=>{
+
+    const pointerDown = () => {
+        space_info.rotateOrigin = null;
         GlobalState.getInstance().clickDown = true;
+    }
+
+    const pointerUp = () => {
+        GlobalState.getInstance().clickDown = false;
+    }
+
+
+    boundingEl.addEventListener('mousedown', (e)=>{
+        pointerDown();
     });
 
     boundingEl.addEventListener('touchstart', (e)=>{
-        GlobalState.getInstance().clickDown = true;
+        pointerDown();
     });
 
     boundingEl.addEventListener('touchend', (e)=>{
-        GlobalState.getInstance().clickDown = false;
+        pointerUp();
     });
 
     boundingEl.addEventListener('touchcancel', (e)=>{
-        GlobalState.getInstance().clickDown = false;
+        pointerUp();
     });
     
-
-    window.addEventListener('mouseup', (e)=>{
-        GlobalState.getInstance().clickDown = false;
+    document.addEventListener('mouseup', (e)=>{
+        pointerUp();
     });
 
-
-
-
-
+    document.addEventListener('mouseleave', (e)=>{
+        pointerUp();
+    });
 
 
     // animation loop
@@ -149,10 +169,8 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
             if (GlobalState.getInstance().canRotate()) {
                 space_info.rotateDeg = (space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / FPS)))) % 360;
             }
-            if (!GlobalState.getInstance().clickDown) {
-                focusUpdate(FPS);
-                spaceUpdate(spaceEl, boundingEl);            
-            }
+            focusUpdate(FPS);
+            spaceUpdate(spaceEl, boundingEl);            
             rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);
             animation_loop_frame(t);
         });
@@ -166,7 +184,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     // // old implementation    
     // setInterval(() => {
     //     if (GlobalState.getInstance().canRotate()) {
-    //         space_info.rotateDeg = (space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)))) % 360;
+    //         space_info.rotateDegY = (space_info.rotateDegY + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)))) % 360;
     //     }
     //     if (!GlobalState.getInstance().clickDown) {
     //         focusUpdate();

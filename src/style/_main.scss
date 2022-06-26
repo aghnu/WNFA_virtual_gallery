@@ -1,6 +1,15 @@
 $site-interactive-size:     2vh;
 $site-element-size:         2vh;
 
+@mixin noselect {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;  
+}
+
+
 #site-noscript {
     font-size: $site-element-size;
     pointer-events: all;
@@ -18,7 +27,7 @@ $site-element-size:         2vh;
         pointer-events: none;
         opacity: 0;
         transition: opacity 0.5s;
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(0,0,0,0.75);
 
         &.show {
             opacity: 1;
@@ -38,6 +47,7 @@ $site-element-size:         2vh;
 }
 
 #site-interactive {
+    @include noselect();
     font-size: $site-interactive-size;
     perspective: 50em;
     perspective-origin: center;

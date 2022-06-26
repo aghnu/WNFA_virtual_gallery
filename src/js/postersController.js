@@ -14,7 +14,7 @@ function loadResults(metaJSON, type) {
     const createPoster = (url) => {
 
         const el = document.createElement('img');
-        const x = (Math.random() * 50);
+        const x = (Math.random() * 80);
         const y = (Math.random() * 80);
         const r = (Math.random() * 360);
         const s = (Math.random() * 6) + 2;
@@ -23,6 +23,10 @@ function loadResults(metaJSON, type) {
         el.onerror = () => {
             this.style.display = 'none';
         }
+        el.draggable = false;
+        // el.ondragstart = () => {
+        //     GlobalState.getInstance().clickDown = false;
+        // }
 
 
         el.style.top = y + '%';
