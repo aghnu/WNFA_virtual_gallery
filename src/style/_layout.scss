@@ -123,22 +123,29 @@ $frame-size-d:       75vh;
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-d;
-                transform: rotateX(-90deg) translateZ(calc(-#{$frame-size-h}/2));
+                transform: rotateX(-90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateZ(180deg);
             }
 
             .left {
                 position: absolute;
-                width: $frame-size-d;
-                height: $frame-size-h;
-                transform: rotateY(90deg) translateZ(calc(-#{$frame-size-w}/2));
+                width: $frame-size-h;
+                height: $frame-size-d;
+                transform: rotateY(90deg) translateZ(calc(-#{$frame-size-w}/2)) rotateZ(90deg);
             }
 
             .right {
                 position: absolute;
-                width: $frame-size-d;
-                height: $frame-size-h;
-                transform: rotateY(-90deg) translateZ(calc(-#{$frame-size-w}/2));
+                width: $frame-size-h;
+                height: $frame-size-d;
+                transform: rotateY(-90deg) translateZ(calc(-#{$frame-size-w}/2)) rotateZ(-90deg);
             }
+
+            // .back {
+            //     position: absolute;
+            //     width: $frame-size-w;
+            //     height: $frame-size-h;
+            //     transform: translateZ(calc(-#{$frame-size-d}/2));
+            // }
 
 
         }
@@ -160,7 +167,6 @@ $frame-size-d:       75vh;
                 top: 12.5%;
                 width: 30%;
                 height: 70%;
-
                 transform-style: preserve-3d;
 
                 .poster {

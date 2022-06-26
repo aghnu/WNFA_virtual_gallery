@@ -35,42 +35,36 @@ function loadResults(metaJSON, type) {
         el.src = url;
 
         el.onmouseenter = () => {
-            if (!animationPlaying) {
-                GlobalState.getInstance().onPoster = true;
-                el.classList.add('focus');                
-            }
+            GlobalState.getInstance().onPoster = true;
+            el.classList.add('focus');       
         }
 
         el.onmouseleave = () => {
-            if (!animationPlaying) {
-                GlobalState.getInstance().onPoster = false;
-                el.classList.remove('focus');                
-            }
+            GlobalState.getInstance().onPoster = false;
+            el.classList.remove('focus');     
         }
 
         el.onclick = () => {
-            if (!animationPlaying) {
-                GlobalState.getInstance().onPoster = false;
-                el.classList.remove('focus');
+            GlobalState.getInstance().onPoster = false;
+            el.classList.remove('focus');
 
-                const site_poster_detail_layer = document.querySelector('#site-poster-detail-layer');
-                const showEl = document.createElement('img');
-                showEl.classList.add('show');
-                showEl.src = url;
+            const site_poster_detail_layer = document.querySelector('#site-poster-detail-layer');
+            const showEl = document.createElement('img');
+            showEl.classList.add('show');
+            showEl.src = url;
 
-                hideAllPosters(() => {
-                    site_poster_detail_layer.classList.add('show');
-                    site_poster_detail_layer.appendChild(showEl);
-                    site_poster_detail_layer.onclick = () => {
-                        site_poster_detail_layer.onclick = () => {};
-                        site_poster_detail_layer.classList.remove('show');
-                        setTimeout(() => {
-                            site_poster_detail_layer.removeChild(showEl);
-                            showAllPosters(()=>{});
-                        }, 500);
-                    }
-                });                
-            }
+            hideAllPosters(() => {
+                site_poster_detail_layer.classList.add('show');
+                site_poster_detail_layer.appendChild(showEl);
+                site_poster_detail_layer.onclick = () => {
+                    site_poster_detail_layer.onclick = () => {};
+                    site_poster_detail_layer.classList.remove('show');
+                    setTimeout(() => {
+                        site_poster_detail_layer.removeChild(showEl);
+                        showAllPosters(()=>{});
+                    }, 500);
+                }
+            });      
         }
 
         return el;
