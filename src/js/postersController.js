@@ -11,7 +11,6 @@ function loadResults(metaJSON, type) {
     let postLoadingInterval;
     let speedUpAnimationInterval;
     let pause = false;
-    let animationPlaying = true;
 
     const createPoster = (url) => {
 
@@ -23,7 +22,7 @@ function loadResults(metaJSON, type) {
 
         el.classList.add('poster');
         el.onerror = () => {
-            this.style.display = 'none';
+            el.style.display = 'none';
         }
         el.draggable = false;
 
@@ -172,15 +171,13 @@ function loadResults(metaJSON, type) {
         const site_interactive = document.querySelector('#site-interactive');
         
         if (type === 'results') {
-            animationPlaying = true;
-            rotateSpeedUp(() => {animationPlaying = false});
+            rotateSpeedUp(() => {});
             pause = false;
             loadResults();
             gallery_name.innerHTML = 'WNFA/心的铁片';
             site_interactive.classList.add('lightup');
         } else if (type === 'posters') {
-            animationPlaying = true;
-            rotateSpeedUp(() => {animationPlaying = false});
+            rotateSpeedUp(() => {});
             pause = false;
             gallery_name.innerHTML = '回想回想';
             loadPosters();

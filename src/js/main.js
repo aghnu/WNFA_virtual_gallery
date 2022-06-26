@@ -42,25 +42,63 @@ window.addEventListener('load', () => {
     const site_prompt = document.querySelector('#site-prompt');
     const prompt = document.querySelector('#site-prompt .prompt');    
 
+    const prompt_hardware_string_en = 'If you encounter lag or visual artifact<br>Please make sure your broswer is up-to-date<br>and has hardware acceleration enabled';
+    const prompt_hardware_string_cn = '如果遇到卡顿或渲染错误<br>请确保浏览器已经更新<br>并且支持硬件加速';
+
+    // const loadingPrompts = [
+    //     'loading/载入中<br>·',
+    //     'loading/载入中<br>· ·',
+    //     'loading/载入中<br>· · ·',
+    // ]
+
+    // let i = 0;
+    // let loadingPromptInterval = setInterval(() => {
+    //     prompt.innerHTML = loadingPrompts[i];
+    //     i = (i + 1) % loadingPrompts.length;
+    // }, 750);
+
+    // // pre-render code here
+    // // for now it is useless
+    // setTimeout(() => {
+    //     clearInterval(loadingPromptInterval);
+    //     prompt.innerHTML = prompt_hardware_string_en + "<br><br>" + prompt_hardware_string_cn;
+
+    //     setTimeout(()=>{
+    //         prompt.innerHTML = "";
+    //         site_prompt.style.visibility = 'hidden';
+    //         main();
+    //     }, 3000)
+        
+        
+    // }, 3000);
+
+
     const loadingPrompts = [
-        'loading<br>.',
-        'loading<br>. .',
-        'loading<br>. . .',
+        '·',
+        '· ·',
+        '· · ·',
     ]
 
     let i = 0;
     let loadingPromptInterval = setInterval(() => {
-        prompt.innerHTML = loadingPrompts[i];
+
+        prompt.innerHTML = 
+            prompt_hardware_string_en + 
+            "<br><br>" + 
+            prompt_hardware_string_cn + 
+            "<br><br>" + 
+            loadingPrompts[i];
+
+
         i = (i + 1) % loadingPrompts.length;
     }, 750);
 
-    // pre-render code here
-    // for now it is useless
-    setTimeout(() => {
+    setTimeout(()=>{
         clearInterval(loadingPromptInterval);
-        prompt.innerHTML = '';
+        prompt.innerHTML = "";
         site_prompt.style.visibility = 'hidden';
         main();
-    }, 3000);
+    }, 5000)
+
 
 });
