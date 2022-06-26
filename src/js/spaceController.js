@@ -14,17 +14,18 @@ const FOCUS_UPDATE_ANIMATION_SPEED = 0.25;
 let focus = true;
 
 function focusUpdate(FPS) {
+    if (focus) {
+        if (Math.abs(space_info.pointerX - space_info.focusX) > 10) {
+            space_info.focusX = space_info.focusX + (space_info.pointerX - space_info.focusX) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
+        } else {
+            space_info.pointerX = space_info.focusX
+        }
 
-    if (Math.abs(space_info.pointerX - space_info.focusX) > 10) {
-        space_info.focusX = space_info.focusX + (space_info.pointerX - space_info.focusX) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
-    } else {
-        space_info.pointerX = space_info.focusX
-    }
-
-    if (Math.abs(space_info.pointerY - space_info.focusY) > 10) {
-        space_info.focusY = space_info.focusY + (space_info.pointerY - space_info.focusY) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
-    } else {
-        space_info.pointerY = space_info.focusY
+        if (Math.abs(space_info.pointerY - space_info.focusY) > 10) {
+            space_info.focusY = space_info.focusY + (space_info.pointerY - space_info.focusY) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
+        } else {
+            space_info.pointerY = space_info.focusY
+        }        
     }
 }
 
@@ -194,15 +195,21 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     const rotateElOriginalTransformMatrix = window.getComputedStyle(rotateEl).transform;
     const animation_loop_frame = (old) => {
         window.requestAnimationFrame((t)=>{
+
             const seconds_timelapse = (t-old) / 1000;
             const FPS = 1 / seconds_timelapse;
-            if (GlobalState.getInstance().canRotate()) {
-                space_info.rotateDeg = (space_info.rotateDeg + (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS)))) % 360;
+
+            if (FPS > 1) {
+                if (GlobalState.getInstance().canRotate()) {
+                    space_info.rotateDeg = (space_info.rotateDeg + (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS)))) % 360;
+                }
+                focusUpdate(FPS);
+                spaceUpdate(spaceEl, boundingEl);            
+                rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);                
+
+                animation_loop_frame(t);                
             }
-            focusUpdate(FPS);
-            spaceUpdate(spaceEl, boundingEl);            
-            rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);
-            animation_loop_frame(t);
+            
         });
             
     }
