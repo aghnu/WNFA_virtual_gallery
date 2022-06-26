@@ -153,8 +153,8 @@ function loadResults(metaJSON, type) {
         }, 100);        
     }
 
-    const rotateSpeedUpAnimationSpeed = 1.5;
-    const rotateSpeedTarget = 45;
+    const rotateSpeedUpAnimationSpeed = 1.25;
+    const rotateSpeedTarget = 30;
     const rotateSpeedUp = (callback = () => {}) => {
         clearInterval(speedUpAnimationInterval);
         GlobalState.getInstance().rotateSpeed = 0.5;

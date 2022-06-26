@@ -7,6 +7,7 @@ const space_info = {
     focusY:0,
     rotateDegFocus: 0,
     rotateDeg: 0,
+    rotateDirection: 1,
 }
 
 const FOCUS_UPDATE_ANIMATION_SPEED = 0.25;
@@ -30,6 +31,11 @@ function focusUpdate(FPS) {
         }        
 
         if (Math.abs(space_info.rotateDeg - space_info.rotateDegFocus) > 1) {
+            if ((space_info.rotateDeg - space_info.rotateDegFocus) > 0) {
+                space_info.rotateDirection = 1;
+            } else {
+                space_info.rotateDirection = -1;
+            }
             space_info.rotateDegFocus = (space_info.rotateDegFocus + (space_info.rotateDeg - space_info.rotateDegFocus) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS));
         } else {
             space_info.rotateDegFocus = space_info.rotateDeg;
@@ -209,7 +215,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
 
             if (FPS > MIN_FPS_ALLOWED) {
                 if (GlobalState.getInstance().canRotate()) {
-                    space_info.rotateDeg = (space_info.rotateDeg + (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
+                    space_info.rotateDeg = (space_info.rotateDeg + space_info.rotateDirection * (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
                 }
                 focusUpdate(FPS);
                 spaceUpdate(spaceEl, boundingEl);            
