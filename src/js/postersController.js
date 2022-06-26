@@ -9,6 +9,7 @@ function loadResults(metaJSON, type) {
 
     let preLoadingInterval;
     let postLoadingInterval;
+    let speedUpAnimationInterval;
     let pause = false;
 
     const createPoster = (url) => {
@@ -64,7 +65,6 @@ function loadResults(metaJSON, type) {
                         site_poster_detail_layer.removeChild(showEl);
                         showAllPosters(()=>{});
                     }, 500);
-                    
                 }
             });
         }
@@ -149,17 +149,37 @@ function loadResults(metaJSON, type) {
         }, 100);        
     }
 
+    const rotateSpeedUpAnimationSpeed = 1.5;
+    const rotateSpeedTarget = 45;
+    const rotateSpeedUp = () => {
+        clearInterval(speedUpAnimationInterval);
+        GlobalState.getInstance().rotateSpeed = 0.5;
+        speedUpAnimationInterval = setInterval(() => {
+            if (!pause) {
+                const target = GlobalState.getInstance().rotateSpeed * rotateSpeedUpAnimationSpeed;
+                if (target > rotateSpeedTarget) {
+                    GlobalState.getInstance().rotateSpeed = rotateSpeedTarget;
+                    clearInterval(speedUpAnimationInterval);   
+                } else {
+                    GlobalState.getInstance().rotateSpeed = target;
+                }                
+            }
+        }, 250);
+    };
+
     // gallery name
     const gallery_name = document.querySelector('#site-gallery-name');
     const load = () => {
         const site_interactive = document.querySelector('#site-interactive');
         
         if (type === 'results') {
+            rotateSpeedUp();
             pause = false;
             loadResults();
             gallery_name.innerHTML = 'WNFA/心的铁片';
             site_interactive.classList.add('lightup');
         } else if (type === 'posters') {
+            rotateSpeedUp();
             pause = false;
             gallery_name.innerHTML = '回想回想';
             loadPosters();

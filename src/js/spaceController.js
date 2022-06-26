@@ -8,7 +8,6 @@ const space_info = {
     rotateDeg: 0,
 }
 
-const ROTATE_SPEED = 60;
 const FOCUS_UPDATE_ANIMATION_SPEED = 0.25;
 // const UPDATE_FPS = 60;
 
@@ -198,7 +197,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
             const seconds_timelapse = (t-old) / 1000;
             const FPS = 1 / seconds_timelapse;
             if (GlobalState.getInstance().canRotate()) {
-                space_info.rotateDeg = (space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / FPS)))) % 360;
+                space_info.rotateDeg = (space_info.rotateDeg + (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS)))) % 360;
             }
             focusUpdate(FPS);
             spaceUpdate(spaceEl, boundingEl);            
@@ -210,20 +209,6 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     window.requestAnimationFrame((t)=>{
         animation_loop_frame(t);
     });
-    
-
-    // // old implementation    
-    // setInterval(() => {
-    //     if (GlobalState.getInstance().canRotate()) {
-    //         space_info.rotateDegY = (space_info.rotateDegY + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)))) % 360;
-    //     }
-    //     if (!GlobalState.getInstance().clickDown) {
-    //         focusUpdate();
-    //         spaceUpdate(spaceEl, boundingEl);            
-    //     }
-    //     rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);
-
-    // }, 1000 / UPDATE_FPS);
 
     window.addEventListener('resize', ()=>{
         checkRatio();
