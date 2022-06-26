@@ -46,6 +46,9 @@ function loadResults(metaJSON, type) {
         }
 
         el.onclick = () => {
+            GlobalState.getInstance().onPoster = false;
+            el.classList.remove('focus');
+
             const site_poster_detail_layer = document.querySelector('#site-poster-detail-layer');
             const showEl = document.createElement('img');
             showEl.classList.add('show');
