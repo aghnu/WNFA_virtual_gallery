@@ -167,7 +167,7 @@ $site-element-size:         2vh;
                     display: block;
                     object-fit: contain;
                     transition: opacity 0.5s, font-size 0.5s;
-                    cursor: pointer;
+                    
                     opacity: 0;
 
                     &.show {
@@ -177,6 +177,7 @@ $site-element-size:         2vh;
 
                     &.focus {
                         opacity: 1;
+                        cursor: pointer;
                     }
                 }
             }

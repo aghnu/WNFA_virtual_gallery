@@ -11,6 +11,7 @@ function loadResults(metaJSON, type) {
     let postLoadingInterval;
     let speedUpAnimationInterval;
     let pause = false;
+    let animationPlaying = true;
 
     const createPoster = (url) => {
 
@@ -25,9 +26,6 @@ function loadResults(metaJSON, type) {
             this.style.display = 'none';
         }
         el.draggable = false;
-        // el.ondragstart = () => {
-        //     GlobalState.getInstance().clickDown = false;
-        // }
 
 
         el.style.top = y + '%';
@@ -37,36 +35,42 @@ function loadResults(metaJSON, type) {
         el.src = url;
 
         el.onmouseenter = () => {
-            GlobalState.getInstance().onPoster = true;
-            el.classList.add('focus');
+            if (!animationPlaying) {
+                GlobalState.getInstance().onPoster = true;
+                el.classList.add('focus');                
+            }
         }
 
         el.onmouseleave = () => {
-            GlobalState.getInstance().onPoster = false;
-            el.classList.remove('focus');
+            if (!animationPlaying) {
+                GlobalState.getInstance().onPoster = false;
+                el.classList.remove('focus');                
+            }
         }
 
         el.onclick = () => {
-            GlobalState.getInstance().onPoster = false;
-            el.classList.remove('focus');
+            if (!animationPlaying) {
+                GlobalState.getInstance().onPoster = false;
+                el.classList.remove('focus');
 
-            const site_poster_detail_layer = document.querySelector('#site-poster-detail-layer');
-            const showEl = document.createElement('img');
-            showEl.classList.add('show');
-            showEl.src = url;
+                const site_poster_detail_layer = document.querySelector('#site-poster-detail-layer');
+                const showEl = document.createElement('img');
+                showEl.classList.add('show');
+                showEl.src = url;
 
-            hideAllPosters(() => {
-                site_poster_detail_layer.classList.add('show');
-                site_poster_detail_layer.appendChild(showEl);
-                site_poster_detail_layer.onclick = () => {
-                    site_poster_detail_layer.onclick = () => {};
-                    site_poster_detail_layer.classList.remove('show');
-                    setTimeout(() => {
-                        site_poster_detail_layer.removeChild(showEl);
-                        showAllPosters(()=>{});
-                    }, 500);
-                }
-            });
+                hideAllPosters(() => {
+                    site_poster_detail_layer.classList.add('show');
+                    site_poster_detail_layer.appendChild(showEl);
+                    site_poster_detail_layer.onclick = () => {
+                        site_poster_detail_layer.onclick = () => {};
+                        site_poster_detail_layer.classList.remove('show');
+                        setTimeout(() => {
+                            site_poster_detail_layer.removeChild(showEl);
+                            showAllPosters(()=>{});
+                        }, 500);
+                    }
+                });                
+            }
         }
 
         return el;
@@ -151,7 +155,7 @@ function loadResults(metaJSON, type) {
 
     const rotateSpeedUpAnimationSpeed = 1.5;
     const rotateSpeedTarget = 45;
-    const rotateSpeedUp = () => {
+    const rotateSpeedUp = (callback = () => {}) => {
         clearInterval(speedUpAnimationInterval);
         GlobalState.getInstance().rotateSpeed = 0.5;
         speedUpAnimationInterval = setInterval(() => {
@@ -160,6 +164,7 @@ function loadResults(metaJSON, type) {
                 if (target > rotateSpeedTarget) {
                     GlobalState.getInstance().rotateSpeed = rotateSpeedTarget;
                     clearInterval(speedUpAnimationInterval);   
+                    callback();
                 } else {
                     GlobalState.getInstance().rotateSpeed = target;
                 }                
@@ -173,13 +178,15 @@ function loadResults(metaJSON, type) {
         const site_interactive = document.querySelector('#site-interactive');
         
         if (type === 'results') {
-            rotateSpeedUp();
+            animationPlaying = true;
+            rotateSpeedUp(() => {animationPlaying = false});
             pause = false;
             loadResults();
             gallery_name.innerHTML = 'WNFA/心的铁片';
             site_interactive.classList.add('lightup');
         } else if (type === 'posters') {
-            rotateSpeedUp();
+            animationPlaying = true;
+            rotateSpeedUp(() => {animationPlaying = false});
             pause = false;
             gallery_name.innerHTML = '回想回想';
             loadPosters();
