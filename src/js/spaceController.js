@@ -207,11 +207,20 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
 
     // animation loop
     const rotateElOriginalTransformMatrix = window.getComputedStyle(rotateEl).transform;
+    const site_fps_prompt = document.querySelector('#site-fps .prompt');
+    let fps_report = 0;
+
+    setInterval(() => {
+        site_fps_prompt.innerHTML = 'FPS: ' + fps_report;
+    }, 1000);
+
+
     const animation_loop_frame = (old) => {
         window.requestAnimationFrame((t)=>{
 
             const seconds_timelapse = (t-old) / 1000;
             const FPS = 1 / seconds_timelapse;
+            fps_report = Math.round(FPS);
 
             if (FPS > MIN_FPS_ALLOWED) {
                 if (GlobalState.getInstance().canRotate()) {

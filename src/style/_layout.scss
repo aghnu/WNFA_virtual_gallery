@@ -20,6 +20,14 @@ $frame-size-d:       75vh;
     transform-style: preserve-3d;
 }
 
+#site-fps {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: fit-content;
+    height: fit-content;
+}
+
 #site-noscript {
     @include fixedWholeScreen();
     z-index: $layer-base-z-index + 4;

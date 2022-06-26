@@ -19,6 +19,16 @@ $site-element-size:         2vh;
     }
 }
 
+#site-fps {
+    font-size: 0.75em;
+    background-color: rgba(0, 0, 0, 0.75);
+    color:rgba(80, 80, 80, 0.75);
+    .prompt {
+        line-height: 1em;
+        margin: 0.25em;
+    }
+}
+
 #site-informative {
     font-size: $site-element-size;
     pointer-events: none;
