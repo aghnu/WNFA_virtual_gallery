@@ -1,7 +1,7 @@
 $layer-base-z-index: 1000;
 $frame-size-w:       100vw;
 $frame-size-h:       100vh;
-$frame-size-d:       100vh;
+$frame-size-d:       75vh;
 
 
 @mixin fixedWholeScreen {
@@ -20,13 +20,6 @@ $frame-size-d:       100vh;
     transform-style: preserve-3d;
 }
 
-#site-poster-detail-layer {
-    @include fixedWholeScreen();
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #site-noscript {
     @include fixedWholeScreen();
     z-index: $layer-base-z-index + 4;
@@ -38,6 +31,21 @@ $frame-size-d:       100vh;
 #site-informative {
     @include fixedWholeScreen();
     z-index: $layer-base-z-index + 2;
+
+    #site-poster-detail-layer {
+        @include fixedWholeScreen();
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        .show {
+            display: block;
+            position: relative;
+            width: 80%;
+            height: 40%;
+            object-fit: contain;
+        }
+    }
 
     #site-prompt {
         @include fixedWholeScreen();
@@ -52,6 +60,13 @@ $frame-size-d:       100vh;
     @include fixedWholeScreen();
     @include interactiveContainer();
     z-index: $layer-base-z-index;
+
+    &.vertical {
+        .room .frame .bottom {
+            transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
+        }
+    }
+
 
     .lighting {
         @include fixedWholeScreen();
@@ -81,7 +96,7 @@ $frame-size-d:       100vh;
                 .control {
                     position: absolute;
                     width: 100%;
-                    top: 10%;
+                    top: 8.5%;
 
                     .buttons {
                         padding-top: 1em;
@@ -95,22 +110,12 @@ $frame-size-d:       100vh;
                 }
             }
 
-            .center {
-                position: absolute;
-                width: $frame-size-w;
-                height: $frame-size-h;
-                transform: translateZ(calc(-#{$frame-size-d} / 4));
-            }
-
             .bottom {
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-d;
                 transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-20deg);
                 transition: transform 0.5s;
-                @media only screen and (max-width: 600px) {
-                    transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
-                }
             }
 
 

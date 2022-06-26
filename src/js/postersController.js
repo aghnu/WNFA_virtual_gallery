@@ -1,3 +1,5 @@
+import { GlobalState } from "./globalState";
+
 const walls = [];
 const assetsURL = 'https://wnfa-interactive-art-project.github.io/hangzhou_060122/';
 
@@ -27,19 +29,37 @@ function loadResults(metaJSON, type) {
         el.style.right = x + '%';
         el.style.transform = `rotateZ(${r}deg) rotateY(${r}deg)`;
         el.style.height = s + 'em';
-        el.style.opacity = 0;
         el.src = url;
 
         el.onmouseenter = () => {
-            el.style.opacity = 1;
+            GlobalState.getInstance().control_rotate = false;
+            el.classList.add('focus');
         }
 
         el.onmouseleave = () => {
-            el.style.opacity = 0.8;
+            GlobalState.getInstance().control_rotate = true;
+            el.classList.remove('focus');
         }
 
         el.onclick = () => {
-            console.log("YES");
+            const site_poster_detail_layer = document.querySelector('#site-poster-detail-layer');
+            const showEl = document.createElement('img');
+            showEl.classList.add('show');
+            showEl.src = url;
+
+            hideAllPosters(() => {
+                site_poster_detail_layer.classList.add('show');
+                site_poster_detail_layer.appendChild(showEl);
+                site_poster_detail_layer.onclick = () => {
+                    site_poster_detail_layer.onclick = () => {};
+                    site_poster_detail_layer.classList.remove('show');
+                    setTimeout(() => {
+                        site_poster_detail_layer.removeChild(showEl);
+                        showAllPosters(()=>{});
+                    }, 500);
+                    
+                }
+            });
         }
 
         return el;
@@ -50,7 +70,7 @@ function loadResults(metaJSON, type) {
         posters.push(el);
         setTimeout(() => {
             if (!pause) {
-                el.style.opacity = 0.8;
+                el.classList.add('show');
             }
         }, 100);
     }
@@ -58,7 +78,7 @@ function loadResults(metaJSON, type) {
     const removeLastPoster = () => {
         if (posters.length !== 0) {
             const el = posters.shift();
-            el.style.opacity = 0;
+            el.classList.remove('show');
             setTimeout(() => {
                 el.parentElement.removeChild(el);
             }, 500);
@@ -76,17 +96,15 @@ function loadResults(metaJSON, type) {
         pause = true;
         for (let i = 0; i < posters.length; i++) {
             const el = posters[i];
-            el.style.opacity = 0;
-            el.style.pointerEvents = 'none';
+            el.classList.remove('show');
         }
-         callback();
+        callback();
     }
 
     const showAllPosters = (callback = () => {}) => {
         for (let i = 0; i < posters.length; i++) {
             const el = posters[i];
-            el.style.opacity = 0.8;
-            el.style.pointerEvents = 'all';
+            el.classList.add('show');
         }
         pause = false;
         callback();
@@ -238,13 +256,17 @@ export function initPosters(container) {
         const info_button = document.querySelector('#site-button-info');
         const gallery = document.querySelector('#site-interactive .room .gallery');
 
+
+        let buttonDown = false;
         const buttonDownFunc = () => {
+            buttonDown = true;
             currentPostersControlFunc.hide(()=>{
                 // gallery.style.display = 'none';
             });
         };
 
         const buttonUpFunc = () => {
+            buttonDown = false;
             currentPostersControlFunc.show(()=>{
                 // gallery.style.display = 'block';
             });
@@ -279,7 +301,9 @@ export function initPosters(container) {
 
         //global up
         document.addEventListener('mouseup', (e) => {
-            buttonUpFunc();
+            if (buttonDown) {
+                buttonUpFunc();
+            }
         });
     });
 

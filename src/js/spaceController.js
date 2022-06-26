@@ -1,3 +1,5 @@
+import { GlobalState } from "./globalState";
+
 const space_info = {
     pointerX: 0,
     pointerY: 0,
@@ -52,6 +54,7 @@ function spaceUpdate(spaceEl, boundingEl) {
 
 export function initSpace(spaceEl, rotateEl, boundingEl) {
     // setup listeners
+    const globalState = GlobalState.getInstance();
     const initSpace = () => {
         const box = spaceEl.getBoundingClientRect();
         space_info.pointerX = box.left + box.width / 2;
@@ -72,6 +75,15 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
         } else {
             site_prompt.style.visibility = 'hidden';
             prompt.innerHTML = '';
+            
+            const site_interactive = document.querySelector('#site-interactive');
+            if (boxRatio < 1) {
+                site_interactive.classList.add('vertical');
+            } else {
+                site_interactive.classList.remove('vertical');
+            }
+            
+            
         }
     }
 
@@ -91,9 +103,12 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     // animation loop
     const rotateElOriginalTransformMatrix = window.getComputedStyle(rotateEl).transform;
     setInterval(() => {
-        space_info.rotateDeg = (space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)))) % 360;
+        if (globalState.control_rotate) {
+            space_info.rotateDeg = (space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / UPDATE_FPS)))) % 360;
+            rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);
+        }
+
         focusUpdate();
-        rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);
         spaceUpdate(spaceEl, boundingEl);
     }, 1000 / UPDATE_FPS);
 

@@ -2,6 +2,7 @@ import '../style/styles.scss';
 import { initSpace } from './spaceController';
 import { initPosters } from './postersController';
 import { icon } from './svgFactory';
+import { GlobalState } from './globalState';
 
 function main() {
     // initMovetracking();
@@ -10,6 +11,7 @@ function main() {
     const room = document.querySelector('#site-interactive .room');
     const gallery = document.querySelector('#site-interactive .room .gallery');
 
+    new GlobalState();
     initSpace(room, gallery, container);
     initPosters(gallery);
 
