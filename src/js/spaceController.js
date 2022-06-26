@@ -89,7 +89,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     initSpace();
     space_info.focusX = space_info.pointerX;
     space_info.focusY = space_info.pointerY;
-    
+
     checkRatio();
     
     boundingEl.onmousemove = e => {
@@ -174,6 +174,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     }
 
     window.onfocus = () => {
+        focus = true;
         initSpace();
     }
 
