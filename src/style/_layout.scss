@@ -62,9 +62,9 @@ $frame-size-d:       75vh;
     z-index: $layer-base-z-index;
 
     &.vertical {
-        .room .frame .bottom {
-            transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
-        }
+        // .room .frame .bottom {
+        //     transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
+        // }
     }
 
 
@@ -114,8 +114,7 @@ $frame-size-d:       75vh;
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-d;
-                transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-20deg);
-                transition: transform 0.5s;
+                transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
             }
 
 
