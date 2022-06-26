@@ -12,6 +12,8 @@ const ROTATE_SPEED = 60;
 const FOCUS_UPDATE_ANIMATION_SPEED = 0.25;
 // const UPDATE_FPS = 60;
 
+let focus = true;
+
 function focusUpdate(FPS) {
 
     if (Math.abs(space_info.pointerX - space_info.focusX) > 1) {
@@ -58,8 +60,6 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
         const box = spaceEl.getBoundingClientRect();
         space_info.pointerX = box.left + box.width / 2;
         space_info.pointerY = box.top + box.height / 2;
-        space_info.focusX = space_info.pointerX;
-        space_info.focusY = space_info.pointerY;
     }
     const checkRatio = () => {
         const box = boundingEl.getBoundingClientRect();
@@ -87,37 +87,46 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     }
 
     initSpace();
+    space_info.focusX = space_info.pointerX;
+    space_info.focusY = space_info.pointerY;
+    
     checkRatio();
     
     boundingEl.onmousemove = e => {
-        if (GlobalState.getInstance().clickDown) {
-            if (space_info.rotateOrigin === null) {
-                space_info.rotateOrigin = e.clientX;
-            } else {
-                const distance = e.clientX - space_info.rotateOrigin;
-                const degPerPixel = 90/1080;
-                space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel) % 360;  
-                space_info.rotateOrigin = e.clientX;         
+        if (focus) {
+            if (GlobalState.getInstance().clickDown) {
+                if (space_info.rotateOrigin === null) {
+                    space_info.rotateOrigin = e.clientX;
+                } else {
+                    const distance = e.clientX - space_info.rotateOrigin;
+                    const degPerPixel = 90/1080;
+                    space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel) % 360;  
+                    space_info.rotateOrigin = e.clientX;         
+                }
             }
+            
+            space_info.pointerX = e.clientX;
+            space_info.pointerY = e.clientY;             
         }
-        
-        space_info.pointerX = e.clientX;
-        space_info.pointerY = e.clientY;              
+             
     };
 
     boundingEl.ontouchmove = e => {
-        if (GlobalState.getInstance().clickDown) {
-            if (space_info.rotateOrigin === null) {
-                space_info.rotateOrigin = e.touches[0].clientX;
-            } else {
-                const distance = e.touches[0].clientX - space_info.rotateOrigin;
-                const degPerPixel = 90/1080;
-                space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel) % 360;   
-                space_info.rotateOrigin = e.touches[0].clientX;          
+        if (focus) {
+            if (GlobalState.getInstance().clickDown) {
+                if (space_info.rotateOrigin === null) {
+                    space_info.rotateOrigin = e.touches[0].clientX;
+                } else {
+                    const distance = e.touches[0].clientX - space_info.rotateOrigin;
+                    const degPerPixel = 90/1080;
+                    space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel) % 360;   
+                    space_info.rotateOrigin = e.touches[0].clientX;          
+                }
             }
+            space_info.pointerX = e.touches[0].clientX;
+            space_info.pointerY = e.touches[0].clientY;            
         }
-        space_info.pointerX = e.touches[0].clientX;
-        space_info.pointerY = e.touches[0].clientY;
+
     };
 
 
@@ -158,6 +167,16 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
         pointerUp();
     });
 
+    window.onblur = () => {
+        pointerUp();
+        focus = false;
+        initSpace();
+    }
+
+    window.onfocus = () => {
+        initSpace();
+    }
+
 
     // animation loop
     const rotateElOriginalTransformMatrix = window.getComputedStyle(rotateEl).transform;
@@ -165,7 +184,6 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
         window.requestAnimationFrame((t)=>{
             const seconds_timelapse = (t-old) / 1000;
             const FPS = 1 / seconds_timelapse;
-            console.log(FPS);
             if (GlobalState.getInstance().canRotate()) {
                 space_info.rotateDeg = (space_info.rotateDeg + (360 / (ROTATE_SPEED / (1 / FPS)))) % 360;
             }
