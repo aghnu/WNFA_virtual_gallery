@@ -20,6 +20,17 @@ $frame-size-d:       75vh;
     transform-style: preserve-3d;
 }
 
+#site-wall-text {
+    @include fixedWholeScreen();
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-75%);
+        text-align: center;
+    }
+}
+
 #site-fps {
     position: absolute;
     top: 0;
@@ -148,12 +159,12 @@ $frame-size-d:       75vh;
                 transform: rotateY(-90deg) translateZ(calc(-#{$frame-size-w}/2)) rotateZ(-90deg);
             }
 
-            // .back {
-            //     position: absolute;
-            //     width: $frame-size-w;
-            //     height: $frame-size-h;
-            //     transform: translateZ(calc(-#{$frame-size-d}/2));
-            // }
+            .back {
+                position: absolute;
+                width: $frame-size-w;
+                height: $frame-size-h;
+                transform: translateZ(calc(-#{$frame-size-d}/2));
+            }
 
 
         }

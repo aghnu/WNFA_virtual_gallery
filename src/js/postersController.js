@@ -345,16 +345,21 @@ export function initPosters(container) {
 
 
         let buttonDown = false;
+        const site_wall_text = document.querySelector('#site-wall-text');
         const buttonDownFunc = () => {
             buttonDown = true;
+            site_wall_text.classList.add('focus');
             currentPostersControlFunc.hide(()=>{
+                
                 // gallery.style.display = 'none';
             });
         };
 
         const buttonUpFunc = () => {
             buttonDown = false;
+            site_wall_text.classList.remove('focus');
             currentPostersControlFunc.show(()=>{
+                
                 // gallery.style.display = 'block';
             });
         }
