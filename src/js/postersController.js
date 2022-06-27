@@ -321,9 +321,28 @@ export function initPosters(container) {
 
     // set up posters after got meta
     getMeta((d)=>{
-        let postersControlType = ['posters', 'results'];
-        let currentPostersControlFunc = loadResults(d, 'results');
+        // switch between two gallerys
+        const url = new URL(window.location);
+        const gallery_selection = (url.searchParams.get('gallery')) ? (url.searchParams.get('gallery')) : 'tiepian';
+        let postersControlType;
+
+        switch (gallery_selection) {
+            case 'tiepian':
+                postersControlType = ['results', 'posters'];
+                break;
+            case 'huixiang':
+                postersControlType = ['posters', 'results'];
+                break;
+            default:
+                postersControlType = ['results', 'posters'];
+        }
+
+        // init first selected gallery
+        const gallery_selected = postersControlType.shift();
+        postersControlType.push(gallery_selected);
+        let currentPostersControlFunc = loadResults(d, gallery_selected);
         
+
         // set up buttons
         const refresh_button = document.querySelector('#site-button-refresh');
         refresh_button.onclick = () => {
