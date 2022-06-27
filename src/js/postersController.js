@@ -24,6 +24,7 @@ function loadResults(metaJSON, type) {
 
     let preLoadingInterval;
     let postLoadingInterval;
+    let animationTimeout;
     let speedUpAnimationInterval;
     let pause = false;
     
@@ -255,10 +256,11 @@ function loadResults(metaJSON, type) {
             pause = true;
             clearInterval(preLoadingInterval);
             clearInterval(postLoadingInterval);
+            clearTimeout(animationTimeout);
             removeAllPosters(() => {
                 const site_interactive = document.querySelector('#site-interactive');
                 site_interactive.classList.remove('lightup');     
-                setTimeout(() => {
+                animationTimeout = setTimeout(() => {
                     callback();
                 }, 1000);   
             });
@@ -267,24 +269,25 @@ function loadResults(metaJSON, type) {
             pause = true;
             clearInterval(preLoadingInterval);
             clearInterval(postLoadingInterval);
+            clearTimeout(animationTimeout);
             removeAllPosters(() => {
                 const site_interactive = document.querySelector('#site-interactive');
                 site_interactive.classList.remove('lightup');     
-                setTimeout(() => {
+                animationTimeout = setTimeout(() => {
                     load();
                 }, 1000);           
             });
         },
         hide: (callback) => {
             hideAllPosters(()=>{
-                setTimeout(() => {
+                animationTimeout = setTimeout(() => {
                     callback();
                 }, 1000);
             });
         },
         show: (callback) => {
             showAllPosters(()=>{
-                setTimeout(() => {
+                animationTimeout = setTimeout(() => {
                     callback();
                 }, 1000);
             })
@@ -401,22 +404,21 @@ export function initPosters(container) {
         });
 
         addButtonBehavior(refresh_button, () => {
+            currentPostersControlFunc.refresh();
             refresh_button.classList.add('pressed');
         }, () => {
-            currentPostersControlFunc.refresh();
             refresh_button.classList.remove('pressed');
         })
 
         addButtonBehavior(next_button, () => {
             next_button.classList.add('pressed');
-        }, () => {
-            
             const nextControlType = postersControlType.shift();
             postersControlType.push(nextControlType);
 
             currentPostersControlFunc.clean(() => {
                 currentPostersControlFunc = loadResults(d, nextControlType);
             });
+        }, () => {
             next_button.classList.remove('pressed');
         })
 
