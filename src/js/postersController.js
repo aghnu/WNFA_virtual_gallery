@@ -346,56 +346,69 @@ export function initPosters(container) {
 
         let buttonDown = false;
         const site_wall_text = document.querySelector('#site-wall-text');
-        const buttonDownFunc = () => {
-            buttonDown = true;
-            site_wall_text.classList.add('focus');
-            currentPostersControlFunc.hide(()=>{
-                
-                // gallery.style.display = 'none';
-            });
-        };
 
-        const buttonUpFunc = () => {
-            buttonDown = false;
-            site_wall_text.classList.remove('focus');
-            currentPostersControlFunc.show(()=>{
-                
-                // gallery.style.display = 'block';
+
+        const addButtonBehavior = (btnEl, downFunc, upFunc) => {
+            let buttonDown = false;
+
+            // touch events
+            btnEl.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                buttonDown = true;
+                downFunc();
+            });
+
+            btnEl.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                upFunc();
+            });
+
+            btnEl.addEventListener('touchcancel', (e) => {
+                e.preventDefault();
+                upFunc();
+            });
+
+            // click events
+            btnEl.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                buttonDown = true;
+                downFunc();
+            });
+
+            btnEl.addEventListener('mouseup', (e) => {
+                e.preventDefault();
+                upFunc();
+            });
+
+            //global up
+            document.addEventListener('mouseup', (e) => {
+                if (buttonDown) {
+                    upFunc();
+                }
             });
         }
 
-        // touch events
-        info_button.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            buttonDownFunc();
+        addButtonBehavior(info_button, () => {
+            info_button.classList.add('pressed');
+            site_wall_text.classList.add('focus');
+            currentPostersControlFunc.hide(()=>{});
+        }, () => {
+            info_button.classList.remove('pressed');
+            site_wall_text.classList.remove('focus');
+            currentPostersControlFunc.show(()=>{});
         });
 
-        info_button.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            buttonUpFunc();
-        });
+        addButtonBehavior(refresh_button, () => {
+            refresh_button.classList.add('pressed');
+        }, () => {
+            refresh_button.classList.remove('pressed');
+        })
 
-        info_button.addEventListener('touchcancel', (e) => {
-            e.preventDefault();
-            buttonUpFunc();
-        });
+        addButtonBehavior(next_button, () => {
+            next_button.classList.add('pressed');
+        }, () => {
+            next_button.classList.remove('pressed');
+        })
 
-        // click events
-        info_button.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            buttonDownFunc();
-        });
-
-        info_button.addEventListener('mouseup', (e) => {
-            e.preventDefault();
-            buttonUpFunc();
-        });
-
-        //global up
-        document.addEventListener('mouseup', (e) => {
-            if (buttonDown) {
-                buttonUpFunc();
-            }
-        });
     });
 }

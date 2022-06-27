@@ -163,9 +163,13 @@ $site-element-size:         2vh;
                             border-radius: 100%;
                             background-color: rgb(58, 58, 58);
                             transition: opacity 0.25s;
+                            box-shadow: 0 0.25em 0.5em rgba(50, 50, 50, 0.75);
+                            position: relative;
 
-                            &:active {
+                            &.pressed {
                                 opacity: 0.1;
+                                top: 0.125em;
+                                box-shadow: none;
                             }
                         }
 
