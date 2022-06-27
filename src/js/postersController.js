@@ -18,7 +18,7 @@ function loadResults(metaJSON, type) {
         const x = (Math.random() * 80);
         const y = (Math.random() * 80);
         const r = (Math.random() * 360);
-        const s = (Math.random() * 6) + 2;
+        const s = (Math.random() * 4) + 2;
 
         el.classList.add('poster');
         el.onerror = () => {
