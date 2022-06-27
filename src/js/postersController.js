@@ -4,6 +4,21 @@ const walls = [];
 const assetsURL = 'https://wnfa-interactive-art-project.github.io/hangzhou_060122/';
 
 
+
+function getImage(url, onSuccess, onFailure) {
+    fetch(url)
+        .then((r) => {
+            if (r.status === 200) {
+                r.blob().then((d) => {
+                    onSuccess(URL.createObjectURL(d));
+                })
+            }
+        })
+        .catch((e) => {
+            onFailure(e);
+        });
+}
+
 function loadResults(metaJSON, type) {
     const posters = [];
 
@@ -11,6 +26,7 @@ function loadResults(metaJSON, type) {
     let postLoadingInterval;
     let speedUpAnimationInterval;
     let pause = false;
+    
 
     const createPoster = (url) => {
 
@@ -116,16 +132,46 @@ function loadResults(metaJSON, type) {
 
     const loadResults = () => {
         const postersNum = metaJSON.results.total;
-        let i = 0;
+        let i = 1;
+        let next = true;
+        const NUM_RESULTS = 22;
+        
         preLoadingInterval = setInterval(() => {
-            if (!pause) {
-                appendPoster(createPoster(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg'));
-                if (++i > 20) {
+            if (!pause && next) {
+
+                // fetch one image
+                next = false;
+                getImage(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg', (url)=>{
+                    // success
+                    if (!pause) {
+                        appendPoster(createPoster(url));
+                        i++;                        
+                    }
+                    next = true;
+                }, ()=>{
+                    // failure
+                    next = true;
+                });
+                
+                if (i >= NUM_RESULTS) {
                     clearInterval(preLoadingInterval);
                     postLoadingInterval = setInterval(() => {
-                        if (!pause) {
-                            removeLastPoster();
-                            appendPoster(createPoster(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg'));                            
+                        if (!pause && next) {
+
+                            // fetch one image
+                            next = false;
+                            getImage(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg', (url)=>{
+                                // success
+                                if (!pause) {
+                                    removeLastPoster();
+                                    appendPoster(createPoster(url));
+                                }
+                                next = true;
+                            }, ()=>{
+                                // failure
+                                next = true;
+                            });    
+
                         };
                     }, 5000);
                 };       
@@ -136,12 +182,28 @@ function loadResults(metaJSON, type) {
     const loadPosters = () => {
         const postersNum = metaJSON.posters.total;
         let i = 1;
+        let next = true;
         preLoadingInterval = setInterval(() => {
-            if (!pause) {
-                appendPoster(createPoster(assetsURL + 'posters/' + String(i) + '.jpg'));
-                if (++i > postersNum) {
+            if (!pause && next) {
+
+                // fetch one image
+                next = false;
+                getImage(assetsURL + 'posters/' + String(i) + '.jpg', (url)=>{
+                    // success
+                    if (!pause) {
+                        appendPoster(createPoster(url));
+                        i++;                        
+                    }
+                    next = true;
+                }, ()=>{
+                    // failure
+                    next = true;
+                });    
+                
+                if (i >= postersNum) {
                     clearInterval(preLoadingInterval);
-                };                
+                };     
+
             }
         }, 100);        
     }
