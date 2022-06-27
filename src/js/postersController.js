@@ -345,27 +345,10 @@ export function initPosters(container) {
 
         // set up buttons
         const refresh_button = document.querySelector('#site-button-refresh');
-        refresh_button.onclick = () => {
-            currentPostersControlFunc.refresh();
-        }
-
         const next_button = document.querySelector('#site-button-next');
-        next_button.onclick = () => {
-            const nextControlType = postersControlType.shift();
-            postersControlType.push(nextControlType);
-
-            currentPostersControlFunc.clean(() => {
-                currentPostersControlFunc = loadResults(d, nextControlType);
-            });
-        }
-
         const info_button = document.querySelector('#site-button-info');
-        const gallery = document.querySelector('#site-interactive .room .gallery');
 
-
-        let buttonDown = false;
         const site_wall_text = document.querySelector('#site-wall-text');
-
 
         const addButtonBehavior = (btnEl, downFunc, upFunc) => {
             let buttonDown = false;
@@ -420,12 +403,20 @@ export function initPosters(container) {
         addButtonBehavior(refresh_button, () => {
             refresh_button.classList.add('pressed');
         }, () => {
+            currentPostersControlFunc.refresh();
             refresh_button.classList.remove('pressed');
         })
 
         addButtonBehavior(next_button, () => {
             next_button.classList.add('pressed');
         }, () => {
+            
+            const nextControlType = postersControlType.shift();
+            postersControlType.push(nextControlType);
+
+            currentPostersControlFunc.clean(() => {
+                currentPostersControlFunc = loadResults(d, nextControlType);
+            });
             next_button.classList.remove('pressed');
         })
 
