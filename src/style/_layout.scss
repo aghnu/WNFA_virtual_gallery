@@ -3,7 +3,7 @@
 $layer-base-z-index: 1000;
 $frame-size-w: 100vw;
 $frame-size-h: 100vh;
-$frame-size-d: 45vh;
+$frame-size-d: 20em;
 
 $bottom_tilt:       25deg;
 
@@ -93,7 +93,11 @@ $bottom_tilt:       25deg;
 
 
     .lighting {
-        @include fixedWholeScreen();
+        // @include fixedWholeScreen();
+        position: relative;
+        top: -10%;
+        width: 20em;
+        height: 20em;
         z-index: $layer-base-z-index + 1;
     }
 
@@ -125,7 +129,7 @@ $bottom_tilt:       25deg;
                     transform: translate(-50%, -50%);
 
                     .buttons {
-                        padding-top: 1em;
+                        padding-top: 1.25em;
                     }
                 }
 
@@ -191,7 +195,7 @@ $bottom_tilt:       25deg;
             width: 100%;
             height: 100%;
 
-            transform: translateZ(calc(-#{$frame-size-d} / 4));
+            transform: translateZ(calc(-#{$frame-size-d}));
 
             .poster {
                 position: absolute;

@@ -138,7 +138,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
                     space_info.rotateOrigin = e.clientX;
                 } else {
                     const distance = e.clientX - space_info.rotateOrigin;
-                    const degPerPixel = 90/1080;
+                    const degPerPixel = 270/1080;
                     space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel);  
                     space_info.rotateOrigin = e.clientX;         
                 }

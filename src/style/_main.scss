@@ -1,5 +1,5 @@
-$site-interactive-size:     2vh;
-$site-element-size:         2vh;
+$site-interactive-size:     min(2vh, 2.25vw);
+$site-element-size:         min(2vh, 2.25vw);
 
 @mixin noselect {
     -webkit-user-select: none;
@@ -14,7 +14,9 @@ $site-element-size:         2vh;
     opacity: 0.15;
     font-size: 1em;
     transition: font-size 0.5s, opacity 1s;
-
+    p {
+        line-height: 2.5em;
+    }
     &.focus {
         opacity: 1;
         font-size: 1.25em;
@@ -73,32 +75,37 @@ $site-element-size:         2vh;
     @include noselect();
     font-size: $site-interactive-size;
     perspective: 100em;
+    
 
     &.vertical {
         .room {
-            .frame .display .control {
-                font-size: 1em;
-            }
+            // .frame .display .control {
+            //     font-size: 1em;
+            // }
             
-            .gallery .wall .poster {
-                font-size: 0.75em;
-            }
+            // .gallery .wall .poster {
+            //     font-size: 0.75em;
+            // }
         }
 
 
-        #site-wall-text {
-            font-size: 0.75em;
+        // #site-wall-text {
+        //     font-size: 0.75em;
         
-            &.focus {
-                opacity: 1;
-                font-size: 1em;
-            }
-        }
+        //     &.focus {
+        //         opacity: 1;
+        //         font-size: 1em;
+        //     }
+        // }
     }
 
     &.lightup {
         .lighting {
             opacity: 1;
+
+            &.hide {
+                opacity: 0;
+            }
         }
 
         .shadowing {
@@ -120,9 +127,9 @@ $site-element-size:         2vh;
     .lighting {
         pointer-events: none;
         opacity: 0;
-        background-image: radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0) 30%);
+        background-image: radial-gradient(rgba(255, 255, 255, 0.175), rgba(0, 0, 0, 0) 75%);
         filter: blur(1em);
-        transition: opacity 0.2s;
+        transition: opacity 1s;
     }
 
     .room {
@@ -140,33 +147,54 @@ $site-element-size:         2vh;
 
             .display {
                 font-size: $site-element-size;
-                p {
-                    line-height: 2em;
-                }
                 .control {
                     pointer-events: all;
                     color: rgb(225, 225, 225);
                     text-align: center;
-                    font-size: 1.25em;
+                    font-size: 1.2em;
                     white-space: nowrap;
-                    transition: font-size 0.5s;
+                    // transition: font-size 0.5s;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2em;
+                    p {
+                        line-height: 1em;
+                    }
+
+                    .first,
+                    .second,
+                    .third {
+                        letter-spacing: 0.85em;
+                    }
+
+                    .first {
+                        font-size: 0.6em;
+                    }
+
+                    .second {
+                        font-size: 0.725em;
+                    }
+
+                    .third {
+                        font-size: 1em;
+                    }
 
                     .buttons {
                         pointer-events: all;
                         display: flex;
                         justify-content: center;
-                        gap: 1em;
+                        gap: 2.5em;
                         button {
-                            width: 1.7em;
-                            height: 1.7em;
+                            width: 2em;
+                            height: 2em;
                             border-radius: 100%;
-                            background-color: rgb(58, 58, 58);
+                            background-color: rgb(50, 50, 50);
                             transition: opacity 0.25s;
-                            box-shadow: 0 0.25em 0.5em rgba(50, 50, 50, 0.75);
+                            box-shadow: 0 0.35em 0.5em rgba(60, 60, 60, 0.8);
                             position: relative;
 
                             &.pressed {
-                                opacity: 0.5;
+                                opacity: 0.75;
                                 top: 0.125em;
                                 box-shadow: none;
                             }
@@ -179,7 +207,7 @@ $site-element-size:         2vh;
                         }
 
                         #site-button-info {
-                            background-color: rgb(225, 225, 225);
+                            background-color: rgb(200, 200, 200);
                         }
                     }
                 }
@@ -204,20 +232,20 @@ $site-element-size:         2vh;
                 opacity: 0;
 
                 &.show {
-                    opacity: 1;
+                    opacity: 0.8;
                     pointer-events: all;
                 }
 
                 &.focus {
                     opacity: 1;
-                    font-size: 1.25em;
+                    font-size: 1.1em;
                     cursor: pointer;
                 }
 
                 &.fade {
                     opacity: 0.2;
                     pointer-events: none;
-                    font-size: 0.85em;
+                    font-size: 0.9em;
                 }
             }
         }

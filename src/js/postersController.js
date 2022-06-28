@@ -31,19 +31,20 @@ function loadResults(metaJSON, type) {
     
 
     const createPoster = (url) => {
-        const clusterWidth = 60;
-        const clusterHeight = 60;
+        const clusterWidth = 45;
+        const clusterWidthOffset = 30;
+        const clusterHeight = 75;
 
 
         const el = document.createElement('img');
-        const x = (Math.random() * clusterWidth - clusterWidth/2);
+        const z = (Math.random() * clusterWidth/2 + clusterWidthOffset/2);
         const y = (Math.random() * clusterHeight - clusterHeight/2);
         const r = (Math.random() * 360);
-        const s = (Math.random() * 4) + 2;
+        const s = (Math.random() * 5.5) + 1.5;
 
-        const rX = (Math.random() * 360);
-        const rY = (Math.random() * 360);
-        const rZ = (Math.random() * 360);
+        const rX = (Math.random() * 90) - 45;
+        const rY = (Math.random() * 180) - 95;
+        // const rZ = (Math.random() * 360);
 
         el.classList.add('poster');
         el.onerror = () => {
@@ -60,13 +61,13 @@ function loadResults(metaJSON, type) {
                 rotateY(${r}deg)
 
 
-                translateX(${x}vw)
+                translateZ(${z}vw)
                 translateY(${y}vh)
 
+                rotateY(${rY}deg)
 
                 rotateX(${rX}deg)
-                rotateY(${rY}deg)
-                rotateZ(${rZ}deg)
+
             `;
         
         el.style.height = s + 'em';
@@ -281,7 +282,7 @@ function loadResults(metaJSON, type) {
     };
 
     // gallery name
-    const gallery_name = document.querySelector('#site-gallery-name');
+    // const gallery_name = document.querySelector('#site-gallery-name');
     const load = () => {
         const site_interactive = document.querySelector('#site-interactive');
         
@@ -289,12 +290,12 @@ function loadResults(metaJSON, type) {
             rotateSpeedUp(() => {});
             pause = false;
             loadResults();
-            gallery_name.innerHTML = 'WNFA/心的铁片';
+            // gallery_name.innerHTML = 'WNFA/心的铁片';
             site_interactive.classList.add('lightup');
         } else if (type === 'posters') {
             rotateSpeedUp(() => {});
             pause = false;
-            gallery_name.innerHTML = '回想回想';
+            // gallery_name.innerHTML = '回想回想';
             loadPosters();
             site_interactive.classList.add('lightup');
         }
@@ -331,6 +332,10 @@ function loadResults(metaJSON, type) {
             });
         },
         hide: (callback) => {
+
+            const lighting = document.querySelector('#site-interactive .lighting');
+            lighting.classList.add('hide');
+
             hideAllPosters(()=>{
                 animationTimeout = setTimeout(() => {
                     callback();
@@ -338,6 +343,10 @@ function loadResults(metaJSON, type) {
             });
         },
         show: (callback) => {
+
+            const lighting = document.querySelector('#site-interactive .lighting');
+            lighting.classList.remove('hide');
+
             showAllPosters(()=>{
                 animationTimeout = setTimeout(() => {
                     callback();
