@@ -3,7 +3,7 @@ import { initSpace } from './spaceController';
 import { initPosters } from './postersController';
 import { icon } from './svgFactory';
 import { GlobalState } from './globalState';
-
+import Bowser from 'bowser';
 function main() {
     // initMovetracking();
     // loadPosters();
@@ -38,31 +38,22 @@ function main() {
 }
 
 function browserIsSupported() {
-    // use user agent to filter out browser, not reliable but good enough 
-    // for a blacklist -> browsers that is known for not render correctly
-    const user_agent = window.navigator.userAgent;
-    let support = true;
-    
-    // some browser has render errors
-    // wechat internal browser on android
-    const test_wechat = () => {
-        if (
-                /WeChat/.test(user_agent) ||
-                /Wechat/.test(user_agent) ||
-                /wechat/.test(user_agent) ||
-                /weixin/.test(user_agent) ||
-                /Weixin/.test(user_agent) ||
-                /WeiXin/.test(user_agent)
-            ) {
-            support = false;
-        }
-    }
+    // broswers that are known to not render the site correctly
+    const bowser = Bowser.getParser(window.navigator.userAgent);
+    const notSupported = bowser.satisfies({
+        chrome:         "<92",
+        chromium:       "<92",
+        
+        Android: {
+            WeChat:     ">=0",
+        },
 
-    // run tests
-    test_wechat();
+        Windows: {
+            WeChat:     ">=0",
+        },
+    });
 
-    // return results
-    return support;
+    return !notSupported;
 }
 
 window.addEventListener('load', () => {
@@ -71,34 +62,6 @@ window.addEventListener('load', () => {
 
     const prompt_hardware_string_en = 'If you encounter lag or visual artifact<br>Please make sure your broswer is up-to-date<br>and has hardware acceleration enabled';
     const prompt_hardware_string_cn = '如果遇到卡顿或渲染错误<br>请确保浏览器已经更新<br>并且支持硬件加速';
-
-    // const loadingPrompts = [
-    //     'loading/载入中<br>·',
-    //     'loading/载入中<br>· ·',
-    //     'loading/载入中<br>· · ·',
-    // ]
-
-    // let i = 0;
-    // let loadingPromptInterval = setInterval(() => {
-    //     prompt.innerHTML = loadingPrompts[i];
-    //     i = (i + 1) % loadingPrompts.length;
-    // }, 750);
-
-    // // pre-render code here
-    // // for now it is useless
-    // setTimeout(() => {
-    //     clearInterval(loadingPromptInterval);
-    //     prompt.innerHTML = prompt_hardware_string_en + "<br><br>" + prompt_hardware_string_cn;
-
-    //     setTimeout(()=>{
-    //         prompt.innerHTML = "";
-    //         site_prompt.style.visibility = 'hidden';
-    //         main();
-    //     }, 3000)
-        
-        
-    // }, 3000);
-
 
     const loadingPrompts = [
         '·',
@@ -134,9 +97,5 @@ window.addEventListener('load', () => {
                 "<br>" +
                 "您的浏览器无法正常渲染内容<br>请使用其他浏览器打开"
         }
-
-
     }, 5000)
-
-
 });
