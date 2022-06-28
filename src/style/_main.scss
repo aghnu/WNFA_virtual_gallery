@@ -210,7 +210,14 @@ $site-element-size:         2vh;
 
                 &.focus {
                     opacity: 1;
+                    font-size: 1.25em;
                     cursor: pointer;
+                }
+
+                &.fade {
+                    opacity: 0.2;
+                    pointer-events: none;
+                    font-size: 00.75em;
                 }
             }
         }

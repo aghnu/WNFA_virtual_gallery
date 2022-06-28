@@ -27,6 +27,7 @@ function loadResults(metaJSON, type) {
     let animationTimeout;
     let speedUpAnimationInterval;
     let pause = false;
+    let pauseForFocus = false;
     
 
     const createPoster = (url) => {
@@ -71,19 +72,43 @@ function loadResults(metaJSON, type) {
         el.style.height = s + 'em';
         el.src = url;
 
+        const focusPoster = (focusEl) => {
+            pauseForFocus = true;
+            posters.map(p => {
+                if (p === focusEl) {
+                    p.classList.add('focus');
+                } else {
+                    p.classList.add('fade');
+                }
+            });               
+        };
+
+        const defocusPoster = (focusEl) => {
+            pauseForFocus = false;
+            posters.map(p => {
+                if (p === focusEl) {
+                    p.classList.remove('focus');
+                } else {
+                    p.classList.remove('fade');
+                }
+            });    
+        }
+
+
         el.onmouseenter = () => {
             GlobalState.getInstance().onPoster = true;
-            el.classList.add('focus');       
+            focusPoster(el);
+   
         }
 
         el.onmouseleave = () => {
             GlobalState.getInstance().onPoster = false;
-            el.classList.remove('focus');     
+            defocusPoster(el);  
         }
 
         el.onclick = () => {
             GlobalState.getInstance().onPoster = false;
-            el.classList.remove('focus');
+            defocusPoster(el);
 
             const site_poster_detail_layer = document.querySelector('#site-poster-detail-layer');
             const showEl = document.createElement('img');
@@ -113,9 +138,13 @@ function loadResults(metaJSON, type) {
         gallery.appendChild(el);
         posters.push(el);
         setTimeout(() => {
-            if (!pause) {
-                el.classList.add('show');
-            }
+            let setShow = setInterval(() => {
+                if (!pause && !pauseForFocus) {
+                    clearInterval(setShow);
+                    el.classList.add('show');
+                }   
+            }, 100);
+
         }, 100);
     }
 
@@ -161,13 +190,13 @@ function loadResults(metaJSON, type) {
         const NUM_RESULTS = 22;
         
         preLoadingInterval = setInterval(() => {
-            if (!pause && next) {
+            if (!pause && next && !pauseForFocus) {
 
                 // fetch one image
                 next = false;
                 getImage(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg', (url)=>{
                     // success
-                    if (!pause) {
+                    if (!pause && !pauseForFocus) {
                         appendPoster(createPoster(url));
                         i++;                        
                     }
@@ -180,13 +209,13 @@ function loadResults(metaJSON, type) {
                 if (i >= NUM_RESULTS) {
                     clearInterval(preLoadingInterval);
                     postLoadingInterval = setInterval(() => {
-                        if (!pause && next) {
+                        if (!pause && next && !pauseForFocus) {
 
                             // fetch one image
                             next = false;
                             getImage(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg', (url)=>{
                                 // success
-                                if (!pause) {
+                                if (!pause && !pauseForFocus) {
                                     removeLastPoster();
                                     appendPoster(createPoster(url));
                                 }
@@ -208,13 +237,13 @@ function loadResults(metaJSON, type) {
         let i = 1;
         let next = true;
         preLoadingInterval = setInterval(() => {
-            if (!pause && next) {
+            if (!pause && next && !pauseForFocus) {
 
                 // fetch one image
                 next = false;
                 getImage(assetsURL + 'posters/' + String(i) + '.jpg', (url)=>{
                     // success
-                    if (!pause) {
+                    if (!pause && !pauseForFocus) {
                         appendPoster(createPoster(url));
                         i++;                        
                     }
@@ -238,7 +267,7 @@ function loadResults(metaJSON, type) {
         clearInterval(speedUpAnimationInterval);
         GlobalState.getInstance().rotateSpeed = 0.5;
         speedUpAnimationInterval = setInterval(() => {
-            if (!pause) {
+            if (!pause && !pauseForFocus) {
                 const target = GlobalState.getInstance().rotateSpeed * rotateSpeedUpAnimationSpeed;
                 if (target > rotateSpeedTarget) {
                     GlobalState.getInstance().rotateSpeed = rotateSpeedTarget;
