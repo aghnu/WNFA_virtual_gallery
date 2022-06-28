@@ -37,6 +37,26 @@ function main() {
     button_refresh.appendChild(button_refresh_icon);
 }
 
+function browserIsSupported() {
+    // use user agent to filter out browser, not reliable but good enough 
+    // for a blacklist -> browsers that is known for not render correctly
+    const user_agent = window.navigator.userAgent;
+    let support = true;
+    
+    // some browser has render errors
+    // wechat internal browser on android
+    const test_wechat = () => {
+        if (/WeChat/.test(user_agent)) {
+            support = false;
+        }
+    }
+
+    // run tests
+    test_wechat();
+
+    // return results
+    return support;
+}
 
 window.addEventListener('load', () => {
     const site_prompt = document.querySelector('#site-prompt');
@@ -95,9 +115,20 @@ window.addEventListener('load', () => {
 
     setTimeout(()=>{
         clearInterval(loadingPromptInterval);
-        prompt.innerHTML = "";
-        site_prompt.style.visibility = 'hidden';
-        main();
+        
+
+        if (browserIsSupported()) {
+            prompt.innerHTML = "";
+            site_prompt.style.visibility = 'hidden';
+            main();            
+        } else {
+            prompt.innerHTML = 
+                "Your browser cannot render correctly<br>Please use another browser" +
+                "<br>" +
+                "您的浏览器无法正常渲染内容<br>请使用其他浏览器打开"
+        }
+
+
     }, 5000)
 
 
