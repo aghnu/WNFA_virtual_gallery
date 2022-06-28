@@ -1,7 +1,11 @@
+@use 'sass:math';
+
 $layer-base-z-index: 1000;
-$frame-size-w:       100vw;
-$frame-size-h:       100vh;
-$frame-size-d:       75vh;
+$frame-size-w: 100vw;
+$frame-size-h: 100vh;
+$frame-size-d: 45vh;
+
+$bottom_tilt:       25deg;
 
 
 @mixin fixedWholeScreen {
@@ -22,11 +26,12 @@ $frame-size-d:       75vh;
 
 #site-wall-text {
     @include fixedWholeScreen();
+
     .container {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-75%);
+        transform: translate(-50%, -75%);
         text-align: center;
     }
 }
@@ -56,7 +61,7 @@ $frame-size-d:       75vh;
         display: flex;
         justify-content: center;
         align-items: center;
-    
+
         .show {
             display: block;
             position: relative;
@@ -112,15 +117,18 @@ $frame-size-d:       75vh;
             .display {
                 position: relative;
                 z-index: $layer-base-z-index;
+
                 .control {
                     position: absolute;
-                    width: 100%;
-                    top: 8.5%;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
 
                     .buttons {
                         padding-top: 1em;
                     }
                 }
+
                 .texture {
                     position: relative;
                     width: 100%;
@@ -133,7 +141,14 @@ $frame-size-d:       75vh;
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-d;
-                transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
+                height: calc(#{$frame-size-d} / 2 / #{math.sin(90deg - $bottom_tilt)} * 2);
+                // height: calc(#{$frame-size-d} + 10em);
+                transform: 
+                    translateZ(calc(-#{$frame-size-d}/2 - 5.25vh)) 
+                    rotateX(90deg) 
+                    translateZ(calc(-#{$frame-size-h}/2)) 
+                    rotateX(calc(-#{$bottom_tilt}))
+                    translateZ(calc(#{$frame-size-d} / 2 * #{math.sin($bottom_tilt)} / #{math.sin(90deg - $bottom_tilt)} + 1.75vh));
             }
 
 
@@ -142,28 +157,28 @@ $frame-size-d:       75vh;
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-d;
-                transform: rotateX(-90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateZ(180deg);
+                transform: translateZ(calc(-#{$frame-size-d}/2)) rotateX(-90deg) rotateZ(180deg) translateZ(calc(-#{$frame-size-h}/2)) ;
             }
 
             .left {
                 position: absolute;
                 width: $frame-size-h;
                 height: $frame-size-d;
-                transform: rotateY(90deg) translateZ(calc(-#{$frame-size-w}/2)) rotateZ(90deg);
+                transform: translateZ(calc(-#{$frame-size-d}/2)) rotateY(90deg)  rotateZ(90deg) translateZ(calc(-#{$frame-size-w}/2));
             }
 
             .right {
                 position: absolute;
                 width: $frame-size-h;
                 height: $frame-size-d;
-                transform: rotateY(-90deg) translateZ(calc(-#{$frame-size-w}/2)) rotateZ(-90deg);
+                transform: translateZ(calc(-#{$frame-size-d}/2)) rotateY(-90deg) translateZ(calc(-#{$frame-size-w}/2)) rotateZ(-90deg);
             }
 
             .back {
                 position: absolute;
                 width: $frame-size-w;
                 height: $frame-size-h;
-                transform: translateZ(calc(-#{$frame-size-d}/2));
+                transform: translateZ(calc(-#{$frame-size-d}/2)) translateZ(calc(-#{$frame-size-d}/2));
             }
 
 
@@ -175,7 +190,7 @@ $frame-size-d:       75vh;
             top: -10%;
             width: 100%;
             height: 100%;
-            
+
             transform: translateZ(calc(-#{$frame-size-d} / 4));
 
             .poster {
