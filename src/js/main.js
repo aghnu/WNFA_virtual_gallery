@@ -46,7 +46,14 @@ function browserIsSupported() {
     // some browser has render errors
     // wechat internal browser on android
     const test_wechat = () => {
-        if (/WeChat/.test(user_agent)) {
+        if (
+                /WeChat/.test(user_agent) ||
+                /Wechat/.test(user_agent) ||
+                /wechat/.test(user_agent) ||
+                /weixin/.test(user_agent) ||
+                /Weixin/.test(user_agent) ||
+                /WeiXin/.test(user_agent)
+            ) {
             support = false;
         }
     }
