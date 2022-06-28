@@ -104,7 +104,7 @@ window.addEventListener('load', () => {
 
         prompt.innerHTML = 
             prompt_hardware_string_en + 
-            "<br><br>" + 
+            "<br>" + 
             prompt_hardware_string_cn + 
             "<br><br>" + 
             loadingPrompts[i];
