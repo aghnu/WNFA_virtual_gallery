@@ -49,13 +49,13 @@ function rotateUpdate(el, originalTransformMatrix) {
 
 function spaceUpdate(spaceEl, boundingEl) {
     
-    const max_degree = 10;
+    const max_degree = 50;
     const boxEl = spaceEl.getBoundingClientRect();
     const boxBody = boundingEl.getBoundingClientRect();
     
-    const bodyRatio = boxBody.height/boxBody.width;
-    const max_degree_x = max_degree * bodyRatio;
-    const max_degree_y = max_degree / bodyRatio;
+    // const bodyRatio = boxBody.height/boxBody.width;
+    // const max_degree_x = max_degree * bodyRatio;
+    // const max_degree_y = max_degree / bodyRatio;
 
     const centerX = boxEl.left + boxEl.width / 2;
     const centerY = boxEl.top + boxEl.height / 2;
@@ -66,18 +66,31 @@ function spaceUpdate(spaceEl, boundingEl) {
     const distanceFactorX = distanceX / (boxBody.width/ 2);
     const distanceFactorY = distanceY / (boxBody.height / 2);
 
-    let calc_rotate_y = (distanceFactorX * max_degree_x) / ((boxBody.height + 600)/600);
-    let calc_rotate_x = (-distanceFactorY * max_degree_y) / ((boxBody.width + 600)/600);
+    // let calc_rotate_y = (distanceFactorX * max_degree_x) / ((boxBody.height + 600)/600);
+    // let calc_rotate_x = (-distanceFactorY * max_degree_y) / ((boxBody.width + 600)/600);
 
-    if (Math.abs(calc_rotate_y) > max_degree) {
-        calc_rotate_y = calc_rotate_y / Math.abs(calc_rotate_y) * max_degree;
-    }
+    // if (Math.abs(calc_rotate_y) > max_degree) {
+    //     calc_rotate_y = calc_rotate_y / Math.abs(calc_rotate_y) * max_degree;
+    // }
 
-    if (Math.abs(calc_rotate_x) > max_degree) {
-        calc_rotate_x = calc_rotate_x / Math.abs(calc_rotate_x) * max_degree;
-    }
+    // if (Math.abs(calc_rotate_x) > max_degree) {
+    //     calc_rotate_x = calc_rotate_x / Math.abs(calc_rotate_x) * max_degree;
+    // }
 
-    spaceEl.style.transform = `rotateX(${calc_rotate_x}deg) rotateY(${calc_rotate_y}deg)`;
+
+    // let calc_rotate_y = (50 - distanceFactorY * max_degree) / ((boxBody.height + 600)/600);
+    // let calc_rotate_x = (50 - distanceFactorX * max_degree) / ((boxBody.width + 600)/600);
+
+    let calc_rotate_y = 50 - distanceFactorY * max_degree / ((boxBody.height + 600)/600);
+    let calc_rotate_x = 50 - distanceFactorX * max_degree / ((boxBody.width + 600)/600);
+
+
+    boundingEl.style.perspectiveOrigin = `${calc_rotate_x}% ${calc_rotate_y}%`
+    // console.log(boundingEl.style.perspectiveOrigin);
+    // spaceEl.style.transform = `rotateX(${calc_rotate_x}deg) rotateY(${calc_rotate_y}deg)`;
+    // console.log(boundingEl.style.perspectiveOrigin);
+
+    console.log(distanceFactorX + " " + distanceFactorY);
 }
 
 export function initSpace(spaceEl, rotateEl, boundingEl) {

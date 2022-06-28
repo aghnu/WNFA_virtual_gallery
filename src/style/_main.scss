@@ -72,8 +72,7 @@ $site-element-size:         2vh;
 #site-interactive {
     @include noselect();
     font-size: $site-interactive-size;
-    perspective: 50em;
-    perspective-origin: center;
+    perspective: 100em;
 
     &.vertical {
         .room {
