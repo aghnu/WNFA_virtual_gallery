@@ -1,6 +1,6 @@
 import { GlobalState } from "./globalState";
 
-const walls = [];
+// const walls = [];
 const assetsURL = 'https://wnfa-interactive-art-project.github.io/hangzhou_060122/';
 
 
@@ -30,12 +30,19 @@ function loadResults(metaJSON, type) {
     
 
     const createPoster = (url) => {
+        const clusterWidth = 60;
+        const clusterHeight = 60;
+
 
         const el = document.createElement('img');
-        const x = (Math.random() * 80);
-        const y = (Math.random() * 80);
+        const x = (Math.random() * clusterWidth - clusterWidth/2);
+        const y = (Math.random() * clusterHeight - clusterHeight/2);
         const r = (Math.random() * 360);
         const s = (Math.random() * 4) + 2;
+
+        const rX = (Math.random() * 360);
+        const rY = (Math.random() * 360);
+        const rZ = (Math.random() * 360);
 
         el.classList.add('poster');
         el.onerror = () => {
@@ -44,9 +51,23 @@ function loadResults(metaJSON, type) {
         el.draggable = false;
 
 
-        el.style.top = y + '%';
-        el.style.right = x + '%';
-        el.style.transform = `rotateZ(${r}deg) rotateY(${r}deg)`;
+        // el.style.top = y + '%';
+        // el.style.right = x + '%';
+        // translateX(${x}vw)
+        // translateY(${y}vh)
+        el.style.transform = `
+                rotateY(${r}deg)
+
+
+                translateX(${x}vw)
+                translateY(${y}vh)
+
+
+                rotateX(${rX}deg)
+                rotateY(${rY}deg)
+                rotateZ(${rZ}deg)
+            `;
+        
         el.style.height = s + 'em';
         el.src = url;
 
@@ -87,7 +108,9 @@ function loadResults(metaJSON, type) {
     }
 
     const appendPoster = (el) => {
-        walls[Math.floor(Math.random() * walls.length)].appendChild(el);
+        // walls[Math.floor(Math.random() * walls.length)].appendChild(el);
+        const gallery = document.querySelector('#site-interactive .room .gallery');
+        gallery.appendChild(el);
         posters.push(el);
         setTimeout(() => {
             if (!pause) {
@@ -296,17 +319,17 @@ function loadResults(metaJSON, type) {
 }
 
 export function initPosters(container) {
-    const wall_num = 6;
-    for (let i = 0; i < wall_num; i++) {
-        const deg = (360 / wall_num) + i * (360 / wall_num);
-        const wall = document.createElement('div');
+    // const wall_num = 6;
+    // for (let i = 0; i < wall_num; i++) {
+    //     const deg = (360 / wall_num) + i * (360 / wall_num);
+    //     const wall = document.createElement('div');
 
-        wall.classList.add('wall');
-        wall.style.transform = `rotateY(${deg}deg) translateX(-50%)`;
+    //     wall.classList.add('wall');
+    //     wall.style.transform = `rotateY(${deg}deg) translateX(-50%)`;
 
-        walls.push(wall);
-        container.appendChild(wall);
-    }
+    //     walls.push(wall);
+    //     container.appendChild(wall);
+    // }
 
     const getMeta = (callback) => {
         fetch(assetsURL + "META.json")

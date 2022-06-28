@@ -172,26 +172,15 @@ $frame-size-d:       75vh;
         .gallery {
             @include interactiveContainer();
             position: absolute;
-            top: 0;
-            left: 0;
+            top: -10%;
             width: 100%;
             height: 100%;
             
             transform: translateZ(calc(-#{$frame-size-d} / 4));
 
-            .wall {
+            .poster {
                 position: absolute;
-                // width: min(40vw, 40vh);
-                // height: min(80vw, 80vh);
-                top: 5%;
-                width: 25%;
-                height: 80%;
                 transform-style: preserve-3d;
-
-                .poster {
-                    position: absolute;
-                    transform-style: preserve-3d;
-                }
             }
         }
     }

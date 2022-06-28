@@ -194,30 +194,25 @@ $site-element-size:         2vh;
 
         .gallery {
             pointer-events: none;
-            
-            .wall {
+                
+            .poster {
                 pointer-events: none;
-    
-                .poster {
-                    pointer-events: none;
-                    display: block;
-                    object-fit: contain;
-                    transition: opacity 0.5s, font-size 0.5s;
-                    
-                    opacity: 0;
+                display: block;
+                object-fit: contain;
+                transition: opacity 0.5s, font-size 0.5s;
+                
+                opacity: 0;
 
-                    &.show {
-                        opacity: 0.9;
-                        pointer-events: all;
-                    }
+                &.show {
+                    opacity: 0.9;
+                    pointer-events: all;
+                }
 
-                    &.focus {
-                        opacity: 1;
-                        cursor: pointer;
-                    }
+                &.focus {
+                    opacity: 1;
+                    cursor: pointer;
                 }
             }
-    
         }
     }
 

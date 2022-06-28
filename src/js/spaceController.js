@@ -90,7 +90,7 @@ function spaceUpdate(spaceEl, boundingEl) {
     // spaceEl.style.transform = `rotateX(${calc_rotate_x}deg) rotateY(${calc_rotate_y}deg)`;
     // console.log(boundingEl.style.perspectiveOrigin);
 
-    console.log(distanceFactorX + " " + distanceFactorY);
+    // console.log(distanceFactorX + " " + distanceFactorY);
 }
 
 export function initSpace(spaceEl, rotateEl, boundingEl) {
