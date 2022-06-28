@@ -148,11 +148,11 @@ $bottom_tilt:       25deg;
                 height: calc(#{$frame-size-d} / 2 / #{math.sin(90deg - $bottom_tilt)} * 2);
                 // height: calc(#{$frame-size-d} + 10em);
                 transform: 
-                    translateZ(calc(-#{$frame-size-d}/2 - 5.25vh)) 
+                    translateZ(calc(-#{$frame-size-d}/2 - 2.525em)) 
                     rotateX(90deg) 
                     translateZ(calc(-#{$frame-size-h}/2)) 
                     rotateX(calc(-#{$bottom_tilt}))
-                    translateZ(calc(#{$frame-size-d} / 2 * #{math.sin($bottom_tilt)} / #{math.sin(90deg - $bottom_tilt)} + 1.75vh));
+                    translateZ(calc(#{$frame-size-d} / 2 * #{math.sin($bottom_tilt)} / #{math.sin(90deg - $bottom_tilt)} + 0.875em));
             }
 
 
