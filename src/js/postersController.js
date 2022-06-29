@@ -31,16 +31,19 @@ function loadResults(metaJSON, type) {
     
 
     const createPoster = (url) => {
-        const clusterWidth = 40;
-        const clusterWidthOffset = 15;
-        const clusterHeight = 70;
+        const sizeMax = 10;
+        const sizeMin = 2;
+
+        const clusterWidth = 70 - Math.sqrt(sizeMax * sizeMax * 2);
+        const clusterWidthOffset = 30;
+        const clusterHeight = 80 - Math.sqrt(sizeMax * sizeMax * 2);
 
 
         const el = document.createElement((url !== null) ? 'img' : 'div');
         const z = (Math.random() * clusterWidth/2 + clusterWidthOffset/2);
         const y = (Math.random() * clusterHeight - clusterHeight/2);
         const r = (Math.random() * 360);
-        const s = (Math.random() * 6) + 2;
+        const s = (Math.random() * sizeMax - sizeMin) + sizeMin;
 
         const rX = (Math.random() * 90) - 45;
         const rY = (Math.random() * 180) - 95;

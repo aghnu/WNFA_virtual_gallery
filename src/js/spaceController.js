@@ -44,8 +44,12 @@ function focusUpdate(FPS) {
     }
 }
 
-function rotateUpdate(el, originalTransformMatrix) {
-    el.style.transform = originalTransformMatrix + `rotateY(${space_info.rotateDegFocus}deg)`;
+function rotateUpdate(el, originalTransformMatrix=null) {
+    if (originalTransformMatrix !== null) {
+        el.style.transform = originalTransformMatrix + `rotateY(${space_info.rotateDegFocus}deg)`;
+    } else {
+        el.style.transform = `rotateY(${space_info.rotateDegFocus}deg)`;
+    }
 }
 
 function spaceUpdate(spaceEl, boundingEl) {

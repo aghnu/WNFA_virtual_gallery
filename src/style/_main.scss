@@ -1,5 +1,5 @@
-$site-interactive-size:     min(1.65vh, 2.25vw);
-$site-element-size:         min(1.65vh, 2.25vw);
+$site-interactive-size:     min(1.7vh, 2.25vw);
+$site-element-size:         min(1.7vh, 2.25vw);
 
 @mixin noselect {
     -webkit-user-select: none;
@@ -15,14 +15,17 @@ $site-element-size:         min(1.65vh, 2.25vw);
     @keyframes text-stretch {
         0% {
             letter-spacing: 0.85em;
+            padding-left: 0.85em;
         }
     
         50% {
             letter-spacing: 1em;
+            padding-left: 1em;
         }
     
         100% {
             letter-spacing: 0.85em;
+            padding-left: 0.85em;
         }
     }
     
@@ -61,12 +64,14 @@ $site-element-size:         min(1.65vh, 2.25vw);
         color: #fff0c7;
         font-size: 1.25em;     
         letter-spacing: 0.85em;   
+        padding-left: 0.85em;
     }
 
     .button {
         @include noselect();
         
         letter-spacing: 0.85em; 
+        padding-left: 0.85em;
         font-size: 0.85em;
         color: #fff0c7;
         opacity: 0.75;
@@ -78,21 +83,68 @@ $site-element-size:         min(1.65vh, 2.25vw);
 
 
 #site-wall-text {
-    color: rgb(80, 80, 80);
-    font-size: 0.9em;
-    transition: font-size 0.5s, opacity 1s;
-    opacity: 0;
-    p {
-        line-height: 2.25em;
+    
+    font-size: 1.15em;
+    color: rgb(225, 225, 225);  
+
+    .container {
+        transition: font-size 0.5s, opacity 1s;
+        letter-spacing: 0.6em;
+        padding-left: 0.6em;
+        opacity: 0;
+        p {
+            line-height: 2.25em;
+        }
     }
+    
+    .logo-container {
+        
+        filter: brightness(0.4);
+        // filter: brightness(0.175);
+
+        .title {
+            letter-spacing: 0.6em;
+            padding-left: 0.6em;
+        }
+    }
+
     &.focus {
-        opacity: 1;
-        font-size: 1.1em;
-        color: rgb(225, 225, 225);
+        .container {
+            opacity: 1;
+            font-size: 1.1em;           
+        }
+
+        .logo-container {
+            opacity: 0 !important;
+        }
     }
 
     &.show {
-        opacity: 1;
+        // opacity: 0;
+    }
+
+    #logo-tiepian {
+        opacity: 0;
+        transition: opacity 1s;
+
+        .logo {
+            background-image: url('../img/tiepian.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;            
+        }
+    }
+
+    #logo-huixiang {
+        opacity: 0;
+        transition: opacity 1s;
+
+        .logo {
+            background-image: url('../img/huixiang.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;            
+        }
     }
 }
 
@@ -211,19 +263,33 @@ $site-element-size:         min(1.65vh, 2.25vw);
             &.tiepian {
                 .frame .surface {
                     background-color: rgb(120, 120, 130);
-                }                
+                }              
+                
+                .frame .display .buttons button {
+                    background-color: rgb(50, 50, 60);
+                }
+
+                #logo-tiepian {
+                    opacity: 1;
+                }
             }
 
             &.huixiang {
                 .frame .surface {
                     background-color: rgb(132, 123, 120);
                 }
+
+                .frame .display .buttons button {
+                    background-color: rgb(60, 55, 50);
+                }
+
+                #logo-huixiang {
+                    opacity: 1;
+                }
             }
         }
 
     }
-
-    &
 
     .shadowing {
         pointer-events: none;
@@ -262,7 +328,7 @@ $site-element-size:         min(1.65vh, 2.25vw);
                     pointer-events: all;
                     color: rgb(225, 225, 225);
                     text-align: center;
-                    font-size: 1.2em;
+                    font-size: 1.25em;
                     white-space: nowrap;
                     // transition: font-size 0.5s;
                     display: flex;
@@ -276,6 +342,8 @@ $site-element-size:         min(1.65vh, 2.25vw);
                     .second,
                     .third {
                         letter-spacing: 0.85em;
+                        padding-left: 0.85em;
+                        
                     }
 
                     .first {
@@ -288,6 +356,7 @@ $site-element-size:         min(1.65vh, 2.25vw);
 
                     .third {
                         font-size: 1em;
+                        // color: #fff0c7;
                     }
 
                     .buttons {
@@ -296,13 +365,14 @@ $site-element-size:         min(1.65vh, 2.25vw);
                         justify-content: center;
                         gap: 2.5em;
                         button {
-                            width: 2em;
-                            height: 2em;
+                            width: 2.1em;
+                            height: 2.1em;
                             border-radius: 100%;
-                            background-color: rgb(50, 50, 60);
+                            background-color: rgb(50, 50, 50);
                             transition: opacity 0.25s;
                             box-shadow: 0 0.35em 0.5em rgba(60, 60, 60, 0.8);
                             position: relative;
+                            transition: background-color 2s;
 
                             &.pressed {
                                 opacity: 0.75;

@@ -20,6 +20,12 @@ function main() {
     initSpace(room, gallery, container);
     let postersInit = initPosters(gallery)['init'];
 
+    // // init logos
+    // const logo_tiepian = document.querySelector('#logo-tiepian');
+    // const logo_huixiang = document.querySelector('#logo-huixiang');
+
+
+
     // init buttons
     const button_info = document.querySelector('#site-button-info');
     const button_next = document.querySelector('#site-button-next');
