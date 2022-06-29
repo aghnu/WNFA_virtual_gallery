@@ -58,6 +58,7 @@ function browserIsSupported() {
     const notSupported = bowser.satisfies({
         chrome:         "<92",
         chromium:       "<92",
+        ie:             ">-0",
         
         Android: {
             WeChat:     ">=0",
