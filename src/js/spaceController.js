@@ -210,14 +210,14 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     window.onblur = () => {
         pointerUp();
         focus = false;
-        AudioControl.getInstance().pause();
+        AudioControl.getInstance().drop();
         initSpace();
 
     }
 
     window.onfocus = () => {
         focus = true;
-        AudioControl.getInstance().play();
+        AudioControl.getInstance().init();
         initSpace();
     }
 

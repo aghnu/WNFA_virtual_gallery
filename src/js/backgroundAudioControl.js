@@ -20,6 +20,7 @@ export class AudioControl {
         this.audio.volume = 0;
 
         this.canPlay = false;
+        this.shouldPlay = false;
     }
 
     static getInstance() {
@@ -33,12 +34,17 @@ export class AudioControl {
     fadeIn(callback=()=>{}) {
         clearInterval(this.fadingInterval);
         this.fadingInterval = setInterval(() => {
-            if (this.audio.volume === 1) {
-                clearInterval(this.fadingInterval);
-                callback();
+            if (this.canPlay) {
+                if (this.audio.volume === 1) {
+                    clearInterval(this.fadingInterval);
+                    callback();
+                } else {
+                    this.audio.volume = Math.min(this.audio.volume + this.fadingStep, 1);
+                }                
             } else {
-                this.audio.volume = Math.min(this.audio.volume + this.fadingStep, 1);
+                clearInterval(this.fadingInterval);
             }
+
         }, this.fadingTime * 1000 / (1 / this.fadingStep));
     }
 
@@ -50,11 +56,12 @@ export class AudioControl {
                 callback();
             } else {
                 this.audio.volume = Math.max(this.audio.volume - this.fadingStep, 0);
-            }
-        }, this.fadingTime * 1000 / (1 /this.fadingStep));
+            }                
+        }, this.fadingTime * 1000 / (1 / this.fadingStep));
     }
 
     play() {
+        this.shouldPlay = true;
         if (this.canPlay) {
             clearInterval(this.fadingInterval);
             if (this.audio.paused) {
@@ -65,17 +72,33 @@ export class AudioControl {
     }
 
     pause() {
+        this.shouldPlay = false;
         if (this.canPlay) {
-            clearInterval(this.fadingInterval);
-            this.fadeOut(()=>{
+            clearInterval(this.fadingInterval);    
+            this.fadeOut(()=>{    
                 if (!this.audio.paused) {
                     this.audio.pause();
                 }
-            });            
+            });                
         }
     }
 
     init() {
         this.canPlay = true;
+        if (this.shouldPlay) {
+            if (this.audio.paused) {
+                this.audio.play();
+            }
+            this.fadeIn();
+        }
+    }
+
+    drop() {
+        this.canPlay = false;
+        this.fadeOut(()=>{
+            if (!this.audio.paused) {
+                this.audio.pause();
+            }
+        });
     }
 }
