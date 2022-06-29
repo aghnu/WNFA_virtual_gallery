@@ -15,11 +15,11 @@ $site-element-size:         min(2vh, 2.25vw);
     font-size: 1em;
     transition: font-size 0.5s, opacity 1s;
     p {
-        line-height: 2.5em;
+        line-height: 2.25em;
     }
     &.focus {
         opacity: 1;
-        font-size: 1.25em;
+        font-size: 1.15em;
     }
 }
 
@@ -113,7 +113,7 @@ $site-element-size:         min(2vh, 2.25vw);
         }
 
         .room .frame .surface {
-            background-color: #777777;
+            background-color: rgb(120, 120, 140);
         }
     }
 
@@ -168,7 +168,7 @@ $site-element-size:         min(2vh, 2.25vw);
                     }
 
                     .first {
-                        font-size: 0.6em;
+                        font-size: 0.575em;
                     }
 
                     .second {
@@ -188,7 +188,7 @@ $site-element-size:         min(2vh, 2.25vw);
                             width: 2em;
                             height: 2em;
                             border-radius: 100%;
-                            background-color: rgb(50, 50, 50);
+                            background-color: rgb(50, 50, 60);
                             transition: opacity 0.25s;
                             box-shadow: 0 0.35em 0.5em rgba(60, 60, 60, 0.8);
                             position: relative;

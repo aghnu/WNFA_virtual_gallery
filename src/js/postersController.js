@@ -3,8 +3,6 @@ import { GlobalState } from "./globalState";
 // const walls = [];
 const assetsURL = 'https://wnfa-interactive-art-project.github.io/hangzhou_060122/';
 
-
-
 function getImage(url, onSuccess, onFailure) {
     fetch(url)
         .then((r) => {
@@ -32,8 +30,8 @@ function loadResults(metaJSON, type) {
 
     const createPoster = (url) => {
         const clusterWidth = 45;
-        const clusterWidthOffset = 30;
-        const clusterHeight = 75;
+        const clusterWidthOffset = 25;
+        const clusterHeight = 70;
 
 
         const el = document.createElement('img');
@@ -356,6 +354,45 @@ function loadResults(metaJSON, type) {
     };
 }
 
+function flickeringTextEl(pEL, text) {
+    const ifContinue = true;
+    for (let i = 0; i < text.length; i++) {
+        const el = document.createElement('span');
+        const animationLength = Math.random() * 2.5 + 1;
+
+        const maxBrightness = 1;
+        const minBrightness = Math.random() * 0.25 + 0.25;
+
+        el.style.transition = `opacity ${animationLength}s`;
+        el.innerHTML = text[i];
+        el.style.opacity = [maxBrightness, minBrightness][Math.floor(Math.random() * 2)];
+
+        let timeout;
+        const start = () => {
+            if (el.style.opacity === String(maxBrightness)) {
+                el.style.opacity = String(minBrightness);
+            } else {
+                el.style.opacity = String(maxBrightness);
+            }
+
+            timeout = setTimeout(() => {
+                if (ifContinue) {
+                    start();
+                }    
+            },  Math.random() * 1000 + animationLength * 1000);
+        }
+        timeout = setTimeout(()=>{
+            start();
+        }, 100);
+        
+        pEL.appendChild(el);
+    }
+
+    return () => {
+        ifContinue = false;
+    }
+}
+
 export function initPosters(container) {
     // const wall_num = 6;
     // for (let i = 0; i < wall_num; i++) {
@@ -484,4 +521,22 @@ export function initPosters(container) {
         })
 
     });
+
+    // set flickering footer
+    const footer_first = document.querySelector('#site-interactive .room .frame .control .first');
+    const footer_second = document.querySelector('#site-interactive .room .frame .control .second');
+    const footer_third = document.querySelector('#site-interactive .room .frame .control .third');
+    
+    const footer_first_text = footer_first.innerText;
+    const footer_second_text = footer_second.innerText;
+    const footer_third_text = footer_third.innerText;
+
+    footer_first.innerHTML = "";
+    footer_second.innerHTML = "";
+    footer_third.innerHTML = "";
+
+    flickeringTextEl(footer_first, footer_first_text);
+    flickeringTextEl(footer_second, footer_second_text);
+    flickeringTextEl(footer_third, footer_third_text);
+
 }
