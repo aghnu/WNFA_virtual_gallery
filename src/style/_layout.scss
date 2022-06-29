@@ -36,7 +36,27 @@ $bottom_tilt:       25deg;
     }
 }
 
+#site-preloading-prompt {
+    @include fixedWholeScreen();
+    z-index: $layer-base-z-index + 1;
+
+    .title {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .button {
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
 #site-fps {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;

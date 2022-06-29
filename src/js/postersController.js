@@ -1,4 +1,5 @@
 import { GlobalState } from "./globalState";
+import { flickeringTextEl } from "./flickerText";
 
 // const walls = [];
 const assetsURL = 'https://wnfa-interactive-art-project.github.io/hangzhou_060122/';
@@ -29,16 +30,16 @@ function loadResults(metaJSON, type) {
     
 
     const createPoster = (url) => {
-        const clusterWidth = 45;
-        const clusterWidthOffset = 25;
+        const clusterWidth = 40;
+        const clusterWidthOffset = 15;
         const clusterHeight = 70;
 
 
-        const el = document.createElement('img');
+        const el = document.createElement((url !== null) ? 'img' : 'div');
         const z = (Math.random() * clusterWidth/2 + clusterWidthOffset/2);
         const y = (Math.random() * clusterHeight - clusterHeight/2);
         const r = (Math.random() * 360);
-        const s = (Math.random() * 5.5) + 1.5;
+        const s = (Math.random() * 6) + 2;
 
         const rX = (Math.random() * 90) - 45;
         const rY = (Math.random() * 180) - 95;
@@ -69,8 +70,14 @@ function loadResults(metaJSON, type) {
             `;
         
         el.style.height = s + 'em';
-        el.src = url;
+        el.style.width = s + 'em';
 
+        if (url !== null) {
+            el.src = url;
+        } else {
+            el.classList.add('mockup');
+        }
+        
         const focusPoster = (focusEl) => {
             pauseForFocus = true;
             posters.map(p => {
@@ -260,6 +267,13 @@ function loadResults(metaJSON, type) {
         }, 100);        
     }
 
+    const loadMockups = () => {
+        const mockupNum = 20;
+        for (let i = 0; i<mockupNum; i++) {
+            appendPoster(createPoster(null));
+        }
+    }
+
     const rotateSpeedUpAnimationSpeed = 1.25;
     const rotateSpeedTarget = 30;
     const rotateSpeedUp = (callback = () => {}) => {
@@ -296,6 +310,10 @@ function loadResults(metaJSON, type) {
             // gallery_name.innerHTML = '回想回想';
             loadPosters();
             site_interactive.classList.add('lightup');
+        } else if (type === 'mockups') {
+            // rotateSpeedUp(()=>{});
+            pause = false;
+            loadMockups();
         }
     }
 
@@ -354,45 +372,6 @@ function loadResults(metaJSON, type) {
     };
 }
 
-function flickeringTextEl(pEL, text) {
-    const ifContinue = true;
-    for (let i = 0; i < text.length; i++) {
-        const el = document.createElement('span');
-        const animationLength = Math.random() * 2.5 + 1;
-
-        const maxBrightness = 1;
-        const minBrightness = Math.random() * 0.25 + 0.25;
-
-        el.style.transition = `opacity ${animationLength}s`;
-        el.innerHTML = text[i];
-        el.style.opacity = [maxBrightness, minBrightness][Math.floor(Math.random() * 2)];
-
-        let timeout;
-        const start = () => {
-            if (el.style.opacity === String(maxBrightness)) {
-                el.style.opacity = String(minBrightness);
-            } else {
-                el.style.opacity = String(maxBrightness);
-            }
-
-            timeout = setTimeout(() => {
-                if (ifContinue) {
-                    start();
-                }    
-            },  Math.random() * 1000 + animationLength * 1000);
-        }
-        timeout = setTimeout(()=>{
-            start();
-        }, 100);
-        
-        pEL.appendChild(el);
-    }
-
-    return () => {
-        ifContinue = false;
-    }
-}
-
 export function initPosters(container) {
     // const wall_num = 6;
     // for (let i = 0; i < wall_num; i++) {
@@ -420,123 +399,110 @@ export function initPosters(container) {
             });
     }
 
-    // set up posters after got meta
-    getMeta((d)=>{
-        // switch between two gallerys
-        const url = new URL(window.location);
-        const gallery_selection = (url.searchParams.get('gallery')) ? (url.searchParams.get('gallery')) : 'tiepian';
-        let postersControlType;
+    let currentPostersControlFunc = loadResults({}, "mockups");
 
-        switch (gallery_selection) {
-            case 'tiepian':
-                postersControlType = ['results', 'posters'];
-                break;
-            case 'huixiang':
-                postersControlType = ['posters', 'results'];
-                break;
-            default:
-                postersControlType = ['results', 'posters'];
-        }
-
-        // init first selected gallery
-        const gallery_selected = postersControlType.shift();
-        postersControlType.push(gallery_selected);
-        let currentPostersControlFunc = loadResults(d, gallery_selected);
+    return {
+        init: () => {
+            currentPostersControlFunc.clean(()=>{});
+            getMeta((d)=>{
+                // switch between two gallerys
+                const url = new URL(window.location);
+                const gallery_selection = (url.searchParams.get('gallery')) ? (url.searchParams.get('gallery')) : 'tiepian';
+                let postersControlType;
         
-
-        // set up buttons
-        const refresh_button = document.querySelector('#site-button-refresh');
-        const next_button = document.querySelector('#site-button-next');
-        const info_button = document.querySelector('#site-button-info');
-
-        const site_wall_text = document.querySelector('#site-wall-text');
-
-        const addButtonBehavior = (btnEl, downFunc, upFunc) => {
-            let buttonDown = false;
-
-            // touch events
-            btnEl.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                buttonDown = true;
-                downFunc();
-            });
-
-            btnEl.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                upFunc();
-            });
-
-            btnEl.addEventListener('touchcancel', (e) => {
-                e.preventDefault();
-                upFunc();
-            });
-
-            // click events
-            btnEl.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                buttonDown = true;
-                downFunc();
-            });
-
-            btnEl.addEventListener('mouseup', (e) => {
-                e.preventDefault();
-                upFunc();
-            });
-
-            //global up
-            document.addEventListener('mouseup', (e) => {
-                if (buttonDown) {
-                    upFunc();
+                switch (gallery_selection) {
+                    case 'tiepian':
+                        postersControlType = ['results', 'posters'];
+                        break;
+                    case 'huixiang':
+                        postersControlType = ['posters', 'results'];
+                        break;
+                    default:
+                        postersControlType = ['results', 'posters'];
                 }
+                // init first selected gallery
+                const gallery_selected = postersControlType.shift();
+                postersControlType.push(gallery_selected);
+                currentPostersControlFunc = loadResults(d, gallery_selected);
+        
+                // set up buttons
+                const refresh_button = document.querySelector('#site-button-refresh');
+                const next_button = document.querySelector('#site-button-next');
+                const info_button = document.querySelector('#site-button-info');
+        
+                const site_wall_text = document.querySelector('#site-wall-text');
+        
+                const addButtonBehavior = (btnEl, downFunc, upFunc) => {
+                    let buttonDown = false;
+        
+                    // touch events
+                    btnEl.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        buttonDown = true;
+                        downFunc();
+                    });
+        
+                    btnEl.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        upFunc();
+                    });
+        
+                    btnEl.addEventListener('touchcancel', (e) => {
+                        e.preventDefault();
+                        upFunc();
+                    });
+        
+                    // click events
+                    btnEl.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        buttonDown = true;
+                        downFunc();
+                    });
+        
+                    btnEl.addEventListener('mouseup', (e) => {
+                        e.preventDefault();
+                        upFunc();
+                    });
+        
+                    //global up
+                    document.addEventListener('mouseup', (e) => {
+                        if (buttonDown) {
+                            upFunc();
+                        }
+                    });
+                }
+        
+                addButtonBehavior(info_button, () => {
+                    info_button.classList.add('pressed');
+                    site_wall_text.classList.add('focus');
+                    currentPostersControlFunc.hide(()=>{});
+                }, () => {
+                    info_button.classList.remove('pressed');
+                    site_wall_text.classList.remove('focus');
+                    currentPostersControlFunc.show(()=>{});
+                });
+        
+                addButtonBehavior(refresh_button, () => {
+                    currentPostersControlFunc.refresh();
+                    refresh_button.classList.add('pressed');
+                }, () => {
+                    refresh_button.classList.remove('pressed');
+                })
+        
+                addButtonBehavior(next_button, () => {
+                    next_button.classList.add('pressed');
+                    const nextControlType = postersControlType.shift();
+                    postersControlType.push(nextControlType);
+        
+                    currentPostersControlFunc.clean(() => {
+                        currentPostersControlFunc = loadResults(d, nextControlType);
+                    });
+                }, () => {
+                    next_button.classList.remove('pressed');
+                })
+        
             });
         }
-
-        addButtonBehavior(info_button, () => {
-            info_button.classList.add('pressed');
-            site_wall_text.classList.add('focus');
-            currentPostersControlFunc.hide(()=>{});
-        }, () => {
-            info_button.classList.remove('pressed');
-            site_wall_text.classList.remove('focus');
-            currentPostersControlFunc.show(()=>{});
-        });
-
-        addButtonBehavior(refresh_button, () => {
-            currentPostersControlFunc.refresh();
-            refresh_button.classList.add('pressed');
-        }, () => {
-            refresh_button.classList.remove('pressed');
-        })
-
-        addButtonBehavior(next_button, () => {
-            next_button.classList.add('pressed');
-            const nextControlType = postersControlType.shift();
-            postersControlType.push(nextControlType);
-
-            currentPostersControlFunc.clean(() => {
-                currentPostersControlFunc = loadResults(d, nextControlType);
-            });
-        }, () => {
-            next_button.classList.remove('pressed');
-        })
-
-    });
-
-    // set flickering footer
-    const footer_first = document.querySelector('#site-interactive .room .frame .control .first');
-    const footer_second = document.querySelector('#site-interactive .room .frame .control .second');
-    const footer_third = document.querySelector('#site-interactive .room .frame .control .third');
-    
-    const footer_first_text = footer_first.innerText;
-    const footer_second_text = footer_second.innerText;
-    const footer_third_text = footer_third.innerText;
-
-    footer_first.innerHTML = "";
-    footer_second.innerHTML = "";
-    footer_third.innerHTML = "";
-
-    flickeringTextEl(footer_first, footer_first_text);
-    flickeringTextEl(footer_second, footer_second_text);
-    flickeringTextEl(footer_third, footer_third_text);
+    }
 
 }

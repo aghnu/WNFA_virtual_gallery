@@ -9,6 +9,73 @@ $site-element-size:         min(2vh, 2.25vw);
     user-select: none;  
 }
 
+
+
+#site-preloading-prompt {
+    @keyframes text-stretch {
+        0% {
+            letter-spacing: 0.85em;
+        }
+    
+        50% {
+            letter-spacing: 1em;
+        }
+    
+        100% {
+            letter-spacing: 0.85em;
+        }
+    }
+    
+    @keyframes enter-screen-background-cycle {
+        0% {
+            background-color: rgb(120, 120, 140, 0.95);
+        }
+
+        // 25% {
+        //     background-color: rgba(120, 120, 140, 0.65);
+            
+        // }
+
+        50% {
+            background-color: rgba(120, 120, 140, 0.65);
+            
+        }
+
+        100% {
+            background-color: rgb(120, 120, 140, 0.95);
+        }
+    }
+
+    font-size: $site-element-size;
+    // background-color: rgb(120, 120, 140);
+    background-image: radial-gradient(at 50% 40%, rgba(50, 50, 50, 0.25), #000 95%);
+    pointer-events: all;
+    white-space: nowrap;
+
+    animation: enter-screen-background-cycle 10s infinite;
+    transition: opacity 2s;
+
+    .title {
+        @include noselect();
+        color: rgb(225, 225, 225);
+        font-size: 1.25em;     
+        letter-spacing: 0.85em;   
+    }
+
+    .button {
+        @include noselect();
+        cursor: pointer;
+        letter-spacing: 0.85em; 
+        font-size: 0.85em;
+        color: #fff0c7;
+        opacity: 0.75;
+
+        animation: text-stretch 1.5s infinite;
+    }
+
+}
+
+
 #site-wall-text {
     color: rgb(225, 225, 225);
     opacity: 0.15;
@@ -24,12 +91,14 @@ $site-element-size:         min(2vh, 2.25vw);
 }
 
 
+
 #site-noscript {
     font-size: $site-element-size;
     pointer-events: all;
     p {
         color: rgb(225, 225, 225);
         text-align: center;
+        font-size: 1.1em;
     }
 }
 
@@ -66,7 +135,7 @@ $site-element-size:         min(2vh, 2.25vw);
         p {
             color: rgb(225, 225, 225);
             text-align: center;
-            font-size: 0.8em;
+            font-size: 1.1em;
         }
     }
 }
@@ -76,28 +145,44 @@ $site-element-size:         min(2vh, 2.25vw);
     font-size: $site-interactive-size;
     perspective: 100em;
     
+    &.loaded {
+        & + #site-preloading-prompt {
+            pointer-events: none;
+            opacity: 0;
 
-    &.vertical {
-        .room {
-            // .frame .display .control {
-            //     font-size: 1em;
-            // }
-            
-            // .gallery .wall .poster {
-            //     font-size: 0.75em;
-            // }
+            .button {
+                animation-play-state: paused;
+            }
         }
-
-
-        // #site-wall-text {
-        //     font-size: 0.75em;
         
-        //     &.focus {
-        //         opacity: 1;
-        //         font-size: 1em;
-        //     }
-        // }
+        .room .frame {
+            visibility: visible;
+        }
     }
+
+
+
+    // &.vertical {
+    //     .room {
+    //         // .frame .display .control {
+    //         //     font-size: 1em;
+    //         // }
+            
+    //         // .gallery .wall .poster {
+    //         //     font-size: 0.75em;
+    //         // }
+    //     }
+
+
+    //     // #site-wall-text {
+    //     //     font-size: 0.75em;
+        
+    //     //     &.focus {
+    //     //         opacity: 1;
+    //     //         font-size: 1em;
+    //     //     }
+    //     // }
+    // }
 
     &.lightup {
         .lighting {
@@ -113,7 +198,7 @@ $site-element-size:         min(2vh, 2.25vw);
         }
 
         .room .frame .surface {
-            background-color: rgb(120, 120, 140);
+            background-color: rgb(120, 120, 130);
         }
     }
 
@@ -127,16 +212,18 @@ $site-element-size:         min(2vh, 2.25vw);
     .lighting {
         pointer-events: none;
         opacity: 0;
-        background-image: radial-gradient(rgba(255, 255, 255, 0.175), rgba(0, 0, 0, 0) 75%);
+        background-image: radial-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0) 75%);
         filter: blur(1em);
         transition: opacity 1s;
     }
 
     .room {
         pointer-events: none;
+        
 
         .frame {
             pointer-events: none;
+            visibility: hidden;
 
             .surface {
                 transition: background-color 1s;
@@ -231,8 +318,12 @@ $site-element-size:         min(2vh, 2.25vw);
                 
                 opacity: 0;
 
+                &.mockup {
+                    background-color: white;
+                }
+
                 &.show {
-                    opacity: 0.8;
+                    opacity: 0.6;
                     pointer-events: all;
                 }
 

@@ -3,7 +3,13 @@ import { initSpace } from './spaceController';
 import { initPosters } from './postersController';
 import { icon } from './svgFactory';
 import { GlobalState } from './globalState';
+import { flickeringTextEl } from './flickerText';
+
+
 import Bowser from 'bowser';
+import bga from '../audio/Bach Cello Suite No.1 - Prelude (Yo-Yo Ma).mp3';
+
+
 function main() {
     // initMovetracking();
     // loadPosters();
@@ -13,7 +19,7 @@ function main() {
 
     new GlobalState();
     initSpace(room, gallery, container);
-    initPosters(gallery);
+    let postersInit = initPosters(gallery)['init'];
 
     // init buttons
     const button_info = document.querySelector('#site-button-info');
@@ -35,6 +41,10 @@ function main() {
     button_info.appendChild(button_info_icon);
     button_next.appendChild(button_next_icon);
     button_refresh.appendChild(button_refresh_icon);
+
+    return () => {
+        postersInit();
+    }
 }
 
 function browserIsSupported() {
@@ -57,6 +67,8 @@ function browserIsSupported() {
 }
 
 window.addEventListener('load', () => {
+
+    // prompt
     const site_prompt = document.querySelector('#site-prompt');
     const prompt = document.querySelector('#site-prompt .prompt');    
 
@@ -88,9 +100,59 @@ window.addEventListener('load', () => {
         
 
         if (browserIsSupported()) {
+            // enter screen
+
+            const site_interactive = document.querySelector('#site-interactive');
+            const enter_screen = document.querySelector('#site-preloading-prompt');
+            const enter_screen_title = document.querySelector('#site-preloading-prompt .title');
+            const enter_screen_button = document.querySelector('#site-preloading-prompt .button');
+
+            const enter_screen_title_text = enter_screen_title.innerText;
+            enter_screen_title.innerHTML = '';
+            let clearFlickering = flickeringTextEl(enter_screen_title, enter_screen_title_text);
+            let mainInitFunc;
+
+            enter_screen_button.onclick = () => {
+                enter_screen_button.onclick = () => {};
+
+                // prepare audio
+                const audio = document.createElement('audio');
+                audio.loop = true;
+                audio.addEventListener('canplay', () => {
+                    audio.play();
+                });
+                audio.src = bga;
+
+                // mark loaded
+                site_interactive.classList.add('loaded');
+                clearFlickering();
+                setTimeout(() => {
+                    enter_screen.style.display = 'none';
+                }, 2000);
+
+                // main InitFunc
+                mainInitFunc();
+
+                // set flickering footer
+                const footer_first = document.querySelector('#site-interactive .room .frame .control .first');
+                const footer_second = document.querySelector('#site-interactive .room .frame .control .second');
+                const footer_third = document.querySelector('#site-interactive .room .frame .control .third');
+                
+                const footer_first_text = footer_first.innerText;
+                const footer_second_text = footer_second.innerText;
+                const footer_third_text = footer_third.innerText;
+
+                footer_first.innerHTML = "";
+                footer_second.innerHTML = "";
+                footer_third.innerHTML = "";
+
+                flickeringTextEl(footer_first, footer_first_text);
+                flickeringTextEl(footer_second, footer_second_text);
+                flickeringTextEl(footer_third, footer_third_text);
+            }
             prompt.innerHTML = "";
             site_prompt.style.visibility = 'hidden';
-            main();            
+            mainInitFunc = main();            
         } else {
             prompt.innerHTML = 
                 "Your browser cannot render correctly<br>Please use another browser" +

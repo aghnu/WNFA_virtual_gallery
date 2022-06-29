@@ -10,7 +10,7 @@ export class GlobalState {
 
         this.onPoster = false;
         this.clickDown = false;
-        this.rotateSpeed = 1;
+        this.rotateSpeed = 30;
     }
 
     static getInstance() {

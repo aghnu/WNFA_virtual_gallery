@@ -13,6 +13,10 @@ module.exports = {
           "sass-loader",
         ],
       },
+      {
+        test: /\.(mp3|ogg)$/,
+        loader: 'file-loader'
+      }
     ],
   },
 
