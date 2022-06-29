@@ -1,4 +1,5 @@
 import { GlobalState } from "./globalState";
+import { AudioControl } from "./backgroundAudioControl";
 
 const space_info = {
     pointerX: 0,
@@ -209,11 +210,14 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     window.onblur = () => {
         pointerUp();
         focus = false;
+        AudioControl.getInstance().pause();
         initSpace();
+
     }
 
     window.onfocus = () => {
         focus = true;
+        AudioControl.getInstance().play();
         initSpace();
     }
 

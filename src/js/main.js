@@ -115,7 +115,7 @@ window.addEventListener('load', () => {
                 enter_screen_button.onclick = () => {};
 
                 // start audio
-                AudioControl.getInstance().play();
+                AudioControl.getInstance().init();
 
                 // mark loaded
                 site_interactive.classList.add('loaded');

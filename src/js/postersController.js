@@ -1,5 +1,6 @@
 import { GlobalState } from "./globalState";
 import { flickeringTextEl } from "./flickerText";
+import { AudioControl } from "./backgroundAudioControl";
 
 // const walls = [];
 const assetsURL = 'https://wnfa-interactive-art-project.github.io/hangzhou_060122/';
@@ -304,12 +305,14 @@ function loadResults(metaJSON, type) {
             loadResults();
             // gallery_name.innerHTML = 'WNFA/心的铁片';
             site_interactive.classList.add('lightup');
+            AudioControl.getInstance().play();
         } else if (type === 'posters') {
             rotateSpeedUp(() => {});
             pause = false;
             // gallery_name.innerHTML = '回想回想';
             loadPosters();
             site_interactive.classList.add('lightup');
+            AudioControl.getInstance().play();
         } else if (type === 'mockups') {
             // rotateSpeedUp(()=>{});
             pause = false;
@@ -323,6 +326,7 @@ function loadResults(metaJSON, type) {
     return {
         clean: (callback) => {
             pause = true;
+            AudioControl.getInstance().pause();
             clearInterval(preLoadingInterval);
             clearInterval(postLoadingInterval);
             clearTimeout(animationTimeout);
@@ -336,6 +340,7 @@ function loadResults(metaJSON, type) {
         },
         refresh: () => {
             pause = true;
+            AudioControl.getInstance().pause();
             clearInterval(preLoadingInterval);
             clearInterval(postLoadingInterval);
             clearTimeout(animationTimeout);
@@ -351,6 +356,7 @@ function loadResults(metaJSON, type) {
 
             const lighting = document.querySelector('#site-interactive .lighting');
             lighting.classList.add('hide');
+            AudioControl.getInstance().pause();
 
             hideAllPosters(()=>{
                 animationTimeout = setTimeout(() => {
@@ -362,6 +368,7 @@ function loadResults(metaJSON, type) {
 
             const lighting = document.querySelector('#site-interactive .lighting');
             lighting.classList.remove('hide');
+            AudioControl.getInstance().play();
 
             showAllPosters(()=>{
                 animationTimeout = setTimeout(() => {
