@@ -112,7 +112,7 @@ window.addEventListener('load', () => {
             let clearFlickering = flickeringTextEl(enter_screen_title, enter_screen_title_text);
             let mainInitFunc;
 
-            enter_screen_button.onclick = () => {
+            enter_screen.onclick = () => {
                 enter_screen_button.onclick = () => {};
 
                 // prepare audio

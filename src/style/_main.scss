@@ -28,7 +28,7 @@ $site-element-size:         min(2vh, 2.25vw);
     
     @keyframes enter-screen-background-cycle {
         0% {
-            background-color: rgb(0, 0, 10, 0.95);
+            background-color: rgb(0, 0, 10, 0.9);
         }
 
         // 25% {
@@ -37,12 +37,12 @@ $site-element-size:         min(2vh, 2.25vw);
         // }
 
         50% {
-            background-color: rgba(0, 0, 10, 0.65);
+            background-color: rgba(0, 0, 10, 0.75);
             
         }
 
         100% {
-            background-color: rgb(0, 0, 10, 0.95);
+            background-color: rgb(0, 0, 10, 0.9);
         }
     }
 
@@ -54,17 +54,18 @@ $site-element-size:         min(2vh, 2.25vw);
 
     animation: enter-screen-background-cycle 10s infinite;
     transition: opacity 2s;
+    cursor: pointer;
 
     .title {
         @include noselect();
-        color: rgb(225, 225, 225);
+        color: #fff0c7;
         font-size: 1.25em;     
         letter-spacing: 0.85em;   
     }
 
     .button {
         @include noselect();
-        cursor: pointer;
+        
         letter-spacing: 0.85em; 
         font-size: 0.85em;
         color: #fff0c7;
