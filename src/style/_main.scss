@@ -99,12 +99,13 @@ $site-element-size:         min(1.7vh, 2.25vw);
     
     .logo-container {
         
-        filter: brightness(0.4);
+        // filter: brightness(0.4);
         // filter: brightness(0.175);
 
         .title {
-            letter-spacing: 0.6em;
-            padding-left: 0.6em;
+            letter-spacing: 0.4em;
+            padding-left: 0.4em;
+            font-size: 1.15em;
         }
     }
 
@@ -126,24 +127,26 @@ $site-element-size:         min(1.7vh, 2.25vw);
     #logo-tiepian {
         opacity: 0;
         transition: opacity 1s;
+        filter: invert(49%) sepia(8%) saturate(388%) hue-rotate(201deg) brightness(94%) contrast(85%);        
 
         .logo {
             background-image: url('../img/tiepian.png');
             background-size: contain;
             background-repeat: no-repeat;
-            background-position: center;            
+            background-position: center;    
         }
     }
 
     #logo-huixiang {
         opacity: 0;
         transition: opacity 1s;
+        filter: invert(51%) sepia(9%) saturate(287%) hue-rotate(329deg) brightness(94%) contrast(92%);       
 
         .logo {
             background-image: url('../img/huixiang.png');
             background-size: contain;
             background-repeat: no-repeat;
-            background-position: center;            
+            background-position: center;     
         }
     }
 }
@@ -262,7 +265,7 @@ $site-element-size:         min(1.7vh, 2.25vw);
 
             &.tiepian {
                 .frame .surface {
-                    background-color: rgb(120, 120, 130);
+                    background-color: #787882;
                 }              
                 
                 .frame .display .buttons button {
@@ -276,7 +279,7 @@ $site-element-size:         min(1.7vh, 2.25vw);
 
             &.huixiang {
                 .frame .surface {
-                    background-color: rgb(132, 123, 120);
+                    background-color: #847b78;
                 }
 
                 .frame .display .buttons button {
