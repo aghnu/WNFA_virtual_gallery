@@ -134,7 +134,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     
     boundingEl.onmousemove = e => {
         if (focus) {
-            if (GlobalState.getInstance().clickDown) {
+            if (GlobalState.getInstance().clickDown && !GlobalState.getInstance().onPoster) {
                 if (space_info.rotateOrigin === null) {
                     space_info.rotateOrigin = e.clientX;
                 } else {
@@ -153,7 +153,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
 
     boundingEl.ontouchmove = e => {
         if (focus) {
-            if (GlobalState.getInstance().clickDown) {
+            if (GlobalState.getInstance().clickDown && !GlobalState.getInstance().onPoster) {
                 if (space_info.rotateOrigin === null) {
                     space_info.rotateOrigin = e.touches[0].clientX;
                 } else {

@@ -103,17 +103,24 @@ function loadResults(metaJSON, type) {
 
 
         el.onmouseenter = () => {
+            const wall_text = document.querySelector('#site-wall-text');
+            wall_text.classList.remove('show');
             GlobalState.getInstance().onPoster = true;
+
             focusPoster(el);
    
         }
 
         el.onmouseleave = () => {
+            const wall_text = document.querySelector('#site-wall-text');
+            wall_text.classList.add('show');
             GlobalState.getInstance().onPoster = false;
             defocusPoster(el);  
         }
 
         el.onclick = () => {
+            const wall_text = document.querySelector('#site-wall-text');
+            wall_text.classList.add('show');
             GlobalState.getInstance().onPoster = false;
             defocusPoster(el);
 
@@ -176,7 +183,7 @@ function loadResults(metaJSON, type) {
         pause = true;
         for (let i = 0; i < posters.length; i++) {
             const el = posters[i];
-            el.classList.remove('show');
+            el.classList.add('hide');
         }
         callback();
     }
@@ -184,7 +191,7 @@ function loadResults(metaJSON, type) {
     const showAllPosters = (callback = () => {}) => {
         for (let i = 0; i < posters.length; i++) {
             const el = posters[i];
-            el.classList.add('show');
+            el.classList.remove('hide');
         }
         pause = false;
         callback();
@@ -298,20 +305,29 @@ function loadResults(metaJSON, type) {
     // const gallery_name = document.querySelector('#site-gallery-name');
     const load = () => {
         const site_interactive = document.querySelector('#site-interactive');
-        
+        const site_room = document.querySelector('#site-interactive-room');
+        site_room.classList.remove('tiepian');
+        site_room.classList.remove('huixiang');
+
         if (type === 'results') {
             rotateSpeedUp(() => {});
             pause = false;
             loadResults();
             // gallery_name.innerHTML = 'WNFA/心的铁片';
+            site_room.classList.add('tiepian');
             site_interactive.classList.add('lightup');
+            const wall_text = document.querySelector('#site-wall-text');
+            wall_text.classList.add('show');
             AudioControl.getInstance().play();
         } else if (type === 'posters') {
             rotateSpeedUp(() => {});
             pause = false;
             // gallery_name.innerHTML = '回想回想';
+            site_room.classList.add('huixiang');
             loadPosters();
             site_interactive.classList.add('lightup');
+            const wall_text = document.querySelector('#site-wall-text');
+            wall_text.classList.add('show');
             AudioControl.getInstance().play();
         } else if (type === 'mockups') {
             // rotateSpeedUp(()=>{});
@@ -333,6 +349,8 @@ function loadResults(metaJSON, type) {
             removeAllPosters(() => {
                 const site_interactive = document.querySelector('#site-interactive');
                 site_interactive.classList.remove('lightup');     
+                const wall_text = document.querySelector('#site-wall-text');
+                wall_text.classList.remove('show');
                 animationTimeout = setTimeout(() => {
                     callback();
                 }, 1000);   
@@ -347,6 +365,8 @@ function loadResults(metaJSON, type) {
             removeAllPosters(() => {
                 const site_interactive = document.querySelector('#site-interactive');
                 site_interactive.classList.remove('lightup');     
+                const wall_text = document.querySelector('#site-wall-text');
+                wall_text.classList.remove('show');
                 animationTimeout = setTimeout(() => {
                     load();
                 }, 1000);           
@@ -357,6 +377,7 @@ function loadResults(metaJSON, type) {
             const lighting = document.querySelector('#site-interactive .lighting');
             lighting.classList.add('hide');
             AudioControl.getInstance().pause();
+            GlobalState.getInstance().onPoster = true;
 
             hideAllPosters(()=>{
                 animationTimeout = setTimeout(() => {
@@ -369,6 +390,7 @@ function loadResults(metaJSON, type) {
             const lighting = document.querySelector('#site-interactive .lighting');
             lighting.classList.remove('hide');
             AudioControl.getInstance().play();
+            GlobalState.getInstance().onPoster = false;
 
             showAllPosters(()=>{
                 animationTimeout = setTimeout(() => {

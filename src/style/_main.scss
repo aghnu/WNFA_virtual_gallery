@@ -81,6 +81,7 @@ $site-element-size:         min(1.65vh, 2.25vw);
     color: rgb(80, 80, 80);
     font-size: 0.9em;
     transition: font-size 0.5s, opacity 1s;
+    opacity: 0;
     p {
         line-height: 2.25em;
     }
@@ -88,6 +89,10 @@ $site-element-size:         min(1.65vh, 2.25vw);
         opacity: 1;
         font-size: 1.1em;
         color: rgb(225, 225, 225);
+    }
+
+    &.show {
+        opacity: 1;
     }
 }
 
@@ -198,16 +203,33 @@ $site-element-size:         min(1.65vh, 2.25vw);
             opacity: 0;
         }
 
-        .room .frame .surface {
-            background-color: rgb(120, 120, 130);
+        .room {
+            .frame .surface {
+                background-color: rgb(120, 120, 120);
+            }      
+
+            &.tiepian {
+                .frame .surface {
+                    background-color: rgb(120, 120, 130);
+                }                
+            }
+
+            &.huixiang {
+                .frame .surface {
+                    background-color: rgb(132, 123, 120);
+                }
+            }
         }
+
     }
+
+    &
 
     .shadowing {
         pointer-events: none;
-        opacity: 1;
+        opacity: 0.25;
         background-color: rgba(0, 0, 0, 0.5);
-        transition: opacity 0.2s;
+        transition: opacity 0.5s;
     }
 
     .lighting {
@@ -228,7 +250,7 @@ $site-element-size:         min(1.65vh, 2.25vw);
             visibility: hidden;
 
             .surface {
-                transition: background-color 1s;
+                transition: background-color 2s;
                 background-color: #444444;
                 background-image: radial-gradient(at 50% 85%, rgba(50, 50, 50, 0.25), #000 95%);
                 filter: blur(1em);                
@@ -318,6 +340,7 @@ $site-element-size:         min(1.65vh, 2.25vw);
                 object-fit: contain;
                 transition: opacity 0.5s, font-size 0.5s;
                 
+                
                 opacity: 0;
 
                 &.mockup {
@@ -339,6 +362,11 @@ $site-element-size:         min(1.65vh, 2.25vw);
                     opacity: 0.2;
                     pointer-events: none;
                     font-size: 0.9em;
+                }
+
+                &.hide {
+                    opacity: 0.1;
+                    pointer-events: none;
                 }
             }
         }
