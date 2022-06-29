@@ -18,7 +18,7 @@ export class GlobalState {
             return GlobalState._instance;
         }
 
-        return new ProgramCore();
+        return new GlobalState();
     }
 
     canRotate() {

@@ -4,11 +4,9 @@ import { initPosters } from './postersController';
 import { icon } from './svgFactory';
 import { GlobalState } from './globalState';
 import { flickeringTextEl } from './flickerText';
-
+import { AudioControl } from './backgroundAudioControl';
 
 import Bowser from 'bowser';
-import bga from '../audio/Bach Cello Suite No.1 - Prelude (Yo-Yo Ma).mp3';
-
 
 function main() {
     // initMovetracking();
@@ -18,6 +16,7 @@ function main() {
     const gallery = document.querySelector('#site-interactive .room .gallery');
 
     new GlobalState();
+    new AudioControl();
     initSpace(room, gallery, container);
     let postersInit = initPosters(gallery)['init'];
 
@@ -115,13 +114,8 @@ window.addEventListener('load', () => {
             enter_screen.onclick = () => {
                 enter_screen_button.onclick = () => {};
 
-                // prepare audio
-                const audio = document.createElement('audio');
-                audio.loop = true;
-                audio.addEventListener('canplay', () => {
-                    audio.play();
-                });
-                audio.src = bga;
+                // start audio
+                AudioControl.getInstance().play();
 
                 // mark loaded
                 site_interactive.classList.add('loaded');
