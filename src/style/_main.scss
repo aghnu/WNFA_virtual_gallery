@@ -1,5 +1,5 @@
-$site-interactive-size:     min(2vh, 2.25vw);
-$site-element-size:         min(2vh, 2.25vw);
+$site-interactive-size:     min(1.65vh, 2.25vw);
+$site-element-size:         min(1.65vh, 2.25vw);
 
 @mixin noselect {
     -webkit-user-select: none;
@@ -78,8 +78,7 @@ $site-element-size:         min(2vh, 2.25vw);
 
 
 #site-wall-text {
-    color: rgb(225, 225, 225);
-    opacity: 0.15;
+    color: rgb(80, 80, 80);
     font-size: 0.9em;
     transition: font-size 0.5s, opacity 1s;
     p {
@@ -88,6 +87,7 @@ $site-element-size:         min(2vh, 2.25vw);
     &.focus {
         opacity: 1;
         font-size: 1.1em;
+        color: rgb(225, 225, 225);
     }
 }
 
@@ -211,9 +211,10 @@ $site-element-size:         min(2vh, 2.25vw);
     }
 
     .lighting {
+        display: none;
         pointer-events: none;
         opacity: 0;
-        background-image: radial-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0) 75%);
+        background-image: radial-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0) 50%);
         filter: blur(1em);
         transition: opacity 1s;
     }
