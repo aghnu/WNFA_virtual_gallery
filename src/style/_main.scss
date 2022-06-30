@@ -105,7 +105,7 @@ $site-element-size:         min(1.7vh, 2.25vw);
         .title {
             letter-spacing: 0.4em;
             padding-left: 0.4em;
-            font-size: 1.15em;
+            font-size: 1em;
         }
     }
 
@@ -421,7 +421,7 @@ $site-element-size:         min(1.7vh, 2.25vw);
                 }
 
                 &.show {
-                    opacity: 0.6;
+                    opacity: 1;
                     pointer-events: all;
                 }
 

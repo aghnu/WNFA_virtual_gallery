@@ -1,16 +1,6 @@
 import { GlobalState } from "./globalState";
 import { AudioControl } from "./backgroundAudioControl";
 
-const space_info = {
-    pointerX: 0,
-    pointerY: 0,
-    focusX: 0,
-    focusY:0,
-    rotateDegFocus: 0,
-    rotateDeg: 0,
-    rotateDirection: 1,
-}
-
 const FOCUS_UPDATE_ANIMATION_SPEED = 0.25;
 const MIN_FPS_ALLOWED = 5;
 // const UPDATE_FPS = 60;
@@ -18,6 +8,9 @@ const MIN_FPS_ALLOWED = 5;
 let focus = true;
 
 function focusUpdate(FPS) {
+    const space_info = GlobalState.getInstance().space_info;
+
+
     if (FPS * FOCUS_UPDATE_ANIMATION_SPEED > 1) {
         if (Math.abs(space_info.pointerX - space_info.focusX) > 1) {
             space_info.focusX = space_info.focusX + (space_info.pointerX - space_info.focusX) / (FOCUS_UPDATE_ANIMATION_SPEED * FPS);
@@ -42,13 +35,15 @@ function focusUpdate(FPS) {
             space_info.rotateDegFocus = space_info.rotateDeg;
         }            
     }
+
+    GlobalState.getInstance().space_info = space_info;
 }
 
 function rotateUpdate(el, originalTransformMatrix=null) {
     if (originalTransformMatrix !== null) {
-        el.style.transform = originalTransformMatrix + `rotateY(${space_info.rotateDegFocus}deg)`;
+        el.style.transform = originalTransformMatrix + `rotateY(${GlobalState.getInstance().space_info.rotateDegFocus}deg)`;
     } else {
-        el.style.transform = `rotateY(${space_info.rotateDegFocus}deg)`;
+        el.style.transform = `rotateY(${GlobalState.getInstance().space_info.rotateDegFocus}deg)`;
     }
 }
 
@@ -65,8 +60,8 @@ function spaceUpdate(spaceEl, boundingEl) {
     const centerX = boxEl.left + boxEl.width / 2;
     const centerY = boxEl.top + boxEl.height / 2;
 
-    const distanceX = space_info.focusX - centerX;
-    const distanceY = space_info.focusY - centerY;
+    const distanceX = GlobalState.getInstance().space_info.focusX - centerX;
+    const distanceY = GlobalState.getInstance().space_info.focusY - centerY;
 
     const distanceFactorX = distanceX / (boxBody.width/ 2);
     const distanceFactorY = distanceY / (boxBody.height / 2);
@@ -102,8 +97,8 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     // setup listeners
     const initSpace = () => {
         const box = spaceEl.getBoundingClientRect();
-        space_info.pointerX = box.left + box.width / 2;
-        space_info.pointerY = box.top + box.height / 2;
+        GlobalState.getInstance().space_info.pointerX = box.left + box.width / 2;
+        GlobalState.getInstance().space_info.pointerY = box.top + box.height / 2;
     }
     const checkRatio = () => {
         const box = boundingEl.getBoundingClientRect();
@@ -131,26 +126,26 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     }
 
     initSpace();
-    space_info.focusX = space_info.pointerX;
-    space_info.focusY = space_info.pointerY;
+    GlobalState.getInstance().space_info.focusX = GlobalState.getInstance().space_info.pointerX;
+    GlobalState.getInstance().space_info.focusY = GlobalState.getInstance().space_info.pointerY;
 
     checkRatio();
     
     boundingEl.onmousemove = e => {
         if (focus) {
             if (GlobalState.getInstance().clickDown && !GlobalState.getInstance().onPoster) {
-                if (space_info.rotateOrigin === null) {
-                    space_info.rotateOrigin = e.clientX;
+                if (GlobalState.getInstance().space_info.rotateOrigin === null) {
+                    GlobalState.getInstance().space_info.rotateOrigin = e.clientX;
                 } else {
-                    const distance = e.clientX - space_info.rotateOrigin;
+                    const distance = e.clientX - GlobalState.getInstance().space_info.rotateOrigin;
                     const degPerPixel = 270/1080;
-                    space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel);  
-                    space_info.rotateOrigin = e.clientX;         
+                    GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + 4 * distance * degPerPixel);  
+                    GlobalState.getInstance().space_info.rotateOrigin = e.clientX;         
                 }
             }
             
-            space_info.pointerX = e.clientX;
-            space_info.pointerY = e.clientY;             
+            GlobalState.getInstance().space_info.pointerX = e.clientX;
+            GlobalState.getInstance().space_info.pointerY = e.clientY;             
         }
              
     };
@@ -158,17 +153,17 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     boundingEl.ontouchmove = e => {
         if (focus) {
             if (GlobalState.getInstance().clickDown && !GlobalState.getInstance().onPoster) {
-                if (space_info.rotateOrigin === null) {
-                    space_info.rotateOrigin = e.touches[0].clientX;
+                if (GlobalState.getInstance().space_info.rotateOrigin === null) {
+                    GlobalState.getInstance().space_info.rotateOrigin = e.touches[0].clientX;
                 } else {
-                    const distance = e.touches[0].clientX - space_info.rotateOrigin;
+                    const distance = e.touches[0].clientX - GlobalState.getInstance().space_info.rotateOrigin;
                     const degPerPixel = 90/1080;
-                    space_info.rotateDeg = (space_info.rotateDeg + 4 * distance * degPerPixel);   
-                    space_info.rotateOrigin = e.touches[0].clientX;          
+                    GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + 4 * distance * degPerPixel);   
+                    GlobalState.getInstance().space_info.rotateOrigin = e.touches[0].clientX;          
                 }
             }
-            space_info.pointerX = e.touches[0].clientX;
-            space_info.pointerY = e.touches[0].clientY;            
+            GlobalState.getInstance().space_info.pointerX = e.touches[0].clientX;
+            GlobalState.getInstance().space_info.pointerY = e.touches[0].clientY;            
         }
 
     };
@@ -178,7 +173,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     // drag rotate
 
     const pointerDown = () => {
-        space_info.rotateOrigin = null;
+        GlobalState.getInstance().space_info.rotateOrigin = null;
         GlobalState.getInstance().clickDown = true;
     }
 
@@ -245,11 +240,12 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
 
             if (FPS > MIN_FPS_ALLOWED) {
                 if (GlobalState.getInstance().canRotate()) {
-                    space_info.rotateDeg = (space_info.rotateDeg + space_info.rotateDirection * (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
+                    GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + GlobalState.getInstance().space_info.rotateDirection * (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
                 }
                 focusUpdate(FPS);
                 spaceUpdate(spaceEl, boundingEl);            
-                rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);                                 
+                rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);    
+                GlobalState.getInstance().broadcastAnimationUpdate(FPS);         
             }
             animation_loop_frame(t);   
         });

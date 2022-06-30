@@ -28,7 +28,6 @@ function loadResults(metaJSON, type) {
     let speedUpAnimationInterval;
     let pause = false;
     let pauseForFocus = false;
-    
 
     const createPoster = (url) => {
         const sizeMax = 10;
@@ -43,7 +42,7 @@ function loadResults(metaJSON, type) {
         const z = (Math.random() * clusterWidth/2 + clusterWidthOffset/2);
         const y = (Math.random() * clusterHeight - clusterHeight/2);
         const r = (Math.random() * 360);
-        const s = (Math.random() * sizeMax - sizeMin) + sizeMin;
+        const s = (Math.random() * (sizeMax - sizeMin)) + sizeMin;
 
         const rX = (Math.random() * 90) - 45;
         const rY = (Math.random() * 180) - 95;
@@ -75,6 +74,45 @@ function loadResults(metaJSON, type) {
         
         el.style.height = s + 'em';
         el.style.width = s + 'em';
+
+        // set custom properties
+        // el.cp_distance = z;
+        // el.cp_angle = r;
+
+        el.oncustomanimationupdate = () => {
+            const rotation = Math.abs((GlobalState.getInstance().space_info.rotateDegFocus + r) % 360);
+            const rotation_corrected = (Math.floor(rotation / 180) === 0) ? rotation % 180 : 180 - (rotation % 180);
+
+            let cameraDistance;
+            if (rotation_corrected === 0) {
+                cameraDistance = 0
+            } else if (rotation_corrected === 90) {
+                cameraDistance = clusterWidth/2;
+            } else if (rotation_corrected === 180) {
+                cameraDistance = clusterWidth;
+            } else {
+                const require_correction = Math.floor(rotation_corrected / 90) !== 0;
+                const rotation_corrected_corrected = (require_correction) ? 90 - rotation_corrected % 90 : rotation_corrected;
+
+                const distance2Center = z * Math.sin((90 - rotation_corrected_corrected) * Math.PI/180);
+                
+                if (require_correction) {
+                    cameraDistance = distance2Center + clusterWidth/2;
+                } else {
+                    cameraDistance = clusterWidth/2 - distance2Center;
+                }
+            }
+
+            let cameraDistanceFactor = cameraDistance / clusterWidth;
+            // fix rounding error
+            cameraDistanceFactor = Math.min(cameraDistanceFactor, 1);
+            cameraDistanceFactor = Math.max(cameraDistanceFactor, 0);
+            // console.log(cameraDistanceFactor);
+
+            el.style.filter = `brightness(${(1- cameraDistanceFactor) * (0.65) + 0.05})`;
+
+
+        }   
 
         if (url !== null) {
             el.src = url;
@@ -173,6 +211,7 @@ function loadResults(metaJSON, type) {
                 el.parentElement.removeChild(el);
             }, 500);
         }
+        return null;
     }
 
     const removeAllPosters = (callback = () => {}) => {
@@ -312,6 +351,18 @@ function loadResults(metaJSON, type) {
         site_room.classList.remove('tiepian');
         site_room.classList.remove('huixiang');
 
+        GlobalState.getInstance().unsubscribeAll();
+        GlobalState.getInstance().subscribeAnimationUpdate(()=>{
+            for (let i = 0; i<posters.length; i++) {
+                const el = posters[i];
+                el.oncustomanimationupdate();
+            }
+
+            // if (posters.length !== 0) {
+            //     posters[0].oncustomanimationupdate();
+            // }
+        });
+
         if (type === 'results') {
             rotateSpeedUp(() => {});
             pause = false;
@@ -416,6 +467,19 @@ export function initPosters(container) {
     //     walls.push(wall);
     //     container.appendChild(wall);
     // }
+
+
+    // const gallery = document.querySelector('#site-interactive .room .gallery'); 
+    
+    // GlobalState.getInstance().subscribeAnimationUpdate(()=>{
+    //     new Promise(()=>{
+    //         const posters = gallery.children;    
+    //         if (posters.length > 0) {
+    //             // console.log(posters[0].cp_angle);
+    //         }            
+    //     });
+
+    // });
 
     const getMeta = (callback) => {
         fetch(assetsURL + "META.json")
