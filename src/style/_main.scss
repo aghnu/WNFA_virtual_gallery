@@ -1,5 +1,5 @@
-$site-interactive-size:     min(1.7vh, 2.25vw);
-$site-element-size:         min(1.7vh, 2.25vw);
+$site-interactive-size:     min(1.65vh, 2.15vw);
+$site-element-size:         min(1.65vh, 2.15vw);
 
 @mixin noselect {
     -webkit-user-select: none;
@@ -103,7 +103,7 @@ $site-element-size:         min(1.7vh, 2.25vw);
         // filter: brightness(0.175);
 
         .title {
-            font-size: 1em;
+            font-size: 0.85em;
         }
     }
 
