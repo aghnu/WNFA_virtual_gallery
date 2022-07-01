@@ -138,7 +138,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
                     GlobalState.getInstance().space_info.rotateOrigin = e.clientX;
                 } else {
                     const distance = e.clientX - GlobalState.getInstance().space_info.rotateOrigin;
-                    const degPerPixel = 270/1080;
+                    const degPerPixel = 120/window.innerWidth;
                     GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + 4 * distance * degPerPixel);  
                     GlobalState.getInstance().space_info.rotateOrigin = e.clientX;         
                 }
@@ -157,7 +157,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
                     GlobalState.getInstance().space_info.rotateOrigin = e.touches[0].clientX;
                 } else {
                     const distance = e.touches[0].clientX - GlobalState.getInstance().space_info.rotateOrigin;
-                    const degPerPixel = 90/1080;
+                    const degPerPixel = 120/window.innerWidth;
                     GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + 4 * distance * degPerPixel);   
                     GlobalState.getInstance().space_info.rotateOrigin = e.touches[0].clientX;          
                 }

@@ -5,6 +5,21 @@ import { AudioControl } from "./backgroundAudioControl";
 // const walls = [];
 const assetsURL = 'https://wnfa-interactive-art-project.github.io/hangzhou_060122/';
 
+function disablePinchZoom() {
+    // document.addEventListener('touchstart', (e) => {
+    //     e.preventDefault();
+    // })
+
+    // document.addEventListener('touchmove', (e) => {
+    //     e.preventDefault();
+    // })
+
+    // document.addEventListener('touchend', (e) => {
+    //     e.preventDefault();
+    // })
+}
+
+
 function getImage(url, onSuccess, onFailure) {
     fetch(url)
         .then((r) => {
@@ -480,6 +495,8 @@ export function initPosters(container) {
     //     });
 
     // });
+
+    disablePinchZoom();
 
     const getMeta = (callback) => {
         fetch(assetsURL + "META.json")
