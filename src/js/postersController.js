@@ -5,6 +5,9 @@ import { AudioControl } from "./backgroundAudioControl";
 // const walls = [];
 const assetsURL = 'https://wnfa-interactive-art-project.github.io/hangzhou_060122/';
 
+// animation function
+let animationUpdateFunction = () => {};
+
 function disablePinchZoom() {
     // document.addEventListener('touchstart', (e) => {
     //     e.preventDefault();
@@ -366,17 +369,12 @@ function loadResults(metaJSON, type) {
         site_room.classList.remove('tiepian');
         site_room.classList.remove('huixiang');
 
-        GlobalState.getInstance().unsubscribeAll();
-        GlobalState.getInstance().subscribeAnimationUpdate(()=>{
+        animationUpdateFunction = () => {
             for (let i = 0; i<posters.length; i++) {
                 const el = posters[i];
                 el.oncustomanimationupdate();
-            }
-
-            // if (posters.length !== 0) {
-            //     posters[0].oncustomanimationupdate();
-            // }
-        });
+            }            
+        }
 
         if (type === 'results') {
             rotateSpeedUp(() => {});
@@ -497,6 +495,10 @@ export function initPosters(container) {
     // });
 
     disablePinchZoom();
+
+    GlobalState.getInstance().subscribeAnimationUpdate(() => {
+        animationUpdateFunction();
+    });
 
     const getMeta = (callback) => {
         fetch(assetsURL + "META.json")
