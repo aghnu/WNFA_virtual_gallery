@@ -24,7 +24,10 @@ function initAnimationLoop() {
             if ((t - oldInterval) !== 0) {
                 const seconds_timelapse = (t-oldInterval) / 1000;
                 const FPS = 1 / seconds_timelapse;
-                GlobalState.getInstance().broadcastAnimationUpdate(FPS);   
+                if (FPS > 10) {
+                    GlobalState.getInstance().broadcastAnimationUpdate(FPS);  
+                }
+                 
                 oldInterval = t;         
                 // console.log(GlobalState.getInstance().animationUpdateListeners.length);
             }
