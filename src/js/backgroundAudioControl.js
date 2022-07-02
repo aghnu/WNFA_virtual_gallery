@@ -1,4 +1,7 @@
 import bga from '../audio/Bach Cello Suite No.1 - Prelude (Yo-Yo Ma).mp3';
+import buttonDown from '../audio/button_down.mp3';
+import buttonUp from '../audio/button_up.mp3';
+
 
 export class AudioControl {
     constructor() {
@@ -21,6 +24,20 @@ export class AudioControl {
 
         this.canPlay = false;
         this.shouldPlay = false;
+
+
+        // prepare other audios
+        this.button_up_audio = document.createElement('audio');
+        this.button_down_audio = document.createElement('audio');
+
+        this.button_up_audio.src = buttonUp;
+        this.button_down_audio.src = buttonDown;
+
+        this.button_up_audio.volume = 0.85;
+        this.button_down_audio.volume = 0.85;
+
+        this.button_up_audio_played = false;
+        this.button_down_audio_played = false; 
     }
 
     static getInstance() {
@@ -29,6 +46,20 @@ export class AudioControl {
         }
 
         return new AudioControl();
+    }
+
+    pressButtonDown() {
+        if (this.button_down_audio.ended || !this.button_down_audio_played) {
+            this.button_down_audio_played = true;
+            this.button_down_audio.play();
+        }
+    }
+
+    pressButtonUp() {
+        if (this.button_up_audio.ended || !this.button_up_audio_played) {
+            this.button_up_audio_played = true;
+            this.button_up_audio.play();
+        }
     }
 
     fadeIn(callback=()=>{}) {

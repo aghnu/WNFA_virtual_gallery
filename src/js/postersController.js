@@ -554,16 +554,21 @@ export function initPosters(container) {
                     btnEl.addEventListener('touchstart', (e) => {
                         e.preventDefault();
                         buttonDown = true;
+                        AudioControl.getInstance().pressButtonDown();
                         downFunc();
                     });
         
                     btnEl.addEventListener('touchend', (e) => {
                         e.preventDefault();
+                        buttonDown = false;
+                        AudioControl.getInstance().pressButtonUp();
                         upFunc();
                     });
         
                     btnEl.addEventListener('touchcancel', (e) => {
                         e.preventDefault();
+                        buttonDown = false;
+                        AudioControl.getInstance().pressButtonUp();
                         upFunc();
                     });
         
@@ -571,17 +576,22 @@ export function initPosters(container) {
                     btnEl.addEventListener('mousedown', (e) => {
                         e.preventDefault();
                         buttonDown = true;
+                        AudioControl.getInstance().pressButtonDown();
                         downFunc();
                     });
         
                     btnEl.addEventListener('mouseup', (e) => {
                         e.preventDefault();
+                        buttonDown = false;
+                        AudioControl.getInstance().pressButtonUp();
                         upFunc();
                     });
         
                     //global up
                     document.addEventListener('mouseup', (e) => {
                         if (buttonDown) {
+                            buttonDown = false;
+                            AudioControl.getInstance().pressButtonUp();
                             upFunc();
                         }
                     });
