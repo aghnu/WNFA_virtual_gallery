@@ -418,9 +418,9 @@ function loadResults(metaJSON, type) {
                 site_interactive.classList.remove('lightup');     
                 const wall_text = document.querySelector('#site-wall-text');
                 wall_text.classList.remove('show');
-                animationTimeout = setTimeout(() => {
-                    callback();
-                }, 1000);   
+                // animationTimeout = setTimeout(() => {
+                //     callback();
+                // }, 1000);   
             });
         },
         refresh: () => {
@@ -434,9 +434,9 @@ function loadResults(metaJSON, type) {
                 site_interactive.classList.remove('lightup');     
                 const wall_text = document.querySelector('#site-wall-text');
                 wall_text.classList.remove('show');
-                animationTimeout = setTimeout(() => {
-                    load();
-                }, 1000);           
+                // animationTimeout = setTimeout(() => {
+                //     load();
+                // }, 1000);           
             });
         },
         hide: (callback) => {
@@ -607,22 +607,37 @@ export function initPosters(container) {
                     currentPostersControlFunc.show(()=>{});
                 });
         
+
+                let refreshButtonAnimationTimeout;
                 addButtonBehavior(refresh_button, () => {
-                    currentPostersControlFunc.refresh();
+                    clearTimeout(refreshButtonAnimationTimeout);
+                    currentPostersControlFunc.clean(()=>{});
                     refresh_button.classList.add('pressed');
                 }, () => {
+                    refreshButtonAnimationTimeout = setTimeout(() => {
+                        const nextControlType = postersControlType.pop();
+                        postersControlType.push(nextControlType);
+            
+                        currentPostersControlFunc = loadResults(d, nextControlType);                        
+                    }, 750);
+
                     refresh_button.classList.remove('pressed');
                 })
         
+
+                let nextButtonAnimationTimeout;
                 addButtonBehavior(next_button, () => {
+                    clearTimeout(nextButtonAnimationTimeout);
+                    currentPostersControlFunc.clean(() => {});
                     next_button.classList.add('pressed');
-                    const nextControlType = postersControlType.shift();
-                    postersControlType.push(nextControlType);
-        
-                    currentPostersControlFunc.clean(() => {
-                        currentPostersControlFunc = loadResults(d, nextControlType);
-                    });
                 }, () => {
+                    nextButtonAnimationTimeout = setTimeout(() => {
+                        const nextControlType = postersControlType.shift();
+                        postersControlType.push(nextControlType);
+            
+                        currentPostersControlFunc = loadResults(d, nextControlType);                        
+                    }, 750);
+
                     next_button.classList.remove('pressed');
                 })
         
