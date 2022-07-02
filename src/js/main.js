@@ -45,7 +45,6 @@ function main() {
     const gallery = document.querySelector('#site-interactive .room .gallery');
 
     new GlobalState();
-    new AudioControl();
     initSpace(room, gallery, container);
     let postersInit = initPosters(gallery)['init'];
 
@@ -107,6 +106,8 @@ function browserIsSupported() {
 
 window.addEventListener('load', () => {
 
+    new AudioControl();
+    
     // prompt
     const site_prompt = document.querySelector('#site-prompt');
     const prompt = document.querySelector('#site-prompt .prompt');    
@@ -133,6 +134,8 @@ window.addEventListener('load', () => {
 
         i = (i + 1) % loadingPrompts.length;
     }, 750);
+
+
 
     setTimeout(()=>{
         clearInterval(loadingPromptInterval);

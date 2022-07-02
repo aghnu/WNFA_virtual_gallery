@@ -48,6 +48,14 @@ export class AudioControl {
         return new AudioControl();
     }
 
+    isReady() {
+        return (
+            this.audio.readyState >=3 && 
+            this.button_up_audio.readyState >= 3 &&
+            this.button_down_audio.readyState >=3    
+        )
+    }
+
     pressButtonDown() {
         if (this.button_down_audio.ended || !this.button_down_audio_played) {
             this.button_down_audio_played = true;
