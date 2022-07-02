@@ -24,6 +24,8 @@ export class GlobalState {
             rotateDirection: 1,
         }
 
+        this.focus = true;
+
     }
 
     static getInstance() {

@@ -22,7 +22,6 @@ function disablePinchZoom() {
     // })
 }
 
-
 function getImage(url, onSuccess, onFailure) {
     fetch(url)
         .then((r) => {

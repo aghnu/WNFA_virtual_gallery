@@ -210,6 +210,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
         pointerUp();
         focus = false;
         AudioControl.getInstance().drop();
+        GlobalState.getInstance().focus = false;
         initSpace();
 
     }
@@ -217,6 +218,7 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     window.onfocus = () => {
         focus = true;
         AudioControl.getInstance().init();
+        GlobalState.getInstance().focus = true;
         initSpace();
     }
 
