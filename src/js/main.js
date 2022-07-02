@@ -8,6 +8,30 @@ import { AudioControl } from './backgroundAudioControl';
 
 import Bowser from 'bowser';
 
+
+
+function initAnimationLoop() {
+    const animationFPS = 60;
+    let oldInterval;
+
+    window.requestAnimationFrame((t) => {
+        oldInterval = t; 
+    });
+
+    setInterval(() => {
+
+        window.requestAnimationFrame((t) => {
+            const seconds_timelapse = (t-oldInterval) / 1000;
+            const FPS = 1 / seconds_timelapse;
+            GlobalState.getInstance().broadcastAnimationUpdate(FPS);   
+            oldInterval = t;         
+            // console.log(GlobalState.getInstance().animationUpdateListeners.length);
+        });
+
+    }, 1000 / animationFPS);
+
+}
+
 function main() {
     // initMovetracking();
     // loadPosters();
@@ -46,10 +70,14 @@ function main() {
     button_info.appendChild(button_info_icon);
     button_next.appendChild(button_next_icon);
     button_refresh.appendChild(button_refresh_icon);
-
+    
+    initAnimationLoop();
+    
     return () => {
         postersInit();
     }
+
+    
 }
 
 function browserIsSupported() {

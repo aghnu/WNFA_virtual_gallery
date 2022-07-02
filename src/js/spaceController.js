@@ -223,37 +223,49 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
 
     // animation loop
     const rotateElOriginalTransformMatrix = window.getComputedStyle(rotateEl).transform;
-    const site_fps_prompt = document.querySelector('#site-fps .prompt');
-    let fps_report = 0;
+    // const site_fps_prompt = document.querySelector('#site-fps .prompt');
+    // let fps_report = 0;
 
-    setInterval(() => {
-        site_fps_prompt.innerHTML = 'FPS: ' + fps_report;
-    }, 1000);
+    // setInterval(() => {
+    //     site_fps_prompt.innerHTML = 'FPS: ' + fps_report;
+    // }, 1000);
 
 
-    const animation_loop_frame = (old) => {
-        window.requestAnimationFrame((t)=>{
+    // animation loop
 
-            const seconds_timelapse = (t-old) / 1000;
-            const FPS = 1 / seconds_timelapse;
-            fps_report = Math.round(FPS);
-
-            if (FPS > MIN_FPS_ALLOWED) {
-                if (GlobalState.getInstance().canRotate()) {
-                    GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + GlobalState.getInstance().space_info.rotateDirection * (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
-                }
-                focusUpdate(FPS);
-                spaceUpdate(spaceEl, boundingEl);            
-                rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);    
-                GlobalState.getInstance().broadcastAnimationUpdate(FPS);         
-            }
-            animation_loop_frame(t);   
-        });
-            
-    }
-    window.requestAnimationFrame((t)=>{
-        animation_loop_frame(t);
+    GlobalState.getInstance().subscribeAnimationUpdate((FPS)=>{
+        if (GlobalState.getInstance().canRotate()) {
+            GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + GlobalState.getInstance().space_info.rotateDirection * (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
+        }
+        focusUpdate(FPS);
+        spaceUpdate(spaceEl, boundingEl);            
+        rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);      
     });
+
+
+    // const animation_loop_frame = (old) => {
+    //     window.requestAnimationFrame((t)=>{
+
+    //         const seconds_timelapse = (t-old) / 1000;
+    //         const FPS = 1 / seconds_timelapse;
+    //         // fps_report = Math.round(FPS);
+
+    //         if (FPS > MIN_FPS_ALLOWED) {
+    //             if (GlobalState.getInstance().canRotate()) {
+    //                 GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + GlobalState.getInstance().space_info.rotateDirection * (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
+    //             }
+    //             focusUpdate(FPS);
+    //             spaceUpdate(spaceEl, boundingEl);            
+    //             rotateUpdate(rotateEl, rotateElOriginalTransformMatrix);    
+    //             GlobalState.getInstance().broadcastAnimationUpdate(FPS);         
+    //         }
+    //         animation_loop_frame(t);   
+    //     });
+            
+    // }
+    // window.requestAnimationFrame((t)=>{
+    //     animation_loop_frame(t);
+    // });
 
     window.addEventListener('resize', ()=>{
         checkRatio();
