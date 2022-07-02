@@ -126,6 +126,12 @@ $bottom_tilt:       25deg;
     }
 }
 
+#screenlock {
+    @include fixedWholeScreen();
+    z-index: $layer-base-z-index + 5;
+
+}
+
 #site-interactive {
     @include fixedWholeScreen();
     @include interactiveContainer();
@@ -136,7 +142,6 @@ $bottom_tilt:       25deg;
         //     transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
         // }
     }
-
 
     .lighting {
         // @include fixedWholeScreen();

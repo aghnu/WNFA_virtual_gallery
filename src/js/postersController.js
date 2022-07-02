@@ -218,7 +218,7 @@ function loadResults(metaJSON, type) {
             }, 100);
 
         }, 100);
-    }
+    };
 
     const removeLastPoster = () => {
         if (posters.length !== 0) {
@@ -229,14 +229,14 @@ function loadResults(metaJSON, type) {
             }, 500);
         }
         return null;
-    }
+    };
 
     const removeAllPosters = (callback = () => {}) => {
         while(posters.length !== 0) {
             removeLastPoster();
         }
         callback();
-    }
+    };
 
     const hideAllPosters = (callback = () => {}) => {
         pause = true;
@@ -245,7 +245,7 @@ function loadResults(metaJSON, type) {
             el.classList.add('hide');
         }
         callback();
-    }
+    };
 
     const showAllPosters = (callback = () => {}) => {
         for (let i = 0; i < posters.length; i++) {
@@ -254,7 +254,11 @@ function loadResults(metaJSON, type) {
         }
         pause = false;
         callback();
-    }
+    };
+
+    const canLoad = () => {
+        return (!pause && GlobalState.getInstance().focus && (GlobalState.getInstance().canRotate()) && !pauseForFocus);
+    };
 
     const loadResults = () => {
         const postersNum = metaJSON.results.total;
@@ -263,13 +267,13 @@ function loadResults(metaJSON, type) {
         const NUM_RESULTS = 22;
         
         preLoadingInterval = setInterval(() => {
-            if (!pause && (GlobalState.getInstance().canRotate()) && next && !pauseForFocus) {
+            if (canLoad() && next) {
 
                 // fetch one image
                 next = false;
                 getImage(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg', (url)=>{
                     // success
-                    if (!pause && (GlobalState.getInstance().canRotate()) && !pauseForFocus) {
+                    if (canLoad()) {
                         appendPoster(createPoster(url));
                         i++;                        
                     }
@@ -282,13 +286,13 @@ function loadResults(metaJSON, type) {
                 if (i >= NUM_RESULTS) {
                     clearInterval(preLoadingInterval);
                     postLoadingInterval = setInterval(() => {
-                        if (!pause && (GlobalState.getInstance().canRotate()) && next && !pauseForFocus) {
+                        if (canLoad() && next) {
 
                             // fetch one image
                             next = false;
                             getImage(assetsURL + 'results/' + Math.floor(Math.random() * postersNum + 1) + '.jpg', (url)=>{
                                 // success
-                                if (!pause && (GlobalState.getInstance().canRotate()) && !pauseForFocus) {
+                                if (canLoad()) {
                                     removeLastPoster();
                                     appendPoster(createPoster(url));
                                 }
@@ -310,13 +314,13 @@ function loadResults(metaJSON, type) {
         let i = 1;
         let next = true;
         preLoadingInterval = setInterval(() => {
-            if (!pause && (GlobalState.getInstance().canRotate()) && next && !pauseForFocus) {
+            if (canLoad() && next) {
 
                 // fetch one image
                 next = false;
                 getImage(assetsURL + 'posters/' + String(i) + '.jpg', (url)=>{
                     // success
-                    if (!pause && (GlobalState.getInstance().canRotate()) && !pauseForFocus) {
+                    if (canLoad()) {
                         appendPoster(createPoster(url));
                         i++;                        
                     }

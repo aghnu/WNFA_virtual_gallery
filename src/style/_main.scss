@@ -9,7 +9,18 @@ $site-element-size:         min(1.65vh, 2.15vw);
     user-select: none;  
 }
 
+#screenlock {
+    opacity: 0;
+    
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.75);
+    transition: opacity 1.5s;
 
+    &.lock {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
 
 #site-preloading-prompt {
     @keyframes text-stretch {

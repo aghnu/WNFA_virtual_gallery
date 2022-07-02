@@ -211,14 +211,21 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
         focus = false;
         AudioControl.getInstance().drop();
         GlobalState.getInstance().focus = false;
-        initSpace();
 
+        const lock = document.querySelector('#screenlock');
+        lock.classList.add('lock');
+
+        initSpace();
     }
 
     window.onfocus = () => {
         focus = true;
         AudioControl.getInstance().init();
         GlobalState.getInstance().focus = true;
+
+        const lock = document.querySelector('#screenlock');
+        lock.classList.remove('lock');
+
         initSpace();
     }
 
@@ -236,8 +243,14 @@ export function initSpace(spaceEl, rotateEl, boundingEl) {
     // animation loop
 
     GlobalState.getInstance().subscribeAnimationUpdate((FPS)=>{
-        if (GlobalState.getInstance().canRotate()) {
-            GlobalState.getInstance().space_info.rotateDeg = (GlobalState.getInstance().space_info.rotateDeg + GlobalState.getInstance().space_info.rotateDirection * (360 / (GlobalState.getInstance().rotateSpeed / (1 / FPS))));
+        const state = GlobalState.getInstance();
+        if (state.canRotate()) {
+            if (state.focus) {
+                state.space_info.rotateDeg = (state.space_info.rotateDeg + state.space_info.rotateDirection * (360 / (state.rotateSpeed / (1 / FPS))));
+            } else {
+                state.space_info.rotateDeg = (state.space_info.rotateDeg + 0.25 * state.space_info.rotateDirection * (360 / (state.rotateSpeed / (1 / FPS))));
+            }
+            
         }
         focusUpdate(FPS);
         spaceUpdate(spaceEl, boundingEl);            
