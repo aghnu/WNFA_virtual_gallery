@@ -13,7 +13,7 @@ $site-element-size:         min(1.65vh, 2.15vw);
     opacity: 0;
     
     pointer-events: none;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.35);
     transition: opacity 1.5s;
 
     &.lock {
