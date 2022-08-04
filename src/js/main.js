@@ -8,7 +8,34 @@ import { AudioControl } from './backgroundAudioControl';
 
 import Bowser from 'bowser';
 
+function initAnimationLoopUnlimited() {
+    let oldInterval;
 
+
+    const render = () => {
+        window.requestAnimationFrame((t) => {
+            if ((t - oldInterval) !== 0) {
+                const seconds_timelapse = (t-oldInterval) / 1000;
+                const FPS = 1 / seconds_timelapse;
+                if (FPS > 10) {
+                    GlobalState.getInstance().broadcastAnimationUpdate(FPS);  
+                }
+                 
+                oldInterval = t;         
+                // console.log(GlobalState.getInstance().animationUpdateListeners.length);
+            }
+            render();
+        });        
+    }
+
+
+    window.requestAnimationFrame((t) => {
+        oldInterval = t; 
+        render();
+    });
+
+
+}
 
 function initAnimationLoop() {
     const animationFPS = 60;
@@ -75,7 +102,8 @@ function main() {
     button_next.appendChild(button_next_icon);
     button_refresh.appendChild(button_refresh_icon);
     
-    initAnimationLoop();
+    // initAnimationLoop();
+    initAnimationLoopUnlimited();
     
     return () => {
         postersInit();
