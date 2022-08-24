@@ -42,7 +42,9 @@ export class GlobalState {
 
     broadcastAnimationUpdate(FPS) {
         for (let i = 0; i < this.animationUpdateListeners.length; i++) {
-            this.animationUpdateListeners[i](FPS);
+            new Promise(()=>{
+                this.animationUpdateListeners[i](FPS);
+            });          
         }
     }
 
