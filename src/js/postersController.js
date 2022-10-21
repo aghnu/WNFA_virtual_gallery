@@ -47,7 +47,7 @@ function loadResults(metaJSON, type) {
     let pauseForFocus = false;
 
     const createPoster = (url) => {
-        const sizeMax = 10;
+        const sizeMax = 9;
         const sizeMin = 2;
 
         const clusterWidth = 70 - Math.sqrt(sizeMax * sizeMax * 2);

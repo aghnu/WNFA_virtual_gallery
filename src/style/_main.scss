@@ -9,6 +9,51 @@ $site-element-size:         min(1.65vh, 2.15vw);
     user-select: none;  
 }
 
+// #site-music-control {
+//     width: 50%;
+//     .slider-container {
+//         font-size: $site-element-size;
+//         .slider {
+//             font-size: $site-element-size;
+//             -webkit-appearance: none;
+//             appearance: none;
+//             outline: none;
+            
+//             width: 100%;
+//             height: 0.25em;
+//             background: rgba(50, 50, 50, 0.25);
+
+//             border-radius: 1em;
+//             opacity: 0.5;
+
+//             transition: opacity 0.5s;
+
+//             &:hover {
+//                 opacity: 1;
+//             }
+
+//             &::-webkit-slider-thumb,
+//             &::-moz-range-thumb {
+//                 font-size: $site-element-size;
+//                 -webkit-appearance: none;
+//                 appearance: none;
+//                 outline: none;
+//                 border: none;
+                
+//                 width: 1.5em;
+//                 height: 1.5em;
+//                 background-color: rgba(200, 200, 200);
+
+//                 border-radius: 100%;
+//                 box-shadow: 0 0.35em 0.5em rgba(60, 60, 60, 0.8);
+
+//                 cursor: pointer;                
+//             }
+//         }
+//     }
+
+// }
+
 #screenlock {
     opacity: 0;
     
@@ -274,7 +319,7 @@ $site-element-size:         min(1.65vh, 2.15vw);
 
             &.tiepian {
                 .frame .surface {
-                    background-color: #787882;
+                    background-color: #787887;
                 }              
                 
                 .frame .display .buttons button {
@@ -282,7 +327,7 @@ $site-element-size:         min(1.65vh, 2.15vw);
                 }
 
                 #logo-tiepian {
-                    opacity: 0.3;
+                    opacity: 0.4;
                 }
             }
 
@@ -296,7 +341,7 @@ $site-element-size:         min(1.65vh, 2.15vw);
                 }
 
                 #logo-huixiang {
-                    opacity: 0.3;
+                    opacity: 0.4;
                 }
             }
         }
