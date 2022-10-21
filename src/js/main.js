@@ -37,32 +37,32 @@ function initAnimationLoopUnlimited() {
 
 }
 
-function initAnimationLoop() {
-    const animationFPS = 60;
-    let oldInterval;
+// function initAnimationLoop() {
+//     const animationFPS = 60;
+//     let oldInterval;
 
-    window.requestAnimationFrame((t) => {
-        oldInterval = t; 
-    });
+//     window.requestAnimationFrame((t) => {
+//         oldInterval = t; 
+//     });
 
-    setInterval(() => {
+//     setInterval(() => {
 
-        window.requestAnimationFrame((t) => {
-            if ((t - oldInterval) !== 0) {
-                const seconds_timelapse = (t-oldInterval) / 1000;
-                const FPS = 1 / seconds_timelapse;
-                if (FPS > 10) {
-                    GlobalState.getInstance().broadcastAnimationUpdate(FPS);  
-                }
+//         window.requestAnimationFrame((t) => {
+//             if ((t - oldInterval) !== 0) {
+//                 const seconds_timelapse = (t-oldInterval) / 1000;
+//                 const FPS = 1 / seconds_timelapse;
+//                 if (FPS > 10) {
+//                     GlobalState.getInstance().broadcastAnimationUpdate(FPS);  
+//                 }
                  
-                oldInterval = t;         
-                // console.log(GlobalState.getInstance().animationUpdateListeners.length);
-            }
-        });
+//                 oldInterval = t;         
+//                 // console.log(GlobalState.getInstance().animationUpdateListeners.length);
+//             }
+//         });
 
-    }, 1000 / animationFPS);
+//     }, 1000 / animationFPS);
 
-}
+// }
 
 function main() {
     // initMovetracking();
@@ -85,22 +85,27 @@ function main() {
     const button_info = document.querySelector('#site-button-info');
     const button_next = document.querySelector('#site-button-next');
     const button_refresh = document.querySelector('#site-button-refresh');
+    const button_gen = document.querySelector('#site-button-gen');
 
     const button_info_icon = document.createElement('div');
     const button_next_icon = document.createElement('div');
     const button_refresh_icon = document.createElement('div');
+    const button_gen_icon = document.createElement('div');
 
     button_info_icon.classList.add('icon');
     button_next_icon.classList.add('icon');
     button_refresh_icon.classList.add('icon');
+    button_gen_icon.classList.add('icon');
 
-    button_info_icon.innerHTML = (icon['info']('rgb(58, 58, 58)', '0.75em'));
-    button_next_icon.innerHTML = (icon['next']('rgb(225, 225, 225)', '0.75em'));
-    button_refresh_icon.innerHTML = (icon['refresh']('rgb(225, 225, 225)', '0.75em'));
+    button_info_icon.innerHTML = (icon['info']('rgb(58, 58, 58)', '0.9em'));
+    button_next_icon.innerHTML = (icon['next']('rgb(225, 225, 225)', '0.9em'));
+    button_refresh_icon.innerHTML = (icon['refresh']('rgb(225, 225, 225)', '0.9em'));
+    button_gen_icon.innerHTML = (icon['add']('rgb(225, 225, 225)', '0.9em'));
 
     button_info.appendChild(button_info_icon);
     button_next.appendChild(button_next_icon);
     button_refresh.appendChild(button_refresh_icon);
+    button_gen.appendChild(button_gen_icon);
     
     // initAnimationLoop();
     initAnimationLoopUnlimited();
