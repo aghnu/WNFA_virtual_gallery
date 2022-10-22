@@ -75,11 +75,13 @@ function main() {
     initSpace(room, gallery, container);
     let postersInit = initPosters(gallery)['init'];
 
-    // // init logos
-    // const logo_tiepian = document.querySelector('#logo-tiepian');
-    // const logo_huixiang = document.querySelector('#logo-huixiang');
+    // init icon
+    const music_control_container = document.querySelector('#site-wall-text .container .music-control');
+    const music_control_container_icon = music_control_container.querySelector('.music-icon');
+    const music_control_container_text = music_control_container.querySelector('.volume-text');
 
-
+    music_control_container_icon.innerHTML = (icon['music']('rgba(225, 225, 225, 0.25)', '7em'));
+    music_control_container_text.innerText = 100;
 
     // init buttons
     const button_info = document.querySelector('#site-button-info');

@@ -634,17 +634,45 @@ export function initPosters(container) {
                         }
                     });
                 }
-        
+
+
+                let textWallAnimationTimeout;
                 addButtonBehavior(info_button, () => {
+                    site_wall_text.classList.remove('text');
+                    site_wall_text.classList.remove('music');
+                    clearTimeout(textWallAnimationTimeout);
                     info_button.classList.add('pressed');
+                    site_wall_text.classList.add('text');
                     site_wall_text.classList.add('focus');
                     currentPostersControlFunc.hide(()=>{});
                 }, () => {
-                    info_button.classList.remove('pressed');
+                    
                     site_wall_text.classList.remove('focus');
+                    info_button.classList.remove('pressed');
+                    textWallAnimationTimeout = setTimeout(() => {
+                        site_wall_text.classList.remove('text');
+                    }, 750);
+                    
                     currentPostersControlFunc.show(()=>{});
                 }, {buttonSound: true, preventDefault: true});
         
+                addButtonBehavior(music_slider, () => {
+                    site_wall_text.classList.remove('text');
+                    site_wall_text.classList.remove('music');
+                    clearTimeout(textWallAnimationTimeout);
+                    music_slider.classList.add('pressed');
+                    site_wall_text.classList.add('music');
+                    site_wall_text.classList.add('focus');
+                    currentPostersControlFunc.hide(()=>{}, false);
+                }, () => {
+                    music_slider.classList.remove('pressed');
+                    site_wall_text.classList.remove('focus');
+
+                    textWallAnimationTimeout = setTimeout(() => {
+                        site_wall_text.classList.remove('music');
+                    }, 750);
+                    currentPostersControlFunc.show(()=>{}, false);
+                });
 
                 let refreshButtonAnimationTimeout;
                 addButtonBehavior(refresh_button, () => {
@@ -690,14 +718,6 @@ export function initPosters(container) {
 
                     gen_button.classList.remove('pressed');
                 }, {buttonSound: true, preventDefault: true});
-
-                addButtonBehavior(music_slider, () => {
-                    music_slider.classList.add('pressed');
-                    currentPostersControlFunc.hide(()=>{}, false);
-                }, () => {
-                    music_slider.classList.remove('pressed');
-                    currentPostersControlFunc.show(()=>{}, false);
-                });
         
             });
         }

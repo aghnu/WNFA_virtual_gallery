@@ -33,6 +33,23 @@ $bottom_tilt:       25deg;
         left: 50%;
         transform: translate(-50%, -75%);
         text-align: center;
+
+        .music-control,
+        .poem-text {
+            display: none;
+        }
+    }
+
+    &.music {
+        .container .music-control {
+            display: block;
+        }          
+    }
+
+    &.text {
+        .container .poem-text {
+            display: block;
+        }            
     }
 
     .logo-container {
