@@ -673,6 +673,14 @@ export function initPosters(container) {
                     }, 750);
                     currentPostersControlFunc.show(()=>{}, false);
                 });
+                // slider control
+                const music_slider_input = music_slider.querySelector('input');
+                const music_text_wall_volume = site_wall_text.querySelector('.container .music-control .volume-text')
+                music_slider_input.addEventListener('input', () => {
+                    const volume = Math.round(music_slider_input.value);
+                    music_text_wall_volume.style.filter = `saturate(${volume/100})`;
+                    music_text_wall_volume.innerText = volume;
+                });
 
                 let refreshButtonAnimationTimeout;
                 addButtonBehavior(refresh_button, () => {

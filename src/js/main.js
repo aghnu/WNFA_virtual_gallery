@@ -81,7 +81,7 @@ function main() {
     const music_control_container_text = music_control_container.querySelector('.volume-text');
 
     music_control_container_icon.innerHTML = (icon['music']('rgba(225, 225, 225, 0.25)', '7em'));
-    music_control_container_text.innerText = 100;
+    // music_control_container_text.innerText = 100;
 
     // init buttons
     const button_info = document.querySelector('#site-button-info');
