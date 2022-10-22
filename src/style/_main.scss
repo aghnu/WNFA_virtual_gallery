@@ -10,9 +10,9 @@ $site-element-size:         min(1.55vh, 2.15vw);
 }
 
 #site-music-control {
-    width: 10em;
+    width: 13em;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
     // &.pressed {
@@ -31,6 +31,13 @@ $site-element-size:         min(1.55vh, 2.15vw);
             
     //     }
     // }
+    .icon {
+        width: 10%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
     .slider-container {
         font-size: $site-element-size;
@@ -40,7 +47,7 @@ $site-element-size:         min(1.55vh, 2.15vw);
             appearance: none;
             outline: none;
             
-            width: 100%;
+            width: 80%;
             height: 0.2em;
             background: rgba(50, 50, 50, 0.75);
 
@@ -61,13 +68,13 @@ $site-element-size:         min(1.55vh, 2.15vw);
                 outline: none;
                 border: none;
                 
-                width: 1.2em;
-                height: 1.2em;
+                width: 1.4em;
+                height: 1.4em;
                 border-radius: 100%;
                 background-color: rgba(200, 200, 200);
 
                 
-                box-shadow: 0 0.4em 0.6em rgba(60, 60, 60, 0.9);
+                box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.2);
                 // transition: width 0.5s, height 0.5s;
 
 
@@ -467,7 +474,7 @@ $site-element-size:         min(1.55vh, 2.15vw);
                             border-radius: 100%;
                             background-color: rgb(50, 50, 50);
                             transition: opacity 0.25s;
-                            box-shadow: 0 0.4em 0.6em rgba(60, 60, 60, 0.9);
+                            box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.2);
                             position: relative;
                             transition: background-color 2s;
 

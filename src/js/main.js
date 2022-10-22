@@ -80,8 +80,12 @@ function main() {
     const music_control_container_icon = music_control_container.querySelector('.music-icon');
     const music_control_container_text = music_control_container.querySelector('.volume-text');
 
+    
     music_control_container_icon.innerHTML = (icon['music']('rgba(225, 225, 225, 0.25)', '7em'));
-    // music_control_container_text.innerText = 100;
+    
+    const music_control_slider = document.querySelector('#site-music-control');
+    music_control_slider.querySelector('.icon-minus').innerHTML = (icon['minus']('rgb(225, 225, 225)', '0.9em'));
+    music_control_slider.querySelector('.icon-plus').innerHTML = (icon['add']('rgb(225, 225, 225)', '0.9em'));
 
     // init buttons
     const button_info = document.querySelector('#site-button-info');
