@@ -50,9 +50,9 @@ function loadResults(metaJSON, type) {
         const sizeMax = 9.25;
         const sizeMin = 2;
 
-        const clusterWidth = 70 - Math.sqrt(sizeMax * sizeMax * 2);
+        const clusterWidth = 50 - Math.sqrt(sizeMax * sizeMax * 2);
         const clusterWidthOffset = 30;
-        const clusterHeight = 80 - Math.sqrt(sizeMax * sizeMax * 2);
+        const clusterHeight = 85 - Math.sqrt(sizeMax * sizeMax * 2);
 
 
         const el = document.createElement((url !== null) ? 'img' : 'div');
