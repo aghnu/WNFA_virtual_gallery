@@ -442,11 +442,14 @@ function loadResults(metaJSON, type) {
                 // }, 1000);           
             });
         },
-        hide: (callback) => {
+        hide: (callback, audioPause=true) => {
 
             const lighting = document.querySelector('#site-interactive .lighting');
             lighting.classList.add('hide');
-            AudioControl.getInstance().pause();
+            if (audioPause) {
+                AudioControl.getInstance().pause();
+            }
+            
             GlobalState.getInstance().onPoster = true;
 
             hideAllPosters(()=>{
@@ -547,46 +550,76 @@ export function initPosters(container) {
                 const refresh_button = document.querySelector('#site-button-refresh');
                 const next_button = document.querySelector('#site-button-next');
                 const info_button = document.querySelector('#site-button-info');
-        
+                const gen_button = document.querySelector('#site-button-gen');
+                const music_slider = document.querySelector('#site-music-control')
+
                 const site_wall_text = document.querySelector('#site-wall-text');
         
-                const addButtonBehavior = (btnEl, downFunc, upFunc) => {
+                const addButtonBehavior = (btnEl, downFunc, upFunc, optional={}) => {
+                    /*
+                        optional: {
+                            preventDefault = true;
+                            buttonSound = true;
+                        }
+                    */
+
+
                     let buttonDown = false;
         
                     // touch events
                     btnEl.addEventListener('touchstart', (e) => {
-                        e.preventDefault();
-                        buttonDown = true;
-                        AudioControl.getInstance().pressButtonDown();
+                        if (optional?.preventDefault) {
+                            e.preventDefault();
+                        }
+                        if (optional?.buttonSound) {
+                            AudioControl.getInstance().pressButtonDown();
+                        }     
+                        buttonDown = true;                   
                         downFunc();
                     });
         
                     btnEl.addEventListener('touchend', (e) => {
-                        e.preventDefault();
+                        if (optional?.preventDefault) {
+                            e.preventDefault();
+                        }
                         buttonDown = false;
-                        AudioControl.getInstance().pressButtonUp();
+                        if (optional?.buttonSound) {
+                            AudioControl.getInstance().pressButtonUp();
+                        }     
                         upFunc();
                     });
         
                     btnEl.addEventListener('touchcancel', (e) => {
-                        e.preventDefault();
+                        if (optional?.preventDefault) {
+                            e.preventDefault();
+                        }
                         buttonDown = false;
-                        AudioControl.getInstance().pressButtonUp();
+                        if (optional?.buttonSound) {
+                            AudioControl.getInstance().pressButtonUp();
+                        } 
                         upFunc();
                     });
         
                     // click events
                     btnEl.addEventListener('mousedown', (e) => {
-                        e.preventDefault();
+                        if (optional?.preventDefault) {
+                            e.preventDefault();
+                        }
                         buttonDown = true;
-                        AudioControl.getInstance().pressButtonDown();
+                        if (optional?.buttonSound) {
+                            AudioControl.getInstance().pressButtonDown();
+                        }     
                         downFunc();
                     });
         
                     btnEl.addEventListener('mouseup', (e) => {
-                        e.preventDefault();
+                        if (optional?.preventDefault) {
+                            e.preventDefault();
+                        }
                         buttonDown = false;
-                        AudioControl.getInstance().pressButtonUp();
+                        if (optional?.buttonSound) {
+                            AudioControl.getInstance().pressButtonUp();
+                        } 
                         upFunc();
                     });
         
@@ -594,7 +627,9 @@ export function initPosters(container) {
                     document.addEventListener('mouseup', (e) => {
                         if (buttonDown) {
                             buttonDown = false;
-                            AudioControl.getInstance().pressButtonUp();
+                            if (optional?.buttonSound) {
+                                AudioControl.getInstance().pressButtonUp();
+                            } 
                             upFunc();
                         }
                     });
@@ -608,7 +643,7 @@ export function initPosters(container) {
                     info_button.classList.remove('pressed');
                     site_wall_text.classList.remove('focus');
                     currentPostersControlFunc.show(()=>{});
-                });
+                }, {buttonSound: true, preventDefault: true});
         
 
                 let refreshButtonAnimationTimeout;
@@ -625,7 +660,7 @@ export function initPosters(container) {
                     }, 750);
 
                     refresh_button.classList.remove('pressed');
-                })
+                }, {buttonSound: true, preventDefault: true});
         
 
                 let nextButtonAnimationTimeout;
@@ -642,7 +677,27 @@ export function initPosters(container) {
                     }, 750);
 
                     next_button.classList.remove('pressed');
-                })
+                }, {buttonSound: true, preventDefault: true});
+
+                let genButtonAnimationTimeout;
+                addButtonBehavior(gen_button, () => {
+                    clearTimeout(genButtonAnimationTimeout);
+                    gen_button.classList.add('pressed');
+                }, () => {
+                    genButtonAnimationTimeout = setTimeout(() => {
+                        window.open("https://www.aghnu.me/WNFA");                     
+                    }, 500);
+
+                    gen_button.classList.remove('pressed');
+                }, {buttonSound: true, preventDefault: true});
+
+                addButtonBehavior(music_slider, () => {
+                    music_slider.classList.add('pressed');
+                    currentPostersControlFunc.hide(()=>{}, false);
+                }, () => {
+                    music_slider.classList.remove('pressed');
+                    currentPostersControlFunc.show(()=>{}, false);
+                });
         
             });
         }
