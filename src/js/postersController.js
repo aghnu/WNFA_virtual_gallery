@@ -676,11 +676,14 @@ export function initPosters(container) {
                 // slider control
                 const music_slider_input = music_slider.querySelector('input');
                 const music_text_wall_volume = site_wall_text.querySelector('.container .music-control .volume-text')
-                music_slider_input.addEventListener('input', () => {
+                const changeVolume = (options) => {
                     const volume = Math.round(music_slider_input.value);
                     music_text_wall_volume.style.filter = `saturate(${volume/100})`;
                     music_text_wall_volume.innerText = volume;
-                });
+                    AudioControl.getInstance().setVolume(volume/100, options);         
+                }
+                changeVolume({fade: true});
+                music_slider_input.addEventListener('input', changeVolume);
 
                 let refreshButtonAnimationTimeout;
                 addButtonBehavior(refresh_button, () => {

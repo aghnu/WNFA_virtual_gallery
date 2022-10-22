@@ -14,6 +14,7 @@ export class AudioControl {
         // init
         // prepare audio
         this.audio = document.createElement('audio');
+
         this.audio.loop = true;
         this.audio.src = bga;
 
@@ -21,6 +22,7 @@ export class AudioControl {
         this.fadingTime = 1.5;            // 1s
         this.fadingStep = 0.05;
         this.audio.volume = 0;
+        this.current_volume = 0;
 
         this.canPlay = false;
         this.shouldPlay = false;
@@ -70,15 +72,24 @@ export class AudioControl {
         }
     }
 
+    setVolume(volume, options) {
+        this.current_volume = volume;
+        if (options?.fade) {
+            this.fadeIn();
+        } else {
+            this.audio.volume = this.current_volume;
+        }
+    }
+
     fadeIn(callback=()=>{}) {
         clearInterval(this.fadingInterval);
         this.fadingInterval = setInterval(() => {
             if (this.canPlay) {
-                if (this.audio.volume === 1) {
+                if (this.audio.volume === this.current_volume) {
                     clearInterval(this.fadingInterval);
                     callback();
                 } else {
-                    this.audio.volume = Math.min(this.audio.volume + this.fadingStep, 1);
+                    this.audio.volume = Math.min(this.audio.volume + this.fadingStep, this.current_volume);
                 }                
             } else {
                 clearInterval(this.fadingInterval);
