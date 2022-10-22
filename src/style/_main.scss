@@ -62,9 +62,8 @@ $site-element-size:         min(1.55vh, 2.15vw);
             // &:hover {
             //     opacity: 1;
             // }
-
-            &::-webkit-slider-thumb,
-            &::-moz-range-thumb {
+            
+            @mixin slider-thumb-style {
                 font-size: $site-element-size;
 
                 -webkit-appearance: none;
@@ -75,16 +74,20 @@ $site-element-size:         min(1.55vh, 2.15vw);
                 width: 1.4em;
                 height: 1.4em;
                 border-radius: 100%;
-                background-color: rgba(200, 200, 200);
-
+                background: rgba(200, 200, 200);
                 
                 box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.2);
                 // transition: width 0.5s, height 0.5s;
 
+                cursor: pointer;                  
+            }
 
-                
+            &::-webkit-slider-thumb {
+                @include slider-thumb-style();
+            }
 
-                cursor: pointer;                
+            &::-moz-range-thumb {
+                @include slider-thumb-style();           
             }
         }
     }
