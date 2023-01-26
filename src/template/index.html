@@ -1,134 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <meta name="author" content="Gengyuan Huang">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="author" content="Gengyuan Huang" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>心的铁片/WNFA Gallery</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <noscript>
-        <div id="site-noscript">
-            <p>Please enable JavaScript</p>
-        </div>
+      <div id="site-noscript">
+        <p>Please enable JavaScript</p>
+      </div>
     </noscript>
 
     <div id="site-informative">
-        <div id="site-poster-detail-layer">
-            
-        </div>
-        <div id="site-fps"><p class="prompt">FPS: 0</p></div>
-        <div id="site-prompt">
-            <p class="prompt"></p>
-        </div>
+      <div id="site-poster-detail-layer"></div>
+      <div id="site-fps"><p class="prompt">FPS: 0</p></div>
+      <div id="site-prompt">
+        <p class="prompt"></p>
+      </div>
     </div>
     <div id="screenlock"></div>
     <div id="site-interactive">
-        
-        <div class="lighting"></div>
-        <div class="shadowing"></div>
-        
-        <div class="room" id="site-interactive-room">
-            <div class="frame">
-                <div class="display bottom">
-                    <div class="texture"></div>
-                    <div class="control">
-                        <p class="first">GENGYUAN HUANG & YUAN FANG</p>
-                        <p class="second">© 2022 WNFA Virtual Gallery</p>
-                        <p class="third">WORDS NEVER FALL APART</p>
-                        <!-- <p id="site-gallery-name">&nbsp</p> -->
-                        
-                        <div class="buttons">
-                            <button id="site-button-info" title="WNFA Info"></button>
-                            <button id="site-button-gen" title="Generate WNFA Poster"></button>
+      <div class="lighting"></div>
+      <div class="shadowing"></div>
 
-                            <div id="site-music-control">
-                                <div class="icon-minus icon"></div>
-                                <div class="slider-container">
-                                    <input class="slider" type="range" min="0" max="100" value="80">
-                                </div>
-                                <div class="icon-plus icon"></div>
-                            </div>       
-                            
-                            <button id="site-button-refresh" title="Refresh"></button>
-                            <button id="site-button-next" title="Switch Gallery"></button>
+      <div class="room" id="site-interactive-room">
+        <div class="frame">
+          <div class="display bottom">
+            <div class="texture"></div>
+            <div class="control">
+              <p class="first">GENGYUAN HUANG & YUAN FANG</p>
+              <p class="second">© 2022 WNFA Virtual Gallery</p>
+              <p class="third">WORDS NEVER FALL APART</p>
+              <!-- <p id="site-gallery-name">&nbsp</p> -->
 
-                        </div>
+              <div class="buttons">
+                <button id="site-button-info" title="WNFA Info"></button>
+                <button
+                  id="site-button-gen"
+                  title="Generate WNFA Poster"
+                ></button>
 
-
-                    </div>
-                </div>
-                <div class="display top">
-                    <div class="texture"></div>
-                </div>
-                <div class="display left">
-                    <div class="texture"></div>
-                </div>
-                <div class="display right">
-                    <div class="texture"></div>
+                <div id="site-music-control">
+                  <div class="icon-minus icon"></div>
+                  <div class="slider-container">
+                    <input
+                      class="slider"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="80"
+                    />
+                  </div>
+                  <div class="icon-plus icon"></div>
                 </div>
 
-                <div class="display back">
-                    <!-- <div class="texture"></div> -->
-                    <div id="site-wall-text">
-                        <div class="container">
-                            <div class="poem-text">
-                                <p>&lt轰响&gt</p>
-                                <br>
-                                <p>荷叶滴落泪水</p>
-                                <p>来不及 浸透书叶</p>
-                                <p>一百年 一千年</p>
-                                <p>点燃一片通电的网</p>
-                                <br>
-                                <p>回想 回想</p>
-                                <p>那心的铁片</p>
-                                <p>也要发出轰响</p>                                 
-                            </div>
-                            <div class="music-control">
-                                <div class="music-icon"></div>
-                                <p class="volume-text"></p>
-                            </div>
-                     
-                        </div>
-                        <div id="logo-tiepian" class="logo-container">
-                            <div class="logo"></div>
-                            <div class="title">
-                                <span>心</span>
-                                <span>的</span>
-                                <span>铁</span>
-                                <span>片</span>
-                            </div>
-                        </div>
-                        <div id="logo-huixiang" class="logo-container">
-                            <div class="logo"></div>
-                            <div class="title">
-                                <span>回</span>
-                                <span>想</span>
-                                <span>回</span>
-                                <span>想</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="surface bottom"></div>
-                <div class="surface top"></div>
-                <div class="surface left"></div>
-                <div class="surface right"></div>
-
-                <!-- <div class="surface back"></div> -->
+                <button id="site-button-refresh" title="Refresh"></button>
+                <button id="site-button-next" title="Switch Gallery"></button>
+              </div>
             </div>
-            <div class="gallery"></div>
+          </div>
+          <div class="display top">
+            <div class="texture"></div>
+          </div>
+          <div class="display left">
+            <div class="texture"></div>
+          </div>
+          <div class="display right">
+            <div class="texture"></div>
+          </div>
+
+          <div class="display back">
+            <!-- <div class="texture"></div> -->
+            <div id="site-wall-text">
+              <div class="container">
+                <div class="poem-text">
+                  <p>&lt轰响&gt</p>
+                  <br />
+                  <p>荷叶滴落泪水</p>
+                  <p>来不及 浸透书叶</p>
+                  <p>一百年 一千年</p>
+                  <p>点燃一片通电的网</p>
+                  <br />
+                  <p>回想 回想</p>
+                  <p>那心的铁片</p>
+                  <p>也要发出轰响</p>
+                </div>
+                <div class="music-control">
+                  <div class="music-icon"></div>
+                  <p class="volume-text"></p>
+                </div>
+              </div>
+              <div id="logo-tiepian" class="logo-container">
+                <div class="logo"></div>
+                <div class="title">
+                  <span>心</span>
+                  <span>的</span>
+                  <span>铁</span>
+                  <span>片</span>
+                </div>
+              </div>
+              <div id="logo-huixiang" class="logo-container">
+                <div class="logo"></div>
+                <div class="title">
+                  <span>回</span>
+                  <span>想</span>
+                  <span>回</span>
+                  <span>想</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="surface bottom"></div>
+          <div class="surface top"></div>
+          <div class="surface left"></div>
+          <div class="surface right"></div>
+
+          <!-- <div class="surface back"></div> -->
         </div>
+        <div class="gallery"></div>
+      </div>
     </div>
     <header id="site-preloading-prompt">
-        <p class="title">WORDS NEVER FALL APART</p>
-        <p class="button">&ltENTER&gt</p>
+      <p class="title">WORDS NEVER FALL APART</p>
+      <p class="button">&ltENTER&gt</p>
     </header>
-</body>
-
+  </body>
 </html>
