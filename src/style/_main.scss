@@ -15,20 +15,6 @@ $site-element-size: min(1.55vh, 2.15vw);
   justify-content: space-between;
   align-items: center;
 
-  // &.pressed {
-  //     .slider-container {
-  //         .slider {
-  //             height: 0.3em;
-
-  //             &::-webkit-slider-thumb,
-  //             &::-moz-range-thumb {
-  //                 width: 1.75em;
-  //                 height: 1.75em;
-  //             }
-  //         }
-
-  //     }
-  // }
   .icon {
     width: 10%;
     height: 100%;
@@ -54,12 +40,6 @@ $site-element-size: min(1.55vh, 2.15vw);
       background: rgba(50, 50, 50, 0.75);
 
       border-radius: 1em;
-
-      // transition: opacity 0.5s, height 0.5s;
-
-      // &:hover {
-      //     opacity: 1;
-      // }
 
       @mixin slider-thumb-style {
         font-size: $site-element-size;
@@ -127,11 +107,6 @@ $site-element-size: min(1.55vh, 2.15vw);
       background-color: rgb(0, 0, 10, 0.9);
     }
 
-    // 25% {
-    //     background-color: rgba(120, 120, 140, 0.65);
-
-    // }
-
     50% {
       background-color: rgba(0, 0, 10, 0.75);
     }
@@ -142,8 +117,6 @@ $site-element-size: min(1.55vh, 2.15vw);
   }
 
   font-size: $site-element-size;
-  // background-color: rgb(120, 120, 140);
-  // background-image: radial-gradient(at 50% 40%, rgba(50, 50, 50, 0.25), #000 95%);
   pointer-events: all;
   white-space: nowrap;
 
@@ -196,9 +169,6 @@ $site-element-size: min(1.55vh, 2.15vw);
   }
 
   .logo-container {
-    // filter: brightness(0.4);
-    // filter: brightness(0.175);
-
     .title {
       font-size: 0.85em;
     }
@@ -213,10 +183,6 @@ $site-element-size: min(1.55vh, 2.15vw);
     .logo-container {
       opacity: 0 !important;
     }
-  }
-
-  &.show {
-    // opacity: 0;
   }
 
   #logo-tiepian {
@@ -434,7 +400,6 @@ $site-element-size: min(1.55vh, 2.15vw);
 
           .third {
             font-size: 1em;
-            // color: #fff0c7;
           }
 
           .buttons {

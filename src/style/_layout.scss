@@ -1,274 +1,276 @@
-@use 'sass:math';
+@use "sass:math";
 
 $layer-base-z-index: 1000;
 $frame-size-w: 100vw;
 $frame-size-h: 100vh;
 $frame-size-d: 21em;
 
-$bottom_tilt:       25deg;
-
+$bottom_tilt: 25deg;
 
 @mixin fixedWholeScreen {
-    position: fixed;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+@mixin interactiveContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+#site-wall-text {
+  @include fixedWholeScreen();
+
+  .container {
+    position: absolute;
+    top: 52.5%;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    text-align: center;
+
+    .music-control,
+    .poem-text {
+      display: none;
+    }
+  }
+
+  &.music {
+    .container .music-control {
+      display: block;
+    }
+  }
+
+  &.text {
+    .container .poem-text {
+      display: block;
+    }
+  }
+
+  .logo-container {
+    position: absolute;
+    top: 47.5%;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75em;
+
+    .logo {
+      width: 6em;
+      height: 6em;
+    }
+
+    .title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      white-space: no-wrap;
+    }
+  }
+}
+
+#site-preloading-prompt {
+  @include fixedWholeScreen();
+  z-index: $layer-base-z-index + 1;
+
+  .title {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .button {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+#site-fps {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: fit-content;
+  height: fit-content;
+}
+
+#site-noscript {
+  @include fixedWholeScreen();
+  z-index: $layer-base-z-index + 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#site-informative {
+  @include fixedWholeScreen();
+  z-index: $layer-base-z-index + 2;
+
+  #site-poster-detail-layer {
+    @include fixedWholeScreen();
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .show {
+      display: block;
+      position: relative;
+      width: 80%;
+      height: 50%;
+      object-fit: contain;
+    }
+  }
+
+  #site-prompt {
+    @include fixedWholeScreen();
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: $layer-base-z-index + 3;
+  }
+}
+
+#screenlock {
+  @include fixedWholeScreen();
+  z-index: $layer-base-z-index + 5;
+}
+
+#site-interactive {
+  @include fixedWholeScreen();
+  @include interactiveContainer();
+  z-index: $layer-base-z-index;
+
+  &.vertical {
+    // .room .frame .bottom {
+    //     transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
+    // }
+  }
+
+  .lighting {
+    // @include fixedWholeScreen();
+    position: relative;
+    top: -10%;
+    width: 20em;
+    height: 20em;
+    z-index: $layer-base-z-index + 1;
+  }
+
+  .shadowing {
+    @include fixedWholeScreen();
+    z-index: $layer-base-z-index + 1;
+  }
+
+  .room {
+    @include interactiveContainer();
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-}
 
-@mixin interactiveContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform-style: preserve-3d;
-}
+    .frame {
+      @include interactiveContainer();
+      z-index: $layer-base-z-index - 1;
 
-#site-wall-text {
-    @include fixedWholeScreen();
-
-    .container {
-        position: absolute;
-        top: 52.5%;
-        left: 50%;
-        transform: translate(-50%, -75%);
-        text-align: center;
-
-        .music-control,
-        .poem-text {
-            display: none;
-        }
-    }
-
-    &.music {
-        .container .music-control {
-            display: block;
-        }          
-    }
-
-    &.text {
-        .container .poem-text {
-            display: block;
-        }            
-    }
-
-    .logo-container {
-        position: absolute;
-        top: 47.5%;
-        left: 50%;
-        transform: translate(-50%, -75%);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0.75em;
-
-
-        .logo {
-            width: 6em;
-            height: 6em;
-        }
-
-        .title {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            white-space: no-wrap;
-        }
-    }
-
-}
-
-#site-preloading-prompt {
-    @include fixedWholeScreen();
-    z-index: $layer-base-z-index + 1;
-
-    .title {
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .button {
-        position: absolute;
-        top: 80%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
-
-#site-fps {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: fit-content;
-    height: fit-content;
-}
-
-#site-noscript {
-    @include fixedWholeScreen();
-    z-index: $layer-base-z-index + 4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#site-informative {
-    @include fixedWholeScreen();
-    z-index: $layer-base-z-index + 2;
-
-    #site-poster-detail-layer {
-        @include fixedWholeScreen();
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .show {
-            display: block;
-            position: relative;
-            width: 80%;
-            height: 50%;
-            object-fit: contain;
-        }
-    }
-
-    #site-prompt {
-        @include fixedWholeScreen();
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: $layer-base-z-index + 3;
-    }
-}
-
-#screenlock {
-    @include fixedWholeScreen();
-    z-index: $layer-base-z-index + 5;
-
-}
-
-#site-interactive {
-    @include fixedWholeScreen();
-    @include interactiveContainer();
-    z-index: $layer-base-z-index;
-
-    &.vertical {
-        // .room .frame .bottom {
-        //     transform: rotateX(90deg) translateZ(calc(-#{$frame-size-h}/2)) rotateX(-25deg);
-        // }
-    }
-
-    .lighting {
-        // @include fixedWholeScreen();
+      .display {
         position: relative;
-        top: -10%;
-        width: 20em;
-        height: 20em;
-        z-index: $layer-base-z-index + 1;
-    }
+        z-index: $layer-base-z-index;
 
-    .shadowing {
-        @include fixedWholeScreen();
-        z-index: $layer-base-z-index + 1;
-    }
+        .control {
+          position: absolute;
+          top: 47.5%;
+          left: 50%;
+          transform: translate(-50%, -50%);
 
-    .room {
-        @include interactiveContainer();
+          .buttons {
+            padding-top: 0.85em;
+          }
+        }
+
+        .texture {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          z-index: $layer-base-z-index + 2;
+        }
+      }
+
+      .bottom {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        width: $frame-size-w;
+        height: $frame-size-d;
+        height: calc(
+          #{$frame-size-d} / 2 / #{math.sin(90deg - $bottom_tilt)} * 2
+        );
+        // height: calc(#{$frame-size-d} + 10em);
+        transform: translateZ(calc(-#{$frame-size-d}/ 2 - 2.525em))
+          rotateX(90deg) translateZ(calc(-#{$frame-size-h}/ 2))
+          rotateX(calc(-#{$bottom_tilt}))
+          translateZ(
+            calc(
+              #{$frame-size-d} / 2 * #{math.sin($bottom_tilt)} / #{math.sin(
+                  90deg - $bottom_tilt
+                )} + 0.875em
+            )
+          );
+      }
 
-        .frame {
-            @include interactiveContainer();
-            z-index: $layer-base-z-index - 1;
+      .top {
+        position: absolute;
+        width: $frame-size-w;
+        height: $frame-size-d;
+        transform: translateZ(calc(-#{$frame-size-d}/ 2)) rotateX(-90deg)
+          rotateZ(180deg) translateZ(calc(-#{$frame-size-h}/ 2));
+      }
 
-            .display {
-                position: relative;
-                z-index: $layer-base-z-index;
+      .left {
+        position: absolute;
+        width: $frame-size-h;
+        height: $frame-size-d;
+        transform: translateZ(calc(-#{$frame-size-d}/ 2)) rotateY(90deg)
+          rotateZ(90deg) translateZ(calc(-#{$frame-size-w}/ 2));
+      }
 
-                .control {
-                    position: absolute;
-                    top: 47.5%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
+      .right {
+        position: absolute;
+        width: $frame-size-h;
+        height: $frame-size-d;
+        transform: translateZ(calc(-#{$frame-size-d}/ 2)) rotateY(-90deg)
+          translateZ(calc(-#{$frame-size-w}/ 2)) rotateZ(-90deg);
+      }
 
-                    .buttons {
-                        padding-top: 0.85em;
-                    }
-                }
-
-                .texture {
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                    z-index: $layer-base-z-index + 2;
-                }
-            }
-
-            .bottom {
-                position: absolute;
-                width: $frame-size-w;
-                height: $frame-size-d;
-                height: calc(#{$frame-size-d} / 2 / #{math.sin(90deg - $bottom_tilt)} * 2);
-                // height: calc(#{$frame-size-d} + 10em);
-                transform: 
-                    translateZ(calc(-#{$frame-size-d}/2 - 2.525em)) 
-                    rotateX(90deg) 
-                    translateZ(calc(-#{$frame-size-h}/2)) 
-                    rotateX(calc(-#{$bottom_tilt}))
-                    translateZ(calc(#{$frame-size-d} / 2 * #{math.sin($bottom_tilt)} / #{math.sin(90deg - $bottom_tilt)} + 0.875em));
-            }
-
-
-
-            .top {
-                position: absolute;
-                width: $frame-size-w;
-                height: $frame-size-d;
-                transform: translateZ(calc(-#{$frame-size-d}/2)) rotateX(-90deg) rotateZ(180deg) translateZ(calc(-#{$frame-size-h}/2)) ;
-            }
-
-            .left {
-                position: absolute;
-                width: $frame-size-h;
-                height: $frame-size-d;
-                transform: translateZ(calc(-#{$frame-size-d}/2)) rotateY(90deg)  rotateZ(90deg) translateZ(calc(-#{$frame-size-w}/2));
-            }
-
-            .right {
-                position: absolute;
-                width: $frame-size-h;
-                height: $frame-size-d;
-                transform: translateZ(calc(-#{$frame-size-d}/2)) rotateY(-90deg) translateZ(calc(-#{$frame-size-w}/2)) rotateZ(-90deg);
-            }
-
-            .back {
-                position: absolute;
-                width: $frame-size-w;
-                height: $frame-size-h;
-                transform: translateZ(calc(-#{$frame-size-d}/2)) translateZ(calc(-#{$frame-size-d}/2));
-            }
-
-
-        }
-
-        .gallery {
-            @include interactiveContainer();
-            position: absolute;
-            top: -7.5%;
-            width: 100%;
-            height: 100%;
-
-            transform: translateZ(calc(-#{$frame-size-d}));
-
-            .poster {
-                position: absolute;
-                transform-style: preserve-3d;
-            }
-        }
+      .back {
+        position: absolute;
+        width: $frame-size-w;
+        height: $frame-size-h;
+        transform: translateZ(calc(-#{$frame-size-d}/ 2))
+          translateZ(calc(-#{$frame-size-d}/ 2));
+      }
     }
+
+    .gallery {
+      @include interactiveContainer();
+      position: absolute;
+      top: -7.5%;
+      width: 100%;
+      height: 100%;
+
+      transform: translateZ(calc(-#{$frame-size-d}));
+
+      .poster {
+        position: absolute;
+        transform-style: preserve-3d;
+      }
+    }
+  }
 }
