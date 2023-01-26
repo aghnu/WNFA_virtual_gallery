@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="Gengyuan Huang" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{{ constants.STRING_NAME_PROJECTNAME }}</title>
+  </head>
+
+  <body>
+    <noscript>
+      <div id="site-noscript">
+        <p>Please enable JavaScript</p>
+      </div>
+    </noscript>
+
+    <div id="site-informative">
+      <div id="site-poster-detail-layer"></div>
+      <div id="site-fps">
+        <p class="prompt">FPS: 0</p>
+      </div>
+      <div id="site-prompt">
+        <p class="prompt"></p>
+      </div>
+    </div>
+    <div id="screenlock"></div>
+    <div id="site-interactive">
+      <div class="lighting"></div>
+      <div class="shadowing"></div>
+
+      <div class="room" id="site-interactive-room">
+        <div class="frame">
+          <div class="display bottom">
+            <div class="texture"></div>
+            <div class="control">
+              <p class="first">{{ constants.STRING_FOOTER_COPYRIGHT }}</p>
+              <p class="second">{{ constants.STRING_FOOTER_AUTHORS }}</p>
+              <p class="third">{{ constants.STRING_FOOTER_PROJECTNAME }}</p>
+
+              <div class="buttons">
+                <button id="site-button-info" title="WNFA Info"></button>
+                <button id="site-button-gen" title="Generate WNFA Poster"></button>
+
+                <div id="site-music-control">
+                  <div class="icon-minus icon"></div>
+                  <div class="slider-container">
+                    <input
+                      class="slider"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="80" />
+                  </div>
+                  <div class="icon-plus icon"></div>
+                </div>
+
+                <button id="site-button-refresh" title="Refresh"></button>
+                <button id="site-button-next" title="Switch Gallery"></button>
+              </div>
+            </div>
+          </div>
+          <div class="display top">
+            <div class="texture"></div>
+          </div>
+          <div class="display left">
+            <div class="texture"></div>
+          </div>
+          <div class="display right">
+            <div class="texture"></div>
+          </div>
+
+          <div class="display back">
+            <!-- <div class="texture"></div> -->
+            <div id="site-wall-text">
+              <div class="container">
+                <div class="poem-text">
+                  {{ constants.HTML_POEM }}
+                </div>
+                <div class="music-control">
+                  <div class="music-icon"></div>
+                  <p class="volume-text"></p>
+                </div>
+              </div>
+              <div id="logo-tiepian" class="logo-container">
+                <div class="logo"></div>
+                <div class="title">
+                  {{ constants.HTML_TITLE_TIEPIAN }}
+                </div>
+              </div>
+              <div id="logo-huixiang" class="logo-container">
+                <div class="logo"></div>
+                <div class="title">
+                  {{ constants.HTML_TITLE_HUIXIANG }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="surface bottom"></div>
+          <div class="surface top"></div>
+          <div class="surface left"></div>
+          <div class="surface right"></div>
+
+          <!-- <div class="surface back"></div> -->
+        </div>
+        <div class="gallery"></div>
+      </div>
+    </div>
+    <header id="site-preloading-prompt">
+      <p class="title">{{ constants.STRING_FOOTER_COPYRIGHT }}</p>
+      <p class="button">&ltENTER&gt</p>
+    </header>
+  </body>
+</html>

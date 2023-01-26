@@ -1,14 +1,5 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-// get liquid template data
-const getTemplateData = (resourcePath) => {
-  const data = {
-    constants: require("./src/data/constants.json"),
-  };
-
-  return data;
-};
-
 module.exports = {
   entry: "./src/js/main.js",
 
@@ -26,20 +17,6 @@ module.exports = {
       {
         test: /\.(mp3|ogg)$/,
         loader: "file-loader",
-      },
-      {
-        test: /\.liquid$/,
-        use: [
-          {
-            loader: "html-loader",
-          },
-          {
-            loader: "liquid-loader",
-            options: {
-              data: getTemplateData,
-            },
-          },
-        ],
       },
     ],
   },
