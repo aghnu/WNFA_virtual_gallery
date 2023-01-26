@@ -5,8 +5,9 @@ import { icon } from "./svgFactory";
 import { GlobalState } from "./globalState";
 import { flickeringTextEl } from "./flickerText";
 import { AudioControl } from "./backgroundAudioControl";
-
 import Bowser from "bowser";
+
+import CONSTANTS from "../data/constants.json";
 
 function initAnimationLoopUnlimited() {
   let oldInterval;
@@ -129,23 +130,11 @@ window.addEventListener("load", () => {
   // prompt
   const site_prompt = document.querySelector("#site-prompt");
   const prompt = document.querySelector("#site-prompt .prompt");
-
-  const prompt_hardware_string_en =
-    "If you encounter lag or visual artifact<br>Please make sure your broswer is up-to-date<br>and has hardware acceleration enabled";
-  const prompt_hardware_string_cn =
-    "如果遇到卡顿或渲染错误<br>请确保浏览器已经更新<br>并且支持硬件加速";
-
   const loadingPrompts = ["·", "· ·", "· · ·"];
 
   let i = 0;
   let loadingPromptInterval = setInterval(() => {
-    prompt.innerHTML =
-      prompt_hardware_string_en +
-      "<br>" +
-      prompt_hardware_string_cn +
-      "<br><br>" +
-      loadingPrompts[i];
-
+    prompt.innerHTML = CONSTANTS.HTML_PROMPT_HARDWARE + loadingPrompts[i];
     i = (i + 1) % loadingPrompts.length;
   }, 750);
 
@@ -154,7 +143,6 @@ window.addEventListener("load", () => {
 
     if (browserIsSupported()) {
       // enter screen
-
       const site_interactive = document.querySelector("#site-interactive");
       const enter_screen = document.querySelector("#site-preloading-prompt");
       const enter_screen_title = document.querySelector(
@@ -215,10 +203,7 @@ window.addEventListener("load", () => {
       site_prompt.style.visibility = "hidden";
       mainInitFunc = main();
     } else {
-      prompt.innerHTML =
-        "Your browser cannot render correctly<br>Please use another browser" +
-        "<br>" +
-        "您的浏览器无法正常渲染内容<br>请使用其他浏览器打开";
+      prompt.innerHTML = CONSTANTS.HTML_PROMPT_BROWSER_ERROR;
     }
   }, 3000);
 });
