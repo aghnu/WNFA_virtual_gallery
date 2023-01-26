@@ -1,0 +1,11 @@
+{
+  "HTML_POEM": "<p>&lt轰响&gt</p><br /><p>荷叶滴落泪水</p><p>来不及 浸透书叶</p><p>一百年 一千年</p><p>点燃一片通电的网</p><br /><p>回想 回想</p><p>那心的铁片</p><p>也要发出轰响</p>",
+  "HTML_TITLE_TIEPIAN": "<span>心</span><span>的</span><span>铁</span><span>片</span>",
+  "HTML_TITLE_HUIXIANG": "<span>回</span><span>想</span><span>回</span><span>想</span>",
+  "STRING_FOOTER_COPYRIGHT": "© 2022 WNFA Virtual Gallery",
+  "STRING_FOOTER_AUTHORS": "GENGYUAN HUANG & YUAN FANG",
+  "STRING_FOOTER_PROJECTNAME": "WORDS NEVER FALL APART",
+  "STRING_NAME_PROJECTNAME": "心的铁片/WNFA Gallery",
+  "HTML_PROMPT_HARDWARE": "If you encounter lag or visual artifact<br>Please make sure your broswer is up-to-date<br>and has hardware acceleration enabled<br>如果遇到卡顿或渲染错误<br>请确保浏览器已经更新<br>并且支持硬件加速<br><br>",
+  "HTML_PROMPT_BROWSER_ERROR": "Your browser cannot render correctly<br>Please use another browser<br>您的浏览器无法正常渲染内容<br>请使用其他浏览器打开"
+}
