@@ -1,561 +1,525 @@
-$site-interactive-size:     min(1.55vh, 2.15vw);
-$site-element-size:         min(1.55vh, 2.15vw);
+$site-interactive-size: min(1.55vh, 2.15vw);
+$site-element-size: min(1.55vh, 2.15vw);
 
 @mixin noselect {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;  
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 #site-music-control {
-    width: 13em;
+  width: 13em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  // &.pressed {
+  //     .slider-container {
+  //         .slider {
+  //             height: 0.3em;
+
+  //             &::-webkit-slider-thumb,
+  //             &::-moz-range-thumb {
+  //                 width: 1.75em;
+  //                 height: 1.75em;
+  //             }
+  //         }
+
+  //     }
+  // }
+  .icon {
+    width: 10%;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+  }
 
-    // &.pressed {
-    //     .slider-container {
-    //         .slider {
-    //             height: 0.3em;
+  .slider-container {
+    font-size: $site-element-size;
+    width: 72.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .slider {
+      font-size: $site-element-size;
+      -webkit-appearance: none;
+      appearance: none;
+      outline: none;
 
+      width: 100%;
+      height: 0.2em;
+      background: rgba(50, 50, 50, 0.75);
 
-    //             &::-webkit-slider-thumb,
-    //             &::-moz-range-thumb {
-    //                 width: 1.75em;
-    //                 height: 1.75em;
-    //             }
-    //         }
+      border-radius: 1em;
 
-            
-    //     }
-    // }
-    .icon {
-        width: 10%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+      // transition: opacity 0.5s, height 0.5s;
 
-    .slider-container {
+      // &:hover {
+      //     opacity: 1;
+      // }
+
+      @mixin slider-thumb-style {
         font-size: $site-element-size;
-        width: 72.5%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .slider {
-            font-size: $site-element-size;
-            -webkit-appearance: none;
-            appearance: none;
-            outline: none;
-            
-            width: 100%;
-            height: 0.2em;
-            background: rgba(50, 50, 50, 0.75);
 
-            border-radius: 1em;
+        -webkit-appearance: none;
+        appearance: none;
+        outline: none;
+        border: none;
 
-            // transition: opacity 0.5s, height 0.5s;
+        width: 1.4em;
+        height: 1.4em;
+        border-radius: 100%;
+        background: rgba(200, 200, 200);
 
-            // &:hover {
-            //     opacity: 1;
-            // }
-            
-            @mixin slider-thumb-style {
-                font-size: $site-element-size;
+        box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.2);
+        // transition: width 0.5s, height 0.5s;
 
-                -webkit-appearance: none;
-                appearance: none;
-                outline: none;
-                border: none;
-                
-                width: 1.4em;
-                height: 1.4em;
-                border-radius: 100%;
-                background: rgba(200, 200, 200);
-                
-                box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.2);
-                // transition: width 0.5s, height 0.5s;
+        cursor: pointer;
+      }
 
-                cursor: pointer;                  
-            }
+      &::-webkit-slider-thumb {
+        @include slider-thumb-style();
+      }
 
-            &::-webkit-slider-thumb {
-                @include slider-thumb-style();
-            }
-
-            &::-moz-range-thumb {
-                @include slider-thumb-style();           
-            }
-        }
+      &::-moz-range-thumb {
+        @include slider-thumb-style();
+      }
     }
-
+  }
 }
 
 #screenlock {
-    opacity: 0;
-    
-    pointer-events: none;
-    background-color: rgba(0, 0, 0, 0.35);
-    transition: opacity 1.5s;
+  opacity: 0;
 
-    &.lock {
-        opacity: 1;
-        pointer-events: all;
-    }
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.35);
+  transition: opacity 1.5s;
+
+  &.lock {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
 #site-preloading-prompt {
-    @keyframes text-stretch {
-        0% {
-            letter-spacing: 0.85em;
-            padding-left: 0.85em;
-        }
-    
-        50% {
-            letter-spacing: 1em;
-            padding-left: 1em;
-        }
-    
-        100% {
-            letter-spacing: 0.85em;
-            padding-left: 0.85em;
-        }
-    }
-    
-    @keyframes enter-screen-background-cycle {
-        0% {
-            background-color: rgb(0, 0, 10, 0.9);
-        }
-
-        // 25% {
-        //     background-color: rgba(120, 120, 140, 0.65);
-            
-        // }
-
-        50% {
-            background-color: rgba(0, 0, 10, 0.75);
-            
-        }
-
-        100% {
-            background-color: rgb(0, 0, 10, 0.9);
-        }
+  @keyframes text-stretch {
+    0% {
+      letter-spacing: 0.85em;
+      padding-left: 0.85em;
     }
 
-    font-size: $site-element-size;
-    // background-color: rgb(120, 120, 140);
-    // background-image: radial-gradient(at 50% 40%, rgba(50, 50, 50, 0.25), #000 95%);
-    pointer-events: all;
-    white-space: nowrap;
-
-    animation: enter-screen-background-cycle 10s infinite;
-    transition: opacity 2s;
-    cursor: pointer;
-
-    .title {
-        @include noselect();
-        color: #fff0c7;
-        font-size: 1.25em;     
-        letter-spacing: 0.85em;   
-        padding-left: 0.85em;
+    50% {
+      letter-spacing: 1em;
+      padding-left: 1em;
     }
 
-    .button {
-        @include noselect();
-        
-        letter-spacing: 0.85em; 
-        padding-left: 0.85em;
-        font-size: 0.85em;
-        color: #fff0c7;
-        opacity: 0.75;
+    100% {
+      letter-spacing: 0.85em;
+      padding-left: 0.85em;
+    }
+  }
 
-        animation: text-stretch 1.5s infinite;
+  @keyframes enter-screen-background-cycle {
+    0% {
+      background-color: rgb(0, 0, 10, 0.9);
     }
 
+    // 25% {
+    //     background-color: rgba(120, 120, 140, 0.65);
+
+    // }
+
+    50% {
+      background-color: rgba(0, 0, 10, 0.75);
+    }
+
+    100% {
+      background-color: rgb(0, 0, 10, 0.9);
+    }
+  }
+
+  font-size: $site-element-size;
+  // background-color: rgb(120, 120, 140);
+  // background-image: radial-gradient(at 50% 40%, rgba(50, 50, 50, 0.25), #000 95%);
+  pointer-events: all;
+  white-space: nowrap;
+
+  animation: enter-screen-background-cycle 10s infinite;
+  transition: opacity 2s;
+  cursor: pointer;
+
+  .title {
+    @include noselect();
+    color: #fff0c7;
+    font-size: 1.25em;
+    letter-spacing: 0.85em;
+    padding-left: 0.85em;
+  }
+
+  .button {
+    @include noselect();
+
+    letter-spacing: 0.85em;
+    padding-left: 0.85em;
+    font-size: 0.85em;
+    color: #fff0c7;
+    opacity: 0.75;
+
+    animation: text-stretch 1.5s infinite;
+  }
 }
-
 
 #site-wall-text {
-    
-    font-size: 1.15em;
-    color: rgb(225, 225, 225);  
+  font-size: 1.15em;
+  color: rgb(225, 225, 225);
 
-    &.music .container {
-        color: rgba(218, 97, 72, 0.5);
-        p {
-            font-size: 2em;
-            line-height: 1.5em;
-        }
+  &.music .container {
+    color: rgba(218, 97, 72, 0.5);
+    p {
+      font-size: 2em;
+      line-height: 1.5em;
     }
+  }
 
+  .container {
+    transition: font-size 0.5s, opacity 1s;
+
+    opacity: 0;
+    p {
+      letter-spacing: 0.6em;
+      padding-left: 0.6em;
+      line-height: 2.25em;
+    }
+  }
+
+  .logo-container {
+    // filter: brightness(0.4);
+    // filter: brightness(0.175);
+
+    .title {
+      font-size: 0.85em;
+    }
+  }
+
+  &.focus {
     .container {
-        transition: font-size 0.5s, opacity 1s;
-        
-        
-        opacity: 0;
-        p {
-            letter-spacing: 0.6em;
-            padding-left: 0.6em;
-            line-height: 2.25em;
-        }
-
-
+      opacity: 1;
+      font-size: 1.1em;
     }
-    
+
     .logo-container {
-        
-        // filter: brightness(0.4);
-        // filter: brightness(0.175);
-
-        .title {
-            font-size: 0.85em;
-        }
+      opacity: 0 !important;
     }
+  }
 
-    &.focus {
-        .container {
-            opacity: 1;
-            font-size: 1.1em;           
-        }
+  &.show {
+    // opacity: 0;
+  }
 
-        .logo-container {
-            opacity: 0 !important;
-        }
+  #logo-tiepian {
+    opacity: 0;
+    transition: opacity 1s;
+    filter: invert(49%) sepia(8%) saturate(388%) hue-rotate(201deg)
+      brightness(94%) contrast(85%);
+
+    .logo {
+      background-image: url("../img/tiepian.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
+  }
 
-    &.show {
-        // opacity: 0;
+  #logo-huixiang {
+    opacity: 0;
+    transition: opacity 1s;
+    filter: invert(51%) sepia(9%) saturate(287%) hue-rotate(329deg)
+      brightness(94%) contrast(92%);
+
+    .logo {
+      background-image: url("../img/huixiang.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
-
-    #logo-tiepian {
-        opacity: 0;
-        transition: opacity 1s;
-        filter: invert(49%) sepia(8%) saturate(388%) hue-rotate(201deg) brightness(94%) contrast(85%);        
-
-        .logo {
-            background-image: url('../img/tiepian.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;    
-        }
-    }
-
-    #logo-huixiang {
-        opacity: 0;
-        transition: opacity 1s;
-        filter: invert(51%) sepia(9%) saturate(287%) hue-rotate(329deg) brightness(94%) contrast(92%);       
-
-        .logo {
-            background-image: url('../img/huixiang.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;     
-        }
-    }
+  }
 }
 
-
-
 #site-noscript {
-    font-size: $site-element-size;
-    pointer-events: all;
-    p {
-        color: rgb(225, 225, 225);
-        text-align: center;
-        font-size: 1.1em;
-    }
+  font-size: $site-element-size;
+  pointer-events: all;
+  p {
+    color: rgb(225, 225, 225);
+    text-align: center;
+    font-size: 1.1em;
+  }
 }
 
 #site-fps {
-    font-size: 0.75em;
-    background-color: rgba(0, 0, 0, 0.75);
-    color:rgba(80, 80, 80, 0.75);
-    .prompt {
-        line-height: 1em;
-        margin: 0.25em;
-    }
+  font-size: 0.75em;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: rgba(80, 80, 80, 0.75);
+  .prompt {
+    line-height: 1em;
+    margin: 0.25em;
+  }
 }
 
 #site-informative {
-    font-size: $site-element-size;
+  font-size: $site-element-size;
+  pointer-events: none;
+
+  #site-poster-detail-layer {
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+    background-color: rgba(0, 0, 0, 0.75);
 
-    #site-poster-detail-layer {
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.5s;
-        background-color: rgba(0,0,0,0.75);
-
-        &.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-
+    &.show {
+      opacity: 1;
+      pointer-events: all;
     }
+  }
 
-    #site-prompt {
-        pointer-events: all;
-        background-color: black;
-        p {
-            color: rgb(225, 225, 225);
-            text-align: center;
-            font-size: 1.1em;
-        }
+  #site-prompt {
+    pointer-events: all;
+    background-color: black;
+    p {
+      color: rgb(225, 225, 225);
+      text-align: center;
+      font-size: 1.1em;
     }
+  }
 }
 
 #site-interactive {
-    @include noselect();
-    font-size: $site-interactive-size;
-    perspective: 100em;
-    
-    &.loaded {
-        & + #site-preloading-prompt {
-            pointer-events: none;
-            opacity: 0;
+  @include noselect();
+  font-size: $site-interactive-size;
+  perspective: 100em;
+  will-change: perspective-origin;
 
-            .button {
-                animation-play-state: paused;
-            }
-        }
-        
-        .room .frame {
-            visibility: visible;
-        }
+  &.loaded {
+    & + #site-preloading-prompt {
+      pointer-events: none;
+      opacity: 0;
+
+      .button {
+        animation-play-state: paused;
+      }
     }
 
+    .room .frame {
+      visibility: visible;
+    }
+  }
 
+  &.lightup {
+    .lighting {
+      opacity: 1;
 
-    // &.vertical {
-    //     .room {
-    //         // .frame .display .control {
-    //         //     font-size: 1em;
-    //         // }
-            
-    //         // .gallery .wall .poster {
-    //         //     font-size: 0.75em;
-    //         // }
-    //     }
-
-
-    //     // #site-wall-text {
-    //     //     font-size: 0.75em;
-        
-    //     //     &.focus {
-    //     //         opacity: 1;
-    //     //         font-size: 1em;
-    //     //     }
-    //     // }
-    // }
-
-    &.lightup {
-        .lighting {
-            opacity: 1;
-
-            &.hide {
-                opacity: 0;
-            }
-        }
-
-        .shadowing {
-            opacity: 0;
-        }
-
-        .room {
-            .frame .surface {
-                background-color: rgb(120, 120, 120);
-            }      
-
-            &.tiepian {
-                .frame .surface {
-                    background-color: #787887;
-                }              
-                
-                .frame .display .buttons button {
-                    background-color: rgb(50, 50, 60);
-                }
-
-                #logo-tiepian {
-                    opacity: 0.4;
-                }
-            }
-
-            &.huixiang {
-                .frame .surface {
-                    background-color: #847b78;
-                }
-
-                .frame .display .buttons button {
-                    background-color: rgb(60, 55, 50);
-                }
-
-                #logo-huixiang {
-                    opacity: 0.4;
-                }
-            }
-        }
-
+      &.hide {
+        opacity: 0;
+      }
     }
 
     .shadowing {
-        pointer-events: none;
-        opacity: 0.25;
-        background-color: rgba(0, 0, 0, 0.5);
-        transition: opacity 0.5s;
-    }
-
-    .lighting {
-        display: none;
-        pointer-events: none;
-        opacity: 0;
-        background-image: radial-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0) 50%);
-        filter: blur(1em);
-        transition: opacity 1s;
+      opacity: 0;
     }
 
     .room {
-        pointer-events: none;
-        
+      .frame .surface {
+        background-color: rgb(120, 120, 120);
+      }
 
-        .frame {
-            pointer-events: none;
-            visibility: hidden;
-
-            .surface {
-                transition: background-color 2s;
-                background-color: #444444;
-                background-image: radial-gradient(at 50% 85%, rgba(50, 50, 50, 0.25), #000 95%);
-                filter: blur(1em);                
-            }
-
-            .display {
-                font-size: $site-element-size;
-                .control {
-                    pointer-events: all;
-                    color: rgb(225, 225, 225);
-                    text-align: center;
-                    font-size: 1.25em;
-                    white-space: nowrap;
-                    // transition: font-size 0.5s;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 2em;
-                    p {
-                        line-height: 1em;
-                    }
-
-                    .first,
-                    .second,
-                    .third {
-                        letter-spacing: 0.85em;
-                        padding-left: 0.85em;
-                        
-                    }
-
-                    .first {
-                        font-size: 0.575em;
-                    }
-
-                    .second {
-                        font-size: 0.725em;
-                    }
-
-                    .third {
-                        font-size: 1em;
-                        // color: #fff0c7;
-                    }
-
-                    .buttons {
-                        font-size: $site-element-size;
-                        pointer-events: all;
-                        display: flex;
-                        justify-content: center;
-                        gap: 3em;
-                        button {
-                            font-size: $site-element-size;
-                            width: 2.4em;
-                            height: 2.4em;
-                            border-radius: 100%;
-                            background-color: rgb(50, 50, 50);
-                            transition: opacity 0.25s;
-                            box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.2);
-                            position: relative;
-                            transition: background-color 2s;
-
-                            &.pressed {
-                                opacity: 0.75;
-                                top: 0.125em;
-                                box-shadow: none;
-                            }
-                        }
-
-                        .icon {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                        }
-
-                        #site-button-info {
-                            background-color: rgb(200, 200, 200);
-                        }
-                    }
-                }
-
-                .texture {
-                    background-image: url("../img/noise_screen.png");
-                    background-size: 30em;
-                    pointer-events: none;
-                }
-            }
+      &.tiepian {
+        .frame .surface {
+          background-color: #787887;
         }
 
-        .gallery {
-            pointer-events: none;
-                
-            .poster {
-                pointer-events: none;
-                display: block;
-                object-fit: contain;
-                transition: opacity 0.65s, font-size 0.5s;
-                
-                
-                opacity: 0;
-
-                &.mockup {
-                    background-color: white;
-                }
-
-                &.show {
-                    opacity: 1;
-                    pointer-events: all;
-                }
-
-                &.focus {
-                    opacity: 1;
-                    font-size: 1.1em;
-                    cursor: pointer;
-                }
-
-                &.fade {
-                    opacity: 0.2;
-                    pointer-events: none;
-                    font-size: 0.9em;
-                }
-
-                &.hide {
-                    opacity: 0.1;
-                    pointer-events: none;
-                }
-            }
+        .frame .display .buttons button {
+          background-color: rgb(50, 50, 60);
         }
+
+        #logo-tiepian {
+          opacity: 0.4;
+        }
+      }
+
+      &.huixiang {
+        .frame .surface {
+          background-color: #847b78;
+        }
+
+        .frame .display .buttons button {
+          background-color: rgb(60, 55, 50);
+        }
+
+        #logo-huixiang {
+          opacity: 0.4;
+        }
+      }
+    }
+  }
+
+  .shadowing {
+    pointer-events: none;
+    opacity: 0.25;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.5s;
+  }
+
+  .lighting {
+    display: none;
+    pointer-events: none;
+    opacity: 0;
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.1),
+      rgba(0, 0, 0, 0) 50%
+    );
+    filter: blur(1em);
+    transition: opacity 1s;
+  }
+
+  .room {
+    pointer-events: none;
+
+    .frame {
+      pointer-events: none;
+      visibility: hidden;
+
+      .surface {
+        transition: background-color 2s;
+        background-color: #444444;
+        background-image: radial-gradient(
+          at 50% 85%,
+          rgba(50, 50, 50, 0.25),
+          #000 95%
+        );
+        filter: blur(1em);
+      }
+
+      .display {
+        font-size: $site-element-size;
+        .control {
+          pointer-events: all;
+          color: rgb(225, 225, 225);
+          text-align: center;
+          font-size: 1.25em;
+          white-space: nowrap;
+          // transition: font-size 0.5s;
+          display: flex;
+          flex-direction: column;
+          gap: 2em;
+          p {
+            line-height: 1em;
+          }
+
+          .first,
+          .second,
+          .third {
+            letter-spacing: 0.85em;
+            padding-left: 0.85em;
+          }
+
+          .first {
+            font-size: 0.575em;
+          }
+
+          .second {
+            font-size: 0.725em;
+          }
+
+          .third {
+            font-size: 1em;
+            // color: #fff0c7;
+          }
+
+          .buttons {
+            font-size: $site-element-size;
+            pointer-events: all;
+            display: flex;
+            justify-content: center;
+            gap: 3em;
+            button {
+              font-size: $site-element-size;
+              width: 2.4em;
+              height: 2.4em;
+              border-radius: 100%;
+              background-color: rgb(50, 50, 50);
+              transition: opacity 0.25s;
+              box-shadow: 0 0.4em 0.7em rgba(0, 0, 0, 0.2);
+              position: relative;
+              transition: background-color 2s;
+
+              &.pressed {
+                opacity: 0.75;
+                top: 0.125em;
+                box-shadow: none;
+              }
+            }
+
+            .icon {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            #site-button-info {
+              background-color: rgb(200, 200, 200);
+            }
+          }
+        }
+
+        .texture {
+          background-image: url("../img/noise_screen.png");
+          background-size: 30em;
+          pointer-events: none;
+        }
+      }
     }
 
+    .gallery {
+      pointer-events: none;
+      will-change: transform;
 
+      .poster {
+        will-change: filter;
+        pointer-events: none;
+        display: block;
+        object-fit: contain;
+        transition: opacity 0.65s, font-size 0.5s;
+
+        opacity: 0;
+
+        &.mockup {
+          background-color: white;
+        }
+
+        &.show {
+          opacity: 1;
+          pointer-events: all;
+        }
+
+        &.focus {
+          opacity: 1;
+          font-size: 1.1em;
+          cursor: pointer;
+        }
+
+        &.fade {
+          opacity: 0.2;
+          pointer-events: none;
+          font-size: 0.9em;
+        }
+
+        &.hide {
+          opacity: 0.1;
+          pointer-events: none;
+        }
+      }
+    }
+  }
 }
-
-
-
-
