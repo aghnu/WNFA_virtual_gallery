@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "outDir": "./site/",
+    "sourceMap": true,
+
     "noImplicitAny": true,
     "module": "ESNext",
     "target": "ESNext",
@@ -9,7 +12,16 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      "@modules/*": ["./src/modules/*"],
+      "@static/*": ["./src/static/*"],
+      "@style/*": ["./src/style/*"],
+      "@type/*": ["./src/type/*"],
+      "@utilities/*": ["./src/utilities/*"],
+      "@/*": ["./src/*"],
+    },
   },
-  "include": ["src", "./.eslintrc.cjs"],
+  "include": ["src", "./.eslintrc.cjs", "./webpack.common.js", "./webpack.dev.js", "./webpack.prod.js", "./custom.d.ts"],
 }
