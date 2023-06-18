@@ -13,7 +13,7 @@ interface StateSpace {
   rotateDirection: number;
 }
 
-export class GlobalState {
+class GlobalState {
   protected static instance: GlobalState | undefined;
   public state: State;
   public stateSpace: StateSpace;
@@ -60,3 +60,5 @@ export class GlobalState {
     this.animationUpdateListeners = [];
   }
 }
+
+export default GlobalState;

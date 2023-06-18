@@ -17,8 +17,8 @@ interface AudioState {
   buttonDownPlayed: boolean;
 }
 
-export class AudioControl {
-  protected static instance: AudioControl | undefined;
+class AudioController {
+  protected static instance: AudioController | undefined;
   protected fadingInterval: number | undefined;
   protected audioConfig: AudioConfig;
   protected audioState: AudioState;
@@ -68,7 +68,7 @@ export class AudioControl {
   }
 
   public static getInstance() {
-    if (this.instance === undefined) this.instance = new AudioControl();
+    if (this.instance === undefined) this.instance = new AudioController();
     return this.instance;
   }
 
@@ -176,3 +176,5 @@ export class AudioControl {
     });
   }
 }
+
+export default AudioController;
