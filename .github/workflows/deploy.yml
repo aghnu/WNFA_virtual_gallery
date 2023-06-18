@@ -1,0 +1,43 @@
+name: Deploy to Aghnu.me
+
+on:
+  push:
+    branches:
+      - "main"
+env:
+  NODE_VERSION: 18.x
+
+jobs:
+  build:
+    name: Build WNFA Gallery
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build WNFA Gallery
+        run: yarn run build
+
+      - name: Deploy to Aghnu.me
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          destination-github-username: "aghnu"
+          destination-repository-name: "aghnu.me"
+
+          user-email: scotthuang007@outlook.com
+          user-name: AUTO UPLOAD
+          commit-message: "AUTO UPLOAD WNFA Gallery: ${{ github.event.head_commit.message }}"
+
+          target-branch: main
+          target-directory: "app/gallery/WNFA/"
+          source-directory: "site/"
