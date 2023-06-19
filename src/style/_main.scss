@@ -192,7 +192,7 @@ $site-element-size: min(1.55vh, 2.15vw);
       brightness(94%) contrast(85%);
 
     .logo {
-      background-image: url("../img/tiepian.png");
+      background-image: url("@static/img/tiepian.png");
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -206,7 +206,7 @@ $site-element-size: min(1.55vh, 2.15vw);
       brightness(94%) contrast(92%);
 
     .logo {
-      background-image: url("../img/huixiang.png");
+      background-image: url("@static/img/huixiang.png");
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -439,7 +439,7 @@ $site-element-size: min(1.55vh, 2.15vw);
         }
 
         .texture {
-          background-image: url("../img/noise_screen.png");
+          background-image: url("@static/img/noise_screen.png");
           background-size: 30em;
           pointer-events: none;
         }
