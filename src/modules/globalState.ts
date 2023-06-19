@@ -11,6 +11,7 @@ interface StateSpace {
   rotateDegFocus: number;
   rotateDeg: number;
   rotateDirection: number;
+  rotateOrigin: null | number;
 }
 
 class GlobalState {
@@ -32,6 +33,7 @@ class GlobalState {
       rotateDegFocus: 0,
       rotateDeg: 0,
       rotateDirection: 1,
+      rotateOrigin: null,
     };
   }
 
