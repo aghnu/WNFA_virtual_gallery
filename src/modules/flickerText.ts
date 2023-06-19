@@ -6,9 +6,8 @@ function getOpacityEndpoints() {
   return Math.floor(Math.random() * 2) === 0 ? { o1, o2 } : { o2, o1 };
 }
 
-function createFlickeringTextEl(text: string) {
+function createFlickeringTextEl(pEl: HTMLElement, text: string) {
   let isContinue = true;
-  const pEL = createHTMLElement<HTMLParagraphElement>({ tag: "p" });
 
   for (let i = 0; i < text.length; i++) {
     const animationLength = Math.random() * 1.5 + 1;
@@ -29,15 +28,12 @@ function createFlickeringTextEl(text: string) {
       if (!isContinue) return;
       window.setTimeout(start, Math.random() * 1000 + animationLength * 1000);
     };
-    pEL.appendChild(el);
+    pEl.appendChild(el);
     window.setTimeout(() => window.requestAnimationFrame(start), 100);
   }
 
-  return {
-    cleanup: () => {
-      isContinue = false;
-    },
-    element: pEL,
+  return () => {
+    isContinue = false;
   };
 }
 
