@@ -33,8 +33,10 @@ module.exports = {
       "@style": path.resolve(__dirname, "src/style/"),
       "@type": path.resolve(__dirname, "src/type/"),
       "@utilities": path.resolve(__dirname, "src/utilities/"),
+      "@api": path.resolve(__dirname, "src/api/"),
       "@": path.resolve(__dirname, "src/"),
     },
+    extensions: [".ts", ".js", ".json"],
   },
   plugins: [
     new MiniCssExtractPlugin({

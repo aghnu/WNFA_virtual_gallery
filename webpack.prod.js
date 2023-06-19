@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 // get liquid template data
 const getTemplateData = (resourcePath) => {
   const data = {
-    constants: require("./src/data/constants.json"),
+    constants: require("./src/static/data/constants.json"),
     iframePath: "./assets/wnfa.html",
   };
 

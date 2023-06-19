@@ -1,6 +1,11 @@
 export interface ImageMetaPayload {
-  total: number;
-  exclude: string[];
-  location: string;
-  data: string;
+  results: {
+    total: number;
+    exclude: string[];
+    location: string;
+    data: string;
+  };
+  posters: {
+    total: number;
+  };
 }
